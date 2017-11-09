@@ -1,6 +1,6 @@
 <?php
 
-namespace User\Controller\Factory;
+namespace User\Factory;
 
 use User\Controller\UserController;
 use User\Model\UserTable;

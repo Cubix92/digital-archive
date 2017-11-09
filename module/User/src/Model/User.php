@@ -19,7 +19,7 @@ class User
         $this->id = (!empty($row['id'])) ? $row['id'] : null;
         $this->username = (!empty($row['username'])) ? $row['username'] : null;
         $this->password = (!empty($row['password'])) ? $row['password'] : null;
-        $this->dateCreated = (!empty($row['date_created'])) ? new \DateTime($row['date_created']) : null;
+        $this->created = (!empty($row['created'])) ? new \DateTime($row['created']) : null;
     }
 
     public function getArrayCopy()
@@ -28,7 +28,7 @@ class User
             'id'     => $this->id,
             'username' => $this->username,
             'password'  => $this->password,
-            'dateCreated'  => $this->dateCreated
+            'dateCreated'  => $this->created
         ];
     }
 
@@ -60,6 +60,12 @@ class User
     }
 
     public function setPassword($password)
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    public function setHashedPassword($password)
     {
         $bcrypt = new Bcrypt();
 

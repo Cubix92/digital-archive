@@ -1,6 +1,6 @@
 <?php
 
-namespace User\Model\Factory;
+namespace User\Factory;
 
 use Interop\Container\ContainerInterface;
 use User\Model\User;

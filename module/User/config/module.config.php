@@ -2,7 +2,6 @@
 
 namespace User;
 
-use User\Model\Factory\UserTableFactory;
 use Zend\Router\Http\Segment;
 
 return [
@@ -22,12 +21,12 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            Controller\UserController::class => Controller\Factory\UserControllerFactory::class,
+            Controller\UserController::class => Factory\UserControllerFactory::class,
         ],
     ],
     'service_manager' => [
         'factories' => [
-            Model\UserTable::class => UserTableFactory::class,
+            Model\UserTable::class => Factory\UserTableFactory::class,
         ],
     ],
     'view_manager' => [
