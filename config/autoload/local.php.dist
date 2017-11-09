@@ -1,0 +1,13 @@
+<?php
+
+return [
+    'driver' => 'Mysqli',
+    'charset' => 'utf-8',
+    'port' => 3306,
+    'database' => 'zend-digital-archive',
+    'username' => 'root',
+    'password' => '',
+    'options' => array(
+        'buffer_results' => true,
+    )
+];

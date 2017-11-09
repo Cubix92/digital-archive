@@ -1,0 +1,421 @@
+/* GENERAL STYLE */
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto+Slab);
+
+body {
+    margin-top: 60px;
+    font-family: 'Roboto Slab', sans-serif;
+    overflow: scroll;
+}
+
+a:focus {
+    outline-style: none;
+}
+
+a, a:hover, a:active, a:focus {
+    color: rgba(82, 103, 115, 1);
+}
+
+.navbar {
+    text-transform: uppercase;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.container-fluid {
+    max-width: 1170px;
+}
+
+.navbar-header a.active {
+    background-color: rgba(82, 103, 115, 1);
+    color: rgba(255, 255, 255, 1);
+}
+
+.navbar-header a.navbar-brand:hover {
+    background-color: rgba(82, 103, 115, 1);
+    color: rgba(255, 255, 255, 1);
+}
+
+.logout {
+    margin-right: -15px;
+}
+
+.form-group ul {
+    padding: 0px;
+    margin-top: 6px;
+}
+
+.form-group ul li {
+    list-style-type: none;
+    color: red;
+}
+
+#custom-bootstrap-menu.navbar-default .navbar-brand {
+    color: rgba(82, 103, 115, 1);
+}
+
+#custom-bootstrap-menu.navbar-default {
+    font-size: 14px;
+    background-color: rgba(0, 0, 0, 1);
+    border-radius: 0px;
+    border: 1px solid #AAA;
+    border-bottom: 0px;
+    margin-top: 0px;
+    overflow: hidden;
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    font-family: 'Roboto', sans-serif;
+    -webkit-transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100;
+}
+
+#custom-bootstrap-menu.navbar-default .navbar-nav > li > a {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(0, 0, 0, 1);
+}
+
+#custom-bootstrap-menu.navbar-default .navbar-nav > li > a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav > li > a:focus {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(82, 103, 115, 1);
+}
+
+#custom-bootstrap-menu.navbar-default .navbar-nav > .active > a,
+#custom-bootstrap-menu.navbar-default .navbar-nav > .active > a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav > .active > a:focus {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(82, 103, 115, 1);
+}
+
+#custom-bootstrap-menu.navbar-default .navbar-toggle {
+    border-color: #526773;
+}
+
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus {
+    background-color: #526773;
+}
+
+#custom-bootstrap-menu.navbar-default .navbar-toggle .icon-bar {
+    background-color: #526773;
+}
+
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover .icon-bar,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus .icon-bar {
+    background-color: #000000;
+}
+
+/* FOOTER STYLES */
+.footer {
+    border-top: 1px solid #f5f5f5;
+    height: 60px;
+    width: 100%;
+    margin-top: 24px;
+}
+
+.footer > .container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.container .text-muted {
+    margin-bottom: 20px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 20px;
+}
+
+/* UTILITY STYLES */
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.margin-top-30 {
+    margin-top: 30px;
+}
+
+.margin-bottom-10 {
+    margin-bottom: 10px;
+}
+
+.margin-bottom-20 {
+    margin-bottom: 20px;
+}
+
+.margin-bottom-30 {
+    margin-bottom: 30px;
+}
+
+.margin-right-10 {
+    margin-right: 10px;
+}
+
+.margin-right-20 {
+    margin-right: 20px;
+}
+
+.margin-right-30 {
+    margin-right: 30px;
+}
+
+.margin-left-10 {
+    margin-left: 10px;
+}
+
+.margin-left-20 {
+    margin-left: 20px;
+}
+
+.margin-left-30 {
+    margin-left: 30px;
+}
+
+/* BREADCRUMBS STYLES */
+.breadcrumb {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.breadcrumb .breadcrumb-item {
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.breadcrumb {
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+}
+
+/* TABS STYLE */
+
+div.tab-menu {
+    padding-right: 0;
+    padding-left: 0;
+    padding-bottom: 30px;
+}
+
+div.tab-menu div.list-group {
+    margin-bottom: 0;
+}
+
+div.tab-menu div.list-group > a {
+    margin-bottom: 0;
+}
+
+div.tab-menu div.list-group > a .glyphicon,
+div.tab-menu div.list-group > a .fa {
+    color: #000;
+}
+
+div.tab-menu div.list-group > a:first-child {
+    border-top-right-radius: 0;
+}
+
+div.tab-menu div.list-group > a:last-child {
+    border-bottom-right-radius: 0;
+}
+
+div.tab-menu div.list-group > a.active,
+div.tab-menu div.list-group > a.active .glyphicon,
+div.tab-menu div.list-group > a.active .fa {
+    background-color: #000;
+    color: #ffffff;
+}
+
+.list-group-item.active,
+.list-group-item.active:focus,
+.list-group-item.active:hover {
+    border-color: #333;
+}
+
+.profile h1, .profile h2{
+    font-family: "Roboto Slab";
+}
+
+.technology img {
+    width: 200px;
+    height: 200px;
+}
+
+@media screen and (max-width: 767px) {
+    .profile .profile-photo {
+        width: 60%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    div.tab-menu div.list-group > a.active:after {
+        content: '';
+        position: absolute;
+        left: 100%;
+        top: 50%;
+        margin-top: -13px;
+        border-left: 0;
+        border-bottom: 13px solid transparent;
+        border-top: 13px solid transparent;
+        border-left: 10px solid #000;
+    }
+
+    div.tab-content {
+        padding-left: 30px;
+    }
+
+    .profile .profile-photo {
+        width: 30%;
+    }
+}
+
+@media screen and (min-width: 1170px) {
+    .container-fluid > .navbar-header {
+        margin-left: 15px;
+    }
+}
+
+div.tab {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+div.tab div.tab-content:not(.active) {
+    display: none;
+}
+
+/* CARDS STYLES */
+
+.card {
+    background: #FFF;
+    display: block;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    border: 1px solid #AAA;
+    border-bottom: 3px solid #BBB;
+    margin-bottom: 16px;
+    padding: 0px;
+    overflow: hidden;
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-header {
+    width: 100%;
+    color: #2196F3;
+    border-bottom: 3px solid #BBB;
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    font-family: 'Roboto', sans-serif;
+    padding: 0px;
+    margin-top: 0px;
+    overflow: hidden;
+    -webkit-transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+}
+
+.card-header-repo {
+    background-color: #000;
+    color: #FFFFFF;
+    border-bottom: 3px solid #BBB;
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    font-family: 'Roboto', sans-serif;
+    padding: 0px;
+    margin-top: 0px;
+    overflow: hidden;
+    -webkit-transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-heading {
+    display: block;
+    font-size: 24px;
+    line-height: 28px;
+    margin-bottom: 24px;
+    margin-left: 12px;
+    border-bottom: 1px #2196F3;
+    color: #fff;
+
+}
+
+.card-body {
+    margin: 1em;
+}
+
+.card-footer {
+    border-top: 1px solid #000;
+}
+
+.nav-pills {
+    padding-left: 8px;
+}
+
+/* BLACK BUTTONS */
+
+.btn.btn-blk,
+.btn.btn-blk:focus {
+    background: #000;
+    color: #fff;
+    border-radius: 0;
+    outline: 0;
+    padding: 6px;
+}
+
+.btn.btn-blk:hover {
+    background: rgba(82, 103, 115, 1);
+}
+
+.card-content .btn-blk {
+    margin: 12px 6px;
+}
+
+/* TABLE STYLES */
+
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th {
+    background-color: #000;
+    color: #ffffff;
+    border-bottom: 1px solid #F3F3F3;
+    border-top: 1px solid #F3F3F3 !important;
+    line-height: 1.42857;
+    padding: 8px;
+    vertical-align: top;
+}
+
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+    border-top: 0px solid blue;
+    line-height: 1.42857;
+    padding: 8px;
+    vertical-align: top;
+    background-color: #F3F3F3;
+
+}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td {
+    background-color: #ffffff;
+}
+
+/* FORM INPUT */
+
+input.form-control {
+    height: 44px;
+}
+
+input[type="submit"] {
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+}
+
+input:not([type="submit"]), textarea.form-control {
+    -webkit-appearance: none;
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 0px !important;
+}

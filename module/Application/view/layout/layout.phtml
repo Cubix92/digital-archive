@@ -1,0 +1,63 @@
+<?= $this->doctype() ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?= $this->headTitle('Digital Game Archive')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?= $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/favicon.ico'])
+            ->prependStylesheet($this->basePath('css/custom.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+        ?>
+
+        <?= $this->headScript()
+            ->prependFile($this->basePath('js/bootstrap.min.js'))
+            ->prependFile($this->basePath('js/jquery-3.1.0.min.js'))
+        ?>
+    </head>
+    <body>
+        <nav id="custom-bootstrap-menu" class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand <?php if($this->isHomePage): ?>active<?php endif; ?>" href="<?= $this->url('home') ?>">
+                        <span class="glyphicon glyphicon-home" style="color: rgba(255, 255, 255, 1);"></span>
+                    </a>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target=".navbar-menubuilder">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse navbar-menubuilder">
+                    <?= $this->navigation('navigation')->menu()
+                        ->setMinDepth(0)
+                        ->setMaxDepth(0)
+                        ->setUlClass('nav navbar-nav')
+                    ?>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a class="logout" href="login.html">Wyloguj</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <?= $this->content ?>
+
+            <footer class="footer">
+                <div class="container">
+                    <p class="text-muted">© 2017 Jakub Ksiązek</p>
+                </div>
+            </footer>
+        </div>
+        <?= $this->inlineScript() ?>
+    </body>
+</html>

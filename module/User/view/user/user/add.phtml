@@ -1,0 +1,26 @@
+<h1>Formularz dodawaniaużytkownika</h1>
+
+<?php $this->form->prepare(); ?>
+<div class="row margin-top-20">
+    <?= $this->form()->openTag($this->form); ?>
+        <div class="col-md-6">
+            <div class="form-group">
+                <?= $this->formLabel($this->form->get('username')) ?>
+                <?= $this->formElement($this->form->get('username')) ?>
+                <?= $this->formElementErrors($this->form->get('username')) ?>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <?= $this->formLabel($this->form->get('password')) ?>
+                <?= $this->formElement($this->form->get('password')) ?>
+                <?= $this->formElementErrors($this->form->get('password')) ?>
+            </div>
+        </div>
+
+        <div class="col-md-8 col-md-offset-2 text-right">
+            <input name="submit" class="btn btn-blk" value="Zapisz" type="submit">
+        </div>
+    <?= $this->form()->closeTag(); ?>
+</div>

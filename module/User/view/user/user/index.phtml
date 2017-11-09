@@ -1,0 +1,40 @@
+<div class="row margin-top-20 margin-bottom-20">
+    <div class="col-md-12">
+        <a class="btn btn-blk pull-right" href="<?= $this->url('user', ['action' => 'add']) ?>">Dodaj użytkownika</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <?php if($this->users->count()): ?>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th style="text-align:left">Nazwa</th>
+                        <th>Data dodania</th>
+                        <th>Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach($this->users as $user): ?>
+                    <tr>
+                        <td><?= $user->getId() ?></td>
+                        <td><?= $user->getUsername() ?></td>
+                        <td><?= $user->getDateCreated()->format('Y-m-d') ?></td>
+                        <td>
+                            <a href="<?= $this->url('user', ['action' => 'edit', 'id' => $user->getId()]) ?>" class="btn btn-success btn-xs" title="Edytuj">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                            <a href="<?= $this->url('user', ['action' => 'delete', 'id' => $user->getId()]) ?>" class="btn btn-danger btn-xs" title="Usuń">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <div class="alert alert-warning" role="alert">Lista użytkowników jest pusta.</div>
+        <?php endif; ?>
+    </div>
+</div>
