@@ -12,7 +12,7 @@ class User
 
     protected $password;
 
-    protected $dateCreated;
+    protected $created;
 
     public function exchangeArray($row)
     {
@@ -67,14 +67,14 @@ class User
         return $this;
     }
 
-    public function getDateCreated():\DateTime
+    public function getCreated():\DateTime
     {
-        return $this->dateCreated;
+        return $this->created;
     }
 
-    public function setDateCreated(\DateTime $dateCreated)
+    public function setCreated(\DateTime $created)
     {
-        $this->dateCreated = $dateCreated;
+        $this->created = $created;
         return $this;
     }
 }
