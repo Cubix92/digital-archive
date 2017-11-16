@@ -6,10 +6,8 @@ use Zend\Form\Form;
 
 class UserForm extends Form
 {
-    public function __construct($name = 'user')
+    public function init()
     {
-        parent::__construct($name);
-
         $this->setAttribute('method', 'POST');
 
         $this->add([
@@ -18,7 +16,7 @@ class UserForm extends Form
         ]);
 
         $this->add([
-            'name' => 'username',
+            'name' => 'email',
             'type' => 'text',
             'attributes' => [
                 'class' => 'form-control'

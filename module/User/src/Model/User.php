@@ -8,7 +8,7 @@ class User
 {
     protected $id;
 
-    protected $username;
+    protected $email;
 
     protected $password;
 
@@ -17,7 +17,7 @@ class User
     public function exchangeArray($row)
     {
         $this->id = (!empty($row['id'])) ? $row['id'] : null;
-        $this->username = (!empty($row['username'])) ? $row['username'] : null;
+        $this->email = (!empty($row['email'])) ? $row['email'] : null;
         $this->password = (!empty($row['password'])) ? $row['password'] : null;
         $this->created = (!empty($row['created'])) ? new \DateTime($row['created']) : null;
     }
@@ -26,7 +26,7 @@ class User
     {
         return [
             'id'     => $this->id,
-            'username' => $this->username,
+            'email' => $this->email,
             'password'  => $this->password,
             'dateCreated'  => $this->created
         ];
@@ -43,14 +43,14 @@ class User
         return $this;
     }
 
-    public function getUsername()
+    public function getEmail()
     {
-        return $this->username;
+        return $this->email;
     }
 
-    public function setUsername($username)
+    public function setEmail($email)
     {
-        $this->username = $username;
+        $this->email = $email;
         return $this;
     }
 

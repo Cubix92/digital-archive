@@ -35,7 +35,7 @@ class UserTable
     public function save(User $user)
     {
         $data = [
-            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
             'password' => $user->getPassword(),
             'date_created' => date('Y-m-d H:i:s'),
         ];

@@ -3,6 +3,7 @@
 namespace User;
 
 use Zend\Router\Http\Segment;
+use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'router' => [
@@ -27,6 +28,17 @@ return [
     'service_manager' => [
         'factories' => [
             Model\UserTable::class => Factory\UserTableFactory::class,
+        ],
+    ],
+    'form_elements' => [
+        'factories' => [
+            Form\UserForm::class => Factory\UserFormFactory::class,
+        ],
+    ],
+
+    'input_filters' => [
+        'factories' => [
+            Form\UserInputFilter::class => InvokableFactory::class,
         ],
     ],
     'view_manager' => [
