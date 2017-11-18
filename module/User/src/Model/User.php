@@ -12,23 +12,23 @@ class User
 
     protected $password;
 
-    protected $created;
+    protected $dateCreated;
 
     public function exchangeArray($row)
     {
         $this->id = (!empty($row['id'])) ? $row['id'] : null;
         $this->email = (!empty($row['email'])) ? $row['email'] : null;
         $this->password = (!empty($row['password'])) ? $row['password'] : null;
-        $this->created = (!empty($row['created'])) ? new \DateTime($row['created']) : null;
+        $this->dateCreated = (!empty($row['date_created'])) ? new \DateTime($row['date_created']) : null;
     }
 
     public function getArrayCopy()
     {
         return [
-            'id'     => $this->id,
+            'id' => $this->id,
             'email' => $this->email,
-            'password'  => $this->password,
-            'dateCreated'  => $this->created
+            'password' => $this->password,
+            'date_created' => $this->dateCreated
         ];
     }
 
@@ -73,14 +73,14 @@ class User
         return $this;
     }
 
-    public function getCreated():\DateTime
+    public function getDateCreated():\DateTime
     {
-        return $this->created;
+        return $this->dateCreated;
     }
 
-    public function setCreated(\DateTime $created)
+    public function setDateCreated(\DateTime $dateCreated)
     {
-        $this->created = $created;
+        $this->dateCreated = $dateCreated;
         return $this;
     }
 }

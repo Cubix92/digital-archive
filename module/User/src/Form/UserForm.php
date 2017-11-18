@@ -28,7 +28,7 @@ class UserForm extends Form
 
         $this->add([
             'name' => 'password',
-            'type' => 'text',
+            'type' => 'password',
             'attributes' => [
                 'class' => 'form-control'
             ],
@@ -41,6 +41,7 @@ class UserForm extends Form
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [
+                'class' => 'btn btn-blk',
                 'value' => 'Zapisz'
             ]
         ]);

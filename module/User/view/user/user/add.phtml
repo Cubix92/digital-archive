@@ -1,13 +1,13 @@
-<h1>Formularz dodawaniaużytkownika</h1>
+<h1>Formularz dodawania użytkownika</h1>
 
 <?php $this->form->prepare(); ?>
 <div class="row margin-top-20">
     <?= $this->form()->openTag($this->form); ?>
         <div class="col-md-6">
             <div class="form-group">
-                <?= $this->formLabel($this->form->get('username')) ?>
-                <?= $this->formElement($this->form->get('username')) ?>
-                <?= $this->formElementErrors($this->form->get('username')) ?>
+                <?= $this->formLabel($this->form->get('email')) ?>
+                <?= $this->formElement($this->form->get('email')) ?>
+                <?= $this->formElementErrors($this->form->get('email')) ?>
             </div>
         </div>
 
@@ -20,7 +20,7 @@
         </div>
 
         <div class="col-md-8 col-md-offset-2 text-right">
-            <input name="submit" class="btn btn-blk" value="Zapisz" type="submit">
+            <?= $this->formSubmit($this->form->get('submit')) ?>
         </div>
     <?= $this->form()->closeTag(); ?>
 </div>

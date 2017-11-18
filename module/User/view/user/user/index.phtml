@@ -19,7 +19,7 @@
                 <?php foreach($this->users as $user): ?>
                     <tr>
                         <td><?= $user->getId() ?></td>
-                        <td><?= $user->getUsername() ?></td>
+                        <td><?= $user->getEmail() ?></td>
                         <td><?= $user->getDateCreated()->format('Y-m-d') ?></td>
                         <td>
                             <a href="<?= $this->url('user', ['action' => 'edit', 'id' => $user->getId()]) ?>" class="btn btn-success btn-xs" title="Edytuj">

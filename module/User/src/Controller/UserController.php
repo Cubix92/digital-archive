@@ -12,29 +12,32 @@ class UserController extends AbstractActionController
 {
     protected $userTable;
 
-    public function __construct(UserTable $userTable)
+    protected $userForm;
+
+    public function __construct(UserTable $userTable, UserForm $userForm)
     {
         $this->userTable = $userTable;
+        $this->userForm = $userForm;
     }
 
     public function indexAction()
     {
         return new ViewModel([
-            'users' => $this->userTable->fetchAll()->buffer()
+            'users' => $this->userTable->fetchAll()
         ]);
     }
 
     public function addAction()
     {
-        $userForm = new UserForm();
         $request = $this->getRequest();
+        $form = $this->userForm;
 
         if ($request->isPost()) {
-            $userForm->setData($request->getPost());
+            $form->setData($request->getPost());
 
-            if ($userForm->isValid()) {
+            if ($this->userForm->isValid()) {
                 $user = new User();
-                $user->exchangeArray($userForm->getData());
+                $user->exchangeArray($form->getData());
                 $this->userTable->save($user);
 
                 return $this->redirect()->toRoute('user');
@@ -42,7 +45,7 @@ class UserController extends AbstractActionController
         }
 
         return new ViewModel([
-            'form' => $userForm
+            'form' => $form
         ]);
     }
 
@@ -60,7 +63,7 @@ class UserController extends AbstractActionController
             return $this->redirect()->toRoute('user', ['action' => 'index']);
         }
 
-        $form = new UserForm();
+        $form = $this->userForm;
         $form->bind($user);
         $form->get('submit')->setAttribute('value', 'Edit');
 
