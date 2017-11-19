@@ -2,48 +2,25 @@
 
 namespace User\Model;
 
+use Zend\Db\Adapter\Driver\ResultInterface;
+use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Db\TableGateway\TableGateway;
 
 class UserTable
 {
-    public function __construct(TableGateway $tableGateway)
+    protected $tableGateway;
+
+    protected $userHydrator;
+
+    public function __construct(TableGateway $tableGateway, UserHydrator $userHydrator)
     {
          $this->tableGateway = $tableGateway;
+         $this->userHydrator = $userHydrator;
     }
 
     public function fetchAll()
     {
         return $this->tableGateway->select();
-    }
-
-    public function findUserById($id)
-    {
-//        $sql       = new Sql($this->db);
-//        $select    = $sql->select('posts');
-//        $select->where(['id = ?' => $id]);
-//
-//        $statement = $sql->prepareStatementForSqlObject($select);
-//        $result    = $statement->execute();
-//
-//        if (! $result instanceof ResultInterface || ! $result->isQueryResult()) {
-//            throw new RuntimeException(sprintf(
-//                'Failed retrieving blog post with identifier "%s"; unknown database error.',
-//                $id
-//            ));
-//        }
-//
-//        $resultSet = new HydratingResultSet($this->hydrator, $this->postPrototype);
-//        $resultSet->initialize($result);
-//        $post = $resultSet->current();
-//
-//        if (! $post) {
-//            throw new InvalidArgumentException(sprintf(
-//                'Blog post with identifier "%s" not found.',
-//                $id
-//            ));
-//        }
-//
-//        return $post;
     }
 
     public function getUser($id)
@@ -60,6 +37,37 @@ class UserTable
         }
 
         return $row;
+    }
+
+    public function findUserById($id)
+    {
+        $sql       = $this->tableGateway->getSql();
+        $select    = $sql->select()
+            ->join(['r' => 'role'], 'user.role_id = r.id')
+            ->where(['user.id' => $id]);
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $result    = $statement->execute();
+
+        if (! $result instanceof ResultInterface || ! $result->isQueryResult()) {
+            throw new \RuntimeException(sprintf(
+                'Failed retrieving user with identifier "%s"; unknown database error.',
+                $id
+            ));
+        }
+
+        $resultSet = new HydratingResultSet($this->userHydrator, new User());
+        $resultSet->initialize($result);
+        $user = $resultSet->current();
+
+        if (! $user) {
+            throw new \InvalidArgumentException(sprintf(
+                'User with identifier "%s" not found.',
+                $id
+            ));
+        }
+
+        return $user;
     }
 
     public function save(User $user)

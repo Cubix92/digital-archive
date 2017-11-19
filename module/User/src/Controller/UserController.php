@@ -3,6 +3,7 @@
 namespace User\Controller;
 
 use User\Form\UserForm;
+use User\Model\UserRepository;
 use User\Model\UserTable;
 use User\Model\User;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -22,7 +23,6 @@ class UserController extends AbstractActionController
 
     public function indexAction()
     {
-        var_dump($this->userTable->fetchAll()->current());die;
         return new ViewModel([
             'users' => $this->userTable->fetchAll()
         ]);

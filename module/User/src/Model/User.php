@@ -16,25 +16,6 @@ class User
 
     protected $dateCreated;
 
-    public function exchangeArray($row)
-    {
-        $this->id = (!empty($row['id'])) ? $row['id'] : null;
-        $this->email = (!empty($row['email'])) ? $row['email'] : null;
-        $this->password = (!empty($row['password'])) ? $row['password'] : null;
-        $this->dateCreated = (!empty($row['date_created'])) ? new \DateTime($row['date_created']) : null;
-    }
-
-    public function getArrayCopy()
-    {
-        return [
-            'id' => $this->id,
-            'role' => $this->role,
-            'email' => $this->email,
-            'password' => $this->password,
-            'date_created' => $this->dateCreated
-        ];
-    }
-
     public function getId()
     {
         return $this->id;
