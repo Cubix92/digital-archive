@@ -22,6 +22,7 @@ class UserController extends AbstractActionController
 
     public function indexAction()
     {
+        var_dump($this->userTable->fetchAll()->current());die;
         return new ViewModel([
             'users' => $this->userTable->fetchAll()
         ]);

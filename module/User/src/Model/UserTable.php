@@ -16,6 +16,36 @@ class UserTable
         return $this->tableGateway->select();
     }
 
+    public function findUserById($id)
+    {
+//        $sql       = new Sql($this->db);
+//        $select    = $sql->select('posts');
+//        $select->where(['id = ?' => $id]);
+//
+//        $statement = $sql->prepareStatementForSqlObject($select);
+//        $result    = $statement->execute();
+//
+//        if (! $result instanceof ResultInterface || ! $result->isQueryResult()) {
+//            throw new RuntimeException(sprintf(
+//                'Failed retrieving blog post with identifier "%s"; unknown database error.',
+//                $id
+//            ));
+//        }
+//
+//        $resultSet = new HydratingResultSet($this->hydrator, $this->postPrototype);
+//        $resultSet->initialize($result);
+//        $post = $resultSet->current();
+//
+//        if (! $post) {
+//            throw new InvalidArgumentException(sprintf(
+//                'Blog post with identifier "%s" not found.',
+//                $id
+//            ));
+//        }
+//
+//        return $post;
+    }
+
     public function getUser($id)
     {
         $id = (int) $id;

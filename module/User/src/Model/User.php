@@ -8,6 +8,8 @@ class User
 {
     protected $id;
 
+    protected $role;
+
     protected $email;
 
     protected $password;
@@ -26,6 +28,7 @@ class User
     {
         return [
             'id' => $this->id,
+            'role' => $this->role,
             'email' => $this->email,
             'password' => $this->password,
             'date_created' => $this->dateCreated
@@ -40,6 +43,17 @@ class User
     public function setId($id)
     {
         $this->id = $id;
+        return $this;
+    }
+
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    public function setRole($role)
+    {
+        $this->role = $role;
         return $this;
     }
 
