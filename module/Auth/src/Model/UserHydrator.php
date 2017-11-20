@@ -1,18 +1,11 @@
 <?php
 
-namespace User\Model;
+namespace Auth\Model;
 
 use Zend\Hydrator\AbstractHydrator;
 
 class UserHydrator extends AbstractHydrator
 {
-    protected $gameTable;
-
-    public function __construct(GameTable $gameTable)
-    {
-        $this->gameTable = $gameTable;
-    }
-
     public function hydrate(array $data, $object)
     {
         if (!$object instanceof User) {
@@ -23,14 +16,12 @@ class UserHydrator extends AbstractHydrator
             $object->setId($data['id']);
         };
 
-        $object->setGames($this->gameTable->findByUserId($data['id']));
-
         if (array_key_exists('email', $data)) {
             $object->setEmail($data['email']);
         };
 
         if (array_key_exists('password', $data)) {
-            $object->setPassword($data['password']);
+            $object->setHashedPassword($data['password']);
         };
 
         if (array_key_exists('date_created', $data)) {

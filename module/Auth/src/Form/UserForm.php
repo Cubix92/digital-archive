@@ -1,6 +1,6 @@
 <?php
 
-namespace User\Form;
+namespace Auth\Form;
 
 use Zend\Form\Form;
 
@@ -35,6 +35,16 @@ class UserForm extends Form
             'options' => [
                 'label' => 'Hasło użytkownika'
             ]
+        ]);
+
+        $this->add([
+            'type' => 'csrf',
+            'name' => 'csrf',
+            'options' => [
+                'csrf_options' => [
+                    'timeout' => 600,
+                ],
+            ],
         ]);
 
         $this->add([

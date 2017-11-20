@@ -1,6 +1,6 @@
 <?php
 
-namespace User\Model;
+namespace Auth\Model;
 
 use Zend\Db\Adapter\Driver\ResultInterface;
 use Zend\Db\ResultSet\HydratingResultSet;
@@ -46,7 +46,7 @@ class UserTable
 
         if (! $user) {
             throw new \InvalidArgumentException(sprintf(
-                'User with identifier "%s" not found.',
+                'Auth with identifier "%s" not found.',
                 $id
             ));
         }

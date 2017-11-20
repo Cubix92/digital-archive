@@ -1,22 +1,27 @@
 <?php
 
-namespace User\Model;
+namespace Auth\Model;
 
 use Zend\Crypt\Password\Bcrypt;
 
+/**
+ * @Annotation\Name("user")
+ * @Annotation\Hydrator("UserHydrator")
+ */
 class User
 {
     protected $id;
-
-    protected $role;
-
-    protected $games;
 
     protected $email;
 
     protected $password;
 
     protected $dateCreated;
+
+    public function __construct()
+    {
+        $this->dateCreated = new \DateTime();
+    }
 
     public function getId()
     {
@@ -26,28 +31,6 @@ class User
     public function setId($id)
     {
         $this->id = $id;
-        return $this;
-    }
-
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    public function setRole($role)
-    {
-        $this->role = $role;
-        return $this;
-    }
-
-    public function getGames()
-    {
-        return $this->games;
-    }
-
-    public function setGames($games)
-    {
-        $this->games = $games;
         return $this;
     }
 

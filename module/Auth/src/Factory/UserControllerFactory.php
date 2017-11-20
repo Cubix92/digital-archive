@@ -1,13 +1,14 @@
 <?php
 
-namespace User\Factory;
+namespace Auth\Factory;
 
-use User\Controller\UserController;
-use User\Form\UserForm;
-use User\Model\UserTable;
+use Auth\Controller\UserController;
+use Auth\Form\UserForm;
+use Auth\Model\UserTable;
+use Interop\Container\ContainerInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Form\FormElementManager;
-use Interop\Container\ContainerInterface;
+
 
 class UserControllerFactory extends AbstractActionController
 {

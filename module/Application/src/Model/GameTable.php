@@ -43,7 +43,7 @@ class GameTable
 
         if (! $games) {
             throw new \InvalidArgumentException(sprintf(
-                'User with identifier "%s" not found.',
+                'Auth with identifier "%s" not found.',
                 $id
             ));
         }

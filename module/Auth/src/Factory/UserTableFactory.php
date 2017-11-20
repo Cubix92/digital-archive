@@ -1,11 +1,11 @@
 <?php
 
-namespace User\Factory;
+namespace Auth\Factory;
 
+use Auth\Model\User;
+use Auth\Model\UserHydrator;
+use Auth\Model\UserTable;
 use Interop\Container\ContainerInterface;
-use User\Model\User;
-use User\Model\UserHydrator;
-use User\Model\UserTable;
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Db\TableGateway\TableGateway;

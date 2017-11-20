@@ -1,10 +1,10 @@
 <?php
 
-namespace User\Controller;
+namespace Auth\Controller;
 
-use User\Form\UserForm;
-use User\Model\UserTable;
-use User\Model\User;
+use Auth\Form\UserForm;
+use Auth\Model\UserTable;
+use Auth\Model\User;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -36,8 +36,7 @@ class UserController extends AbstractActionController
             $form->setData($request->getPost());
 
             if ($this->userForm->isValid()) {
-                $user = new User();
-                $user->exchangeArray($form->getData());
+                $user = $form->getData();
                 $this->userTable->save($user);
 
                 return $this->redirect()->toRoute('user');

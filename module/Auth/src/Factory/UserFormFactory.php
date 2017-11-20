@@ -1,11 +1,11 @@
 <?php
-namespace User\Factory;
+namespace Auth\Factory;
 
-use User\Model\User;
-use User\Form\UserForm;
-use User\Form\UserInputFilter;
 use Interop\Container\ContainerInterface;
-use User\Model\UserHydrator;
+use Auth\Model\User;
+use Auth\Form\UserForm;
+use Auth\Form\UserInputFilter;
+use Auth\Model\UserHydrator;
 
 class UserFormFactory
 {

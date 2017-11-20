@@ -19,6 +19,7 @@
     </div>
 
         <div class="col-md-8 col-md-offset-2 text-right">
+            <?= $this->formElement($this->form->get('csrf')) ?>
             <?= $this->formSubmit($this->form->get('submit')) ?>
         </div>
     <?= $this->form()->closeTag(); ?>

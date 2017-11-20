@@ -1,6 +1,6 @@
 <?php
 
-namespace User\Form;
+namespace Auth\Form;
 
 use Zend\Filter\StringToLower;
 use Zend\Filter\StringTrim;

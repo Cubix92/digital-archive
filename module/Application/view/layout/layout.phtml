@@ -2,10 +2,10 @@
 
 <html lang="en">
     <head>
-        <meta charset="utf-8">
         <?= $this->headTitle('Digital Game Archive')->setSeparator(' - ')->setAutoEscape(false) ?>
 
         <?= $this->headMeta()
+            ->appendName('charset', 'UTF-8')
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
         ?>
@@ -43,7 +43,7 @@
                     ?>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a class="logout" href="login.html">Wyloguj</a>
+                            <a class="logout" href="<?= $this->url('logout') ?>">Wyloguj</a>
                         </li>
                     </ul>
                 </div>
