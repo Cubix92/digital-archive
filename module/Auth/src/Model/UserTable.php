@@ -18,7 +18,7 @@ class UserTable
          $this->userHydrator = $userHydrator;
     }
 
-    public function fetchAll()
+    public function findAll()
     {
         return $this->tableGateway->select();
     }
