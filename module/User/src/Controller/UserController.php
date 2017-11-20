@@ -3,7 +3,6 @@
 namespace User\Controller;
 
 use User\Form\UserForm;
-use User\Model\UserRepository;
 use User\Model\UserTable;
 use User\Model\User;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -59,7 +58,7 @@ class UserController extends AbstractActionController
         }
 
         try {
-            $user = $this->userTable->getUser($id);
+            $user = $this->userTable->findUserById($id);
         } catch (\Exception $e) {
             return $this->redirect()->toRoute('user', ['action' => 'index']);
         }

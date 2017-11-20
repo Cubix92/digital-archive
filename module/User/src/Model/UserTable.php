@@ -23,31 +23,15 @@ class UserTable
         return $this->tableGateway->select();
     }
 
-    public function getUser($id)
-    {
-        $id = (int) $id;
-        $rowset = $this->tableGateway->select(['id' => $id]);
-        $row = $rowset->current();
-
-        if (!$row) {
-            throw new \RuntimeException(sprintf(
-                'Could not find row with identifier %d',
-                $id
-            ));
-        }
-
-        return $row;
-    }
-
     public function findUserById($id)
     {
-        $sql       = $this->tableGateway->getSql();
-        $select    = $sql->select()
-            ->join(['r' => 'role'], 'user.role_id = r.id')
+        $sql = $this->tableGateway->getSql();
+
+        $select = $sql->select()
             ->where(['user.id' => $id]);
 
-        $statement = $sql->prepareStatementForSqlObject($select);
-        $result    = $statement->execute();
+        $statement = $sql->prepareStatementForSqlObject($select)->execute();
+        $result = $statement;
 
         if (! $result instanceof ResultInterface || ! $result->isQueryResult()) {
             throw new \RuntimeException(sprintf(
@@ -85,7 +69,7 @@ class UserTable
             return;
         }
 
-        if (!$this->getUser($id)) {
+        if (!$this->findUserById($id)) {
             throw new \RuntimeException(sprintf(
                 'Cannot update user with identifier %d; does not exist',
                 $id

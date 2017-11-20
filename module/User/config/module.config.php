@@ -28,6 +28,7 @@ return [
     'service_manager' => [
         'factories' => [
             Model\UserTable::class => Factory\UserTableFactory::class,
+            Model\GameTable::class => Factory\GameTableFactory::class,
             Model\UserHydrator::class => Factory\UserHydratorFactory::class,
         ],
     ],

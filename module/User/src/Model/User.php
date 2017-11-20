@@ -10,6 +10,8 @@ class User
 
     protected $role;
 
+    protected $games;
+
     protected $email;
 
     protected $password;
@@ -35,6 +37,17 @@ class User
     public function setRole($role)
     {
         $this->role = $role;
+        return $this;
+    }
+
+    public function getGames()
+    {
+        return $this->games;
+    }
+
+    public function setGames($games)
+    {
+        $this->games = $games;
         return $this;
     }
 
