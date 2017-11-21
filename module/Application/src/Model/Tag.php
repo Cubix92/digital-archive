@@ -1,12 +1,12 @@
 <?php
 
-namespace User\Model;
+namespace Application\Model;
 
-class Game
+class Tag
 {
     protected $id;
 
-    protected $title;
+    protected $name;
 
     public function getId()
     {
@@ -19,14 +19,14 @@ class Game
         return $this;
     }
 
-    public function getTitle()
+    public function getName()
     {
-        return $this->title;
+        return $this->name;
     }
 
-    public function setTitle($title)
+    public function setName($name)
     {
-        $this->title = $title;
+        $this->name = $name;
         return $this;
     }
 }
