@@ -1,20 +1,24 @@
 <?php
 
-namespace Auth\Controller;
+namespace Application\Controller;
 
 use Application\Form\CategoryForm;
+use Application\Model\CategoryRepository;
 use Application\Model\CategoryTable;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 class CategoryController extends AbstractActionController
 {
+    protected $categoryRepository;
+
     protected $categoryTable;
 
     protected $categoryForm;
 
-    public function __construct(CategoryTable $categoryTable, CategoryForm $categoryForm)
+    public function __construct(CategoryRepository $categoryRepository, CategoryTable $categoryTable, CategoryForm $categoryForm)
     {
+        $this->categoryRepository = $categoryRepository;
         $this->categoryTable = $categoryTable;
         $this->categoryForm = $categoryForm;
     }
@@ -22,7 +26,7 @@ class CategoryController extends AbstractActionController
     public function indexAction()
     {
         return new ViewModel([
-            'categories' => $this->categoryTable->findAll()
+            'categories' => $this->categoryRepository->findAll()
         ]);
     }
 
@@ -56,7 +60,7 @@ class CategoryController extends AbstractActionController
         }
 
         try {
-            $category = $this->categoryTable->findById($id);
+            $category = $this->categoryRepository->findById($id);
         } catch (\Exception $e) {
             return $this->redirect()->toRoute('category', ['action' => 'index']);
         }

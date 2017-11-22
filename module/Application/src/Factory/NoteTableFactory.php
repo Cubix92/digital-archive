@@ -19,6 +19,6 @@ class NoteTableFactory
         $dbAdapter = $container->get(AdapterInterface::class);
         $tableGateway = new TableGateway('note', $dbAdapter, null, $resultSetPrototype);
 
-        return new NoteTable($tableGateway, $noteHydrator);
+        return new NoteTable($tableGateway);
     }
 }

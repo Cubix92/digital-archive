@@ -1,6 +1,6 @@
 <?php
 
-namespace Auth\Controller;
+namespace Application\Controller;
 
 use Application\Form\NoteForm;
 use Application\Model\NoteTable;

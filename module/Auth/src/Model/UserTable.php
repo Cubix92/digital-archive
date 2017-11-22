@@ -46,7 +46,7 @@ class UserTable
 
         if (! $user) {
             throw new \InvalidArgumentException(sprintf(
-                'Auth with identifier "%s" not found.',
+                'User with identifier "%s" not found.',
                 $id
             ));
         }

@@ -25,9 +25,14 @@ class Category
         return $this;
     }
 
-    public function getNotes(): array
+    public function getNotes(): ?array
     {
         return $this->notes;
+    }
+
+    public function addNote(Note $note)
+    {
+        $this->notes[] = $note;
     }
 
     public function setNotes(array $notes)

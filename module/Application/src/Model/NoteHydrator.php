@@ -11,7 +11,6 @@ class NoteHydrator extends AbstractHydrator
     public function __construct(CategoryTable $categoryTable)
     {
         $this->categoryTable = $categoryTable;
-        parent::__construct();
     }
 
     /**

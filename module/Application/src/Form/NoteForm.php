@@ -6,6 +6,17 @@ use Zend\Form\Form;
 
 class NoteForm extends Form
 {
+    protected $categories;
+
+    public function __construct(array $categories)
+    {
+        foreach((array)$categories as $category) {
+            $this->categories[$category['id']] = $category['name'];
+        }
+
+        parent::__construct('note');
+    }
+
     public function init()
     {
         $this->setAttribute('method', 'POST');
@@ -40,6 +51,15 @@ class NoteForm extends Form
             'options' => [
                 'label' => 'Treść'
             ]
+        ]);
+
+        $this->add([
+            'name' => 'category_id',
+            'type' => 'select',
+            'options' => [
+                'label' => 'Kategoria',
+                'value_options' => $this->categories,
+            ],
         ]);
 
         $this->add([

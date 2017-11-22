@@ -6,14 +6,6 @@ use Zend\Hydrator\AbstractHydrator;
 
 class CategoryHydrator extends AbstractHydrator
 {
-    protected $noteTable;
-
-    public function __construct(NoteTable $noteTable)
-    {
-        $this->noteTable = $noteTable;
-        parent::__construct();
-    }
-
     /**
      * @param Category $object
      * @param array $data
@@ -27,16 +19,15 @@ class CategoryHydrator extends AbstractHydrator
 
         if (array_key_exists('id', $data)) {
             $object->setId($data['id']);
-
-            $notes = $this->noteTable->findByCategoryId($data['id']);
-            $object->setNotes($notes);
         };
 
         if (array_key_exists('name', $data)) {
             $object->setName($data['name']);
         };
 
-        $object->setNotes([]);
+        if (array_key_exists('notes', $data)) {
+            $object->setNotes($data['notes']);
+        };
 
         if (array_key_exists('icon', $data)) {
             $object->setIcon($data['icon']);
@@ -58,7 +49,7 @@ class CategoryHydrator extends AbstractHydrator
         return [
             'id' => $object->getId(),
             'notes' => $object->getNotes(),
-            'title' => $object->getName(),
+            'name' => $object->getName(),
             'icon' => $object->getIcon(),
             'position' => $object->getPosition()
         ];

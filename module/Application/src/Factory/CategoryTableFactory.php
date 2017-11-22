@@ -19,6 +19,6 @@ class CategoryTableFactory
         $dbAdapter = $container->get(AdapterInterface::class);
         $tableGateway = new TableGateway('category', $dbAdapter, null, $resultSetPrototype);
 
-        return new CategoryTable($tableGateway, $categoryHydrator);
+        return new CategoryTable($tableGateway);
     }
 }

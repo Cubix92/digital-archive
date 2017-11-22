@@ -1,4 +1,4 @@
-<h1>Formularz dodawania użytkownika</h1>
+<h1>Formularz dodawania notatki</h1>
 
 <?php $this->form->prepare(); ?>
 <div class="row margin-top-20">
@@ -12,6 +12,14 @@
         </div>
 
         <div class="col-md-6">
+            <div class="form-group">
+                <?= $this->formLabel($this->form->get('category_id')) ?>
+                <?= $this->formElement($this->form->get('category_id')) ?>
+                <?= $this->formElementErrors($this->form->get('category_id')) ?>
+            </div>
+        </div>
+
+        <div class="col-md-12">
             <div class="form-group">
                 <?= $this->formLabel($this->form->get('content')) ?>
                 <?= $this->formElement($this->form->get('content')) ?>

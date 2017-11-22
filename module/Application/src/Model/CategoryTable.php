@@ -12,10 +12,9 @@ class CategoryTable
 
     protected $categoryHydrator;
 
-    public function __construct(TableGateway $tableGateway, CategoryHydrator $categoryHydrator)
+    public function __construct(TableGateway $tableGateway)
     {
          $this->tableGateway = $tableGateway;
-         $this->categoryHydrator = $categoryHydrator;
     }
 
     public function findAll()
@@ -25,26 +24,42 @@ class CategoryTable
 
     public function findById($id): Category
     {
-        $result = $this->tableGateway->select(['id' => $id]);
+        /** @var Category $category */
+        $categoryResult = $this->tableGateway->select(['id' => $id]);
+        $category = $categoryResult->current();
 
-        if (!$result instanceof ResultInterface || ! $result->isQueryResult()) {
-            throw new \RuntimeException(sprintf(
-                'Failed retrieving category with identifier "%s"; unknown database error.',
-                $id
-            ));
-        }
-
-        $resultSet = new HydratingResultSet($this->categoryHydrator, new Category());
-        $resultSet->initialize($result);
-        $note = $resultSet->current();
-
-        if (!$note) {
+        if (!$category) {
             throw new \InvalidArgumentException(sprintf(
                 'Category with identifier "%s" not found.',
                 $id
             ));
         }
 
-        return $note;
+        return $category;
+    }
+
+    public function save(Category $category)
+    {
+        $data = [
+            'name' => $category->getName(),
+            'icon' => $category->getIcon(),
+            'position' => 0
+        ];
+
+        $id = $category->getId();
+
+        if ($id == 0) {
+            $this->tableGateway->insert($data);
+            return;
+        }
+
+        if (!$this->findById($id)) {
+            throw new \RuntimeException(sprintf(
+                'Cannot update user with identifier %d; does not exist',
+                $id
+            ));
+        }
+
+        $this->tableGateway->update($data, ['id' => $id]);
     }
 }

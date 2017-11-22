@@ -10,12 +10,9 @@ class NoteTable
 {
     protected $tableGateway;
 
-    protected $noteHydrator;
-
-    public function __construct(TableGateway $tableGateway, NoteHydrator $noteHydrator)
+    public function __construct(TableGateway $tableGateway)
     {
          $this->tableGateway = $tableGateway;
-         $this->noteHydrator = $noteHydrator;
     }
 
     public function findAll()
@@ -26,17 +23,7 @@ class NoteTable
     public function findById($id)
     {
         $result = $this->tableGateway->select(['id' => $id]);
-
-        if (!$result instanceof ResultInterface || ! $result->isQueryResult()) {
-            throw new \RuntimeException(sprintf(
-                'Failed retrieving note with identifier "%s"; unknown database error.',
-                $id
-            ));
-        }
-
-        $resultSet = new HydratingResultSet($this->noteHydrator, new Note());
-        $resultSet->initialize($result);
-        $note = $resultSet->current();
+        $note = $result->current();
 
         if (!$note) {
             throw new \InvalidArgumentException(sprintf(
@@ -48,28 +35,29 @@ class NoteTable
         return $note;
     }
 
-    public function findByCategoryId($id)
+    public function save(Note $note)
     {
-        $result = $this->tableGateway->select(['category_id' => $id]);
+        $data = [
+            'title' => $note->getTitle(),
+            'category_id' => $note->getCategory() ? $note->getCategory()->getId() : null,
+            'content' => $note->getContent(),
+            'position' => 0
+        ];
 
-        if (!$result instanceof ResultInterface || ! $result->isQueryResult()) {
+        $id = $note->getId();
+
+        if ($id == 0) {
+            $this->tableGateway->insert($data);
+            return;
+        }
+
+        if (!$this->findById($id)) {
             throw new \RuntimeException(sprintf(
-                'Failed retrieving note with identifier "%s"; unknown database error.',
+                'Cannot update user with identifier %d; does not exist',
                 $id
             ));
         }
 
-        $resultSet = new HydratingResultSet($this->noteHydrator, new Note());
-        $resultSet->initialize($result);
-        $note = $resultSet->current();
-
-        if (!$note) {
-            throw new \InvalidArgumentException(sprintf(
-                'Note with identifier "%s" not found.',
-                $id
-            ));
-        }
-
-        return $note;
+        $this->tableGateway->update($data, ['id' => $id]);
     }
 }

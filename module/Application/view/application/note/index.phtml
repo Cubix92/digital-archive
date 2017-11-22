@@ -11,14 +11,16 @@
                     <tr>
                         <th>ID</th>
                         <th style="text-align:left">Tytuł</th>
+                        <th style="text-align:left">Kategoria</th>
                         <th>Akcje</th>
                     </tr>
                 </thead>
                 <tbody>
                 <?php foreach($this->notes as $note): ?>
                     <tr>
-                        <td><?= $note->getId() ?></td>
+                        <td style="width: 60px;"><?= $note->getId() ?></td>
                         <td><?= $note->getTitle() ?></td>
+                        <td><?= $note->getCategory()->getName() ?></td>
                         <td>
                             <a href="<?= $this->url('note', ['action' => 'edit', 'id' => $note->getId()]) ?>" class="btn btn-success btn-xs" title="Edytuj">
                                 <span class="glyphicon glyphicon-edit"></span>
