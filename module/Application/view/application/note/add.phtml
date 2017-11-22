@@ -1,0 +1,26 @@
+<h1>Formularz dodawania użytkownika</h1>
+
+<?php $this->form->prepare(); ?>
+<div class="row margin-top-20">
+    <?= $this->form()->openTag($this->form); ?>
+        <div class="col-md-6">
+            <div class="form-group">
+                <?= $this->formLabel($this->form->get('title')) ?>
+                <?= $this->formElement($this->form->get('title')) ?>
+                <?= $this->formElementErrors($this->form->get('title')) ?>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <?= $this->formLabel($this->form->get('content')) ?>
+                <?= $this->formElement($this->form->get('content')) ?>
+                <?= $this->formElementErrors($this->form->get('content')) ?>
+            </div>
+        </div>
+
+        <div class="col-md-8 col-md-offset-2 text-right">
+            <?= $this->formSubmit($this->form->get('submit')) ?>
+        </div>
+    <?= $this->form()->closeTag(); ?>
+</div>
