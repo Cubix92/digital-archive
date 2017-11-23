@@ -38,7 +38,8 @@ class UserForm extends Form
                     'admin' => 'Administrator',
                     'moderator' => 'Moderator',
                     'editor' => 'Redaktor',
-                    'guest' => 'Gość'
+                    'author' => 'Autor',
+                    '3' => 'Chinese',
                 ],
             ],
         ]);
