@@ -2,20 +2,15 @@
 
 namespace Auth\Model;
 
-use Zend\Db\Adapter\Driver\ResultInterface;
-use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Db\TableGateway\TableGateway;
 
 class UserTable
 {
     protected $tableGateway;
 
-    protected $userHydrator;
-
-    public function __construct(TableGateway $tableGateway, UserHydrator $userHydrator)
+    public function __construct(TableGateway $tableGateway)
     {
          $this->tableGateway = $tableGateway;
-         $this->userHydrator = $userHydrator;
     }
 
     public function findAll()
@@ -23,32 +18,13 @@ class UserTable
         return $this->tableGateway->select();
     }
 
-    public function findUserById($id)
+    public function findById($id)
     {
-        $sql = $this->tableGateway->getSql();
-
-        $select = $sql->select()
-            ->where(['user.id' => $id]);
-
-        $statement = $sql->prepareStatementForSqlObject($select)->execute();
-        $result = $statement;
-
-        if (! $result instanceof ResultInterface || ! $result->isQueryResult()) {
-            throw new \RuntimeException(sprintf(
-                'Failed retrieving user with identifier "%s"; unknown database error.',
-                $id
-            ));
-        }
-
-        $resultSet = new HydratingResultSet($this->userHydrator, new User());
-        $resultSet->initialize($result);
+        $resultSet = $this->tableGateway->select(['id' => $id]);
         $user = $resultSet->current();
 
-        if (! $user) {
-            throw new \InvalidArgumentException(sprintf(
-                'User with identifier "%s" not found.',
-                $id
-            ));
+        if (!$user) {
+            throw new \InvalidArgumentException(sprintf('User with identifier "%s" not found.', $id));
         }
 
         return $user;
@@ -58,22 +34,24 @@ class UserTable
     {
         $data = [
             'email' => $user->getEmail(),
+            'role' => $user->getRole(),
             'password' => $user->getPassword(),
-            'date_created' => date('Y-m-d H:i:s'),
         ];
 
         $id = $user->getId();
 
         if ($id == 0) {
+            $data['date_created'] = date('Y-m-d H:i:s');
             $this->tableGateway->insert($data);
             return;
         }
 
-        if (!$this->findUserById($id)) {
-            throw new \RuntimeException(sprintf(
-                'Cannot update user with identifier %d; does not exist',
-                $id
-            ));
+        if (!$this->findById($id)) {
+            throw new \RuntimeException(sprintf('Cannot update user with identifier %d; does not exist', $id));
+        }
+
+        if (!$data['password']) {
+            unset($data['password']);
         }
 
         $this->tableGateway->update($data, ['id' => $id]);

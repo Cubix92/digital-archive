@@ -22,8 +22,25 @@ class UserForm extends Form
                 'class' => 'form-control'
             ],
             'options' => [
-                'label' => 'Nazwa użytkownika'
+                'label' => 'Adres email'
             ]
+        ]);
+
+        $this->add([
+            'name' => 'role',
+            'type' => 'select',
+            'attributes' => [
+                'class' => 'form-control'
+            ],
+            'options' => [
+                'label' => 'Rola',
+                'value_options' => [
+                    'admin' => 'Administrator',
+                    'moderator' => 'Moderator',
+                    'editor' => 'Redaktor',
+                    'guest' => 'Gość'
+                ],
+            ],
         ]);
 
         $this->add([
@@ -33,7 +50,18 @@ class UserForm extends Form
                 'class' => 'form-control'
             ],
             'options' => [
-                'label' => 'Hasło użytkownika'
+                'label' => 'Hasło'
+            ]
+        ]);
+
+        $this->add([
+            'name' => 'repeat_password',
+            'type' => 'password',
+            'attributes' => [
+                'class' => 'form-control'
+            ],
+            'options' => [
+                'label' => 'Powtórz hasło'
             ]
         ]);
 
