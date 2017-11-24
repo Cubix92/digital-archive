@@ -6,11 +6,11 @@ use Zend\Hydrator\AbstractHydrator;
 
 class NoteHydrator extends AbstractHydrator
 {
-    protected $categoryTable;
+    protected $categoryRepository;
 
-    public function __construct(CategoryTable $categoryTable)
+    public function __construct(CategoryRepository $categoryRepository)
     {
-        $this->categoryTable = $categoryTable;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -29,7 +29,7 @@ class NoteHydrator extends AbstractHydrator
         };
 
         if (array_key_exists('category_id', $data)) {
-            $category = $this->categoryTable->findById($data['category_id']);
+            $category = $this->categoryRepository->findById($data['category_id']);
             $object->setCategory($category);
         };
 

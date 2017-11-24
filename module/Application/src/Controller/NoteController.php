@@ -3,26 +3,31 @@
 namespace Application\Controller;
 
 use Application\Form\NoteForm;
-use Application\Model\NoteTable;
+use Application\Model\Note;
+use Application\Model\NoteCommand;
+use Application\Model\NoteRepository;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 class NoteController extends AbstractActionController
 {
-    protected $noteTable;
+    protected $noteRepository;
+
+    protected $noteCommand;
 
     protected $noteForm;
 
-    public function __construct(NoteTable $noteTable, NoteForm $noteForm)
+    public function __construct(NoteRepository $noteRepository, NoteCommand $noteCommand, NoteForm $noteForm)
     {
-        $this->noteTable = $noteTable;
+        $this->noteRepository = $noteRepository;
+        $this->noteCommand = $noteCommand;
         $this->noteForm = $noteForm;
     }
 
     public function indexAction()
     {
         return new ViewModel([
-            'notes' => $this->noteTable->findAll()
+            'notes' => $this->noteRepository->findAll()
         ]);
     }
 
@@ -36,8 +41,9 @@ class NoteController extends AbstractActionController
 
             if ($form->isValid()) {
                 $note = $form->getData();
-                $this->noteTable->save($note);
-
+                /** @var Note $note */
+                $this->noteCommand->insert($note);
+                $this->flashMessenger()->addSuccessMessage('Note was added successfull.');
                 return $this->redirect()->toRoute('note');
             }
         }
@@ -56,8 +62,9 @@ class NoteController extends AbstractActionController
         }
 
         try {
-            $note = $this->noteTable->findById($id);
+            $note = $this->noteRepository->findById($id);
         } catch (\Exception $e) {
+            $this->flashMessenger()->addSuccessMessage($e->getMessage());
             return $this->redirect()->toRoute('note', ['action' => 'index']);
         }
 
@@ -68,9 +75,9 @@ class NoteController extends AbstractActionController
 
         if ($request->isPost()) {
             $form->setData($request->getPost());
-
+            $this->flashMessenger()->addSuccessMessage('User was updated successfull.');
             if ($form->isValid()) {
-                $this->noteTable->save($note);
+                $this->noteCommand->save($note);
                 return $this->redirect()->toRoute('note', ['action' => 'index']);
             }
         }
@@ -89,8 +96,15 @@ class NoteController extends AbstractActionController
             return $this->redirect()->toRoute('note');
         }
 
-        $this->noteTable->delete($id);
+        try {
+            $note = $this->noteRepository->findById($id);
+        } catch (\Exception $e) {
+            $this->flashMessenger()->addSuccessMessage($e->getMessage());
+            return $this->redirect()->toRoute('note', ['action' => 'index']);
+        }
 
+        $this->noteCommand->delete($note);
+        $this->flashMessenger()->addSuccessMessage('Note was deleted successfull.');
         return $this->redirect()->toRoute('note', ['action' => 'index']);
     }
 }

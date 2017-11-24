@@ -27,7 +27,7 @@ class NoteTable
 
         if (!$note) {
             throw new \InvalidArgumentException(sprintf(
-                'Note with identifier "%s" not found.',
+                'Note with identifier "%s" not found',
                 $id
             ));
         }

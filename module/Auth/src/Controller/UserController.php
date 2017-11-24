@@ -39,7 +39,7 @@ class UserController extends AbstractActionController
                 /** @var User $user */
                 $user = $form->getData();
                 $this->userTable->save($user);
-                $this->flashMessenger()->addSuccessMessage('User was added successfull.');
+                $this->flashMessenger()->addSuccessMessage('User was added successfull');
                 return $this->redirect()->toRoute('user');
             }
         }
@@ -54,7 +54,7 @@ class UserController extends AbstractActionController
         $id = (int) $this->params()->fromRoute('id', 0);
 
         if (0 === $id) {
-            $this->flashMessenger()->addErrorMessage('Identifier not found.');
+            $this->flashMessenger()->addErrorMessage('Identifier not found');
             return $this->redirect()->toRoute('user', ['action' => 'add']);
         }
 
@@ -75,7 +75,7 @@ class UserController extends AbstractActionController
 
             if ($form->isValid()) {
                 $this->userTable->save($user);
-                $this->flashMessenger()->addSuccessMessage('User was updated successfull.');
+                $this->flashMessenger()->addSuccessMessage('User was updated successfull');
                 return $this->redirect()->toRoute('user', ['action' => 'index']);
             }
         }
@@ -91,12 +91,12 @@ class UserController extends AbstractActionController
         $id = (int) $this->params()->fromRoute('id', 0);
 
         if (!$id) {
-            $this->flashMessenger()->addErrorMessage(sprintf('User with identifier "%s" not found.', $id));
+            $this->flashMessenger()->addErrorMessage(sprintf('User with identifier "%s" not found', $id));
             return $this->redirect()->toRoute('user');
         }
 
         $this->userTable->delete($id);
-        $this->flashMessenger()->addSuccessMessage('User was deleted successful.');
+        $this->flashMessenger()->addSuccessMessage('User was deleted successful');
         return $this->redirect()->toRoute('user', ['action' => 'index']);
     }
 }

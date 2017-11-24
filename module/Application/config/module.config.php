@@ -48,10 +48,10 @@ return [
     ],
     'service_manager' => [
         'factories' => [
-            Model\CategoryTable::class => Factory\CategoryTableFactory::class,
-            Model\CategoryHydrator::class => Factory\CategoryHydratorFactory::class,
             Model\CategoryRepository::class => Factory\CategoryRepositoryFactory::class,
-            Model\NoteTable::class => Factory\NoteTableFactory::class,
+            Model\CategoryCommand::class => Factory\CategoryCommandFactory::class,
+            Model\NoteRepository::class => Factory\NoteRepositoryFactory::class,
+            Model\NoteCommand::class => Factory\NoteCommandFactory::class,
             Model\NoteHydrator::class => Factory\NoteHydratorFactory::class,
         ],
     ],

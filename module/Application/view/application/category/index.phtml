@@ -9,15 +9,15 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th style="text-align:left">Nazwa</th>
-                        <th>Akcje</th>
+                        <th style="width: 60px;">ID</th>
+                        <th>Nazwa</th>
+                        <th style="width: 80px;">Akcje</th>
                     </tr>
                 </thead>
                 <tbody>
                 <?php foreach($this->categories as $category): ?>
                     <tr>
-                        <td style="width: 60px;"><?= $category->getId() ?></td>
+                        <td><?= $category->getId() ?></td>
                         <td><?= $category->getName() ?></td>
                         <td>
                             <a href="<?= $this->url('category', ['action' => 'edit', 'id' => $category->getId()]) ?>" class="btn btn-success btn-xs" title="Edytuj">

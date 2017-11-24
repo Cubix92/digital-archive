@@ -2,6 +2,7 @@
 
 namespace Application\Form;
 
+use Application\Model\Category;
 use Zend\Form\Form;
 
 class NoteForm extends Form
@@ -10,8 +11,9 @@ class NoteForm extends Form
 
     public function __construct(array $categories)
     {
+        /** @var Category $category */
         foreach((array)$categories as $category) {
-            $this->categories[$category['id']] = $category['name'];
+            $this->categories[$category->getId()] = $category->getName();
         }
 
         parent::__construct('note');
@@ -56,6 +58,9 @@ class NoteForm extends Form
         $this->add([
             'name' => 'category_id',
             'type' => 'select',
+            'attributes' => [
+                'class' => 'form-control'
+            ],
             'options' => [
                 'label' => 'Kategoria',
                 'value_options' => $this->categories,

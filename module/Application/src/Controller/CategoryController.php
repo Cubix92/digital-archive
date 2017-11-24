@@ -3,8 +3,9 @@
 namespace Application\Controller;
 
 use Application\Form\CategoryForm;
+use Application\Model\Category;
+use Application\Model\CategoryCommand;
 use Application\Model\CategoryRepository;
-use Application\Model\CategoryTable;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -39,9 +40,10 @@ class CategoryController extends AbstractActionController
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
+                /** @var Category $category */
                 $category = $form->getData();
-                $this->categoryCommand->save($category);
-
+                $this->categoryCommand->insert($category);
+                $this->flashMessenger()->addSuccessMessage('Category was added successfull.');
                 return $this->redirect()->toRoute('category');
             }
         }
@@ -62,6 +64,7 @@ class CategoryController extends AbstractActionController
         try {
             $category = $this->categoryRepository->findById($id);
         } catch (\Exception $e) {
+            $this->flashMessenger()->addSuccessMessage($e->getMessage());
             return $this->redirect()->toRoute('category', ['action' => 'index']);
         }
 
@@ -72,7 +75,7 @@ class CategoryController extends AbstractActionController
 
         if ($request->isPost()) {
             $form->setData($request->getPost());
-
+            $this->flashMessenger()->addSuccessMessage('User was updated successfull.');
             if ($form->isValid()) {
                 $this->categoryCommand->save($category);
                 return $this->redirect()->toRoute('category', ['action' => 'index']);
@@ -93,8 +96,15 @@ class CategoryController extends AbstractActionController
             return $this->redirect()->toRoute('category');
         }
 
-        $this->categoryCommand->delete($id);
+        try {
+            $category = $this->categoryRepository->findById($id);
+        } catch (\Exception $e) {
+            $this->flashMessenger()->addSuccessMessage($e->getMessage());
+            return $this->redirect()->toRoute('category', ['action' => 'index']);
+        }
 
+        $this->categoryCommand->delete($category);
+        $this->flashMessenger()->addSuccessMessage('Category was deleted successfull.');
         return $this->redirect()->toRoute('category', ['action' => 'index']);
     }
 }

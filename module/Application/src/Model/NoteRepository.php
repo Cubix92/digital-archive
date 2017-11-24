@@ -8,58 +8,59 @@ use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Db\Sql\Sql;
 use Zend\Hydrator\Reflection as ReflectionHydrator;
 
-class CategoryRepository
+class NoteRepository
 {
+    protected $noteHydrator;
+
     protected $dbAdapter;
 
-    public function __construct(AdapterInterface  $dbAdapter)
+    public function __construct(NoteHydrator $noteHydrator, AdapterInterface  $dbAdapter)
     {
+         $this->noteHydrator = $noteHydrator;
          $this->dbAdapter = $dbAdapter;
     }
 
     public function findAll()
     {
         $sql                = new Sql($this->dbAdapter);
-        $categorySelect     = $sql->select('category');
-        $categoryStatement  = $sql->prepareStatementForSqlObject($categorySelect);
-        $categoryResult     = $categoryStatement->execute();
+        $noteSelect     = $sql->select('note');
+        $noteStatement  = $sql->prepareStatementForSqlObject($noteSelect);
+        $noteResult     = $noteStatement->execute();
 
-        if (! $categoryResult instanceof ResultInterface || ! $categoryResult->isQueryResult()) {
+        if (! $noteResult instanceof ResultInterface || ! $noteResult->isQueryResult()) {
             return [];
         }
 
-        $categoryResultSet = new HydratingResultSet(
-            new ReflectionHydrator(),
-            new Category()
+        $noteResultSet = new HydratingResultSet(
+            $this->noteHydrator,
+            new Note()
         );
 
-        $categoryResultSet->initialize($categoryResult);
+        $noteResultSet->initialize($noteResult);
 
-        $categories = [];
+        $notes = [];
 
         /**
-         * @var Category $category
+         * @var Note $note
          */
-        foreach($categoryResultSet as $category) {
-            $noteSelect     = $sql->select('note')->where(['category_id' => $category->getId()]);
-            $noteStatement  = $sql->prepareStatementForSqlObject($noteSelect);
-            $noteResult     = $noteStatement->execute();
+        foreach($noteResultSet as $note) {
+            $categorySelect     = $sql->select('category')->where(['id' => $note->getCategory()->getId()]);
+            $categoryStatement  = $sql->prepareStatementForSqlObject($categorySelect);
+            $categoryResult     = $categoryStatement->execute();
 
-            $noteResultSet = new HydratingResultSet(
+            $categoryResultSet = new HydratingResultSet(
                 new ReflectionHydrator(),
-                new Note()
+                new Category()
             );
 
-            $noteResultSet->initialize($noteResult);
-
-            foreach($noteResultSet as $note) {
-                $category->addNote($note);
-            }
-
-            $categories[] = $category;
+            $categoryResultSet->initialize($categoryResult);
+            /** @var Category $category */
+            $category = $categoryResultSet->current();
+            $note->setCategory($category);
+            $notes[] = $note;
         }
 
-        return $categories;
+        return $notes;
     }
 
     public function findById($id): Category

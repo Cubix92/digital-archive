@@ -12,7 +12,7 @@ CREATE TABLE note
   category_id INT NOT NULL,
   title VARCHAR(255) NOT NULL ,
   content TEXT,
-  position INT,
+  position INT NOT NULL,
   FOREIGN KEY(category_id) REFERENCES category(id)
 );
 

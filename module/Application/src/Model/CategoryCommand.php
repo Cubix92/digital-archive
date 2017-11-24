@@ -23,9 +23,9 @@ class CategoryCommand
         $insert = new Insert('category');
 
         $insert->values([
-            'name' => $category->getTitle(),
-            'icon' => $category->getName(),
-            'position' => $category->getPosition()
+            'name' => $category->getName(),
+            'icon' => $category->getIcon(),
+            'position' => $category->getPosition() ? $category->getPosition() : 0
         ]);
 
         $sql = new Sql($this->dbAdapter);
@@ -34,7 +34,7 @@ class CategoryCommand
 
         if (! $result instanceof ResultInterface) {
             throw new \RuntimeException(
-                'Database error occurred during category insert operation'
+                'Database error occurred during category insert operation.'
             );
         }
 
@@ -45,14 +45,14 @@ class CategoryCommand
     public function update(Category $category)
     {
         if ( !$category->getId()) {
-            throw new \RuntimeException('Cannot update post; missing identifier');
+            throw new \RuntimeException('Cannot update post; missing identifier.');
         }
 
         $update = new Update('category');
 
         $update->set([
-            'name' => $category->getTitle(),
-            'icon' => $category->getName(),
+            'name' => $category->getName(),
+            'icon' => $category->getIcon(),
             'position' => $category->getPosition()
         ]);
         $update->where(['id = ?' => $category->getId()]);
@@ -73,7 +73,7 @@ class CategoryCommand
     public function delete(Category $category)
     {
         if (!$category->getId()) {
-            throw new \RuntimeException('Cannot delete category; missing identifier');
+            throw new \RuntimeException('Cannot delete category; missing identifier.');
         }
 
         $delete = new Delete('category');
