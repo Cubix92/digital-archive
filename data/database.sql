@@ -1,4 +1,4 @@
-create table category
+CREATE TABLE category
 (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
@@ -6,7 +6,7 @@ create table category
   position INT NOT NULL
 );
 
-create table note
+CREATE TABLE note
 (
   id INT AUTO_INCREMENT PRIMARY KEY,
   category_id INT NOT NULL,
@@ -16,13 +16,13 @@ create table note
   FOREIGN KEY(category_id) REFERENCES category(id)
 );
 
-create table tag
+CREATE TABLE tag
 (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL
 );
 
-create table user
+CREATE TABLE user
 (
   id INT AUTO_INCREMENT PRIMARY KEY,
   email VARCHAR(255) NOT NULL UNIQUE,

@@ -12,14 +12,14 @@ class CategoryController extends AbstractActionController
 {
     protected $categoryRepository;
 
-    protected $categoryTable;
+    protected $categoryCommand;
 
     protected $categoryForm;
 
-    public function __construct(CategoryRepository $categoryRepository, CategoryTable $categoryTable, CategoryForm $categoryForm)
+    public function __construct(CategoryRepository $categoryRepository, CategoryCommand $categoryCommand, CategoryForm $categoryForm)
     {
         $this->categoryRepository = $categoryRepository;
-        $this->categoryTable = $categoryTable;
+        $this->categoryCommand = $categoryCommand;
         $this->categoryForm = $categoryForm;
     }
 
@@ -40,7 +40,7 @@ class CategoryController extends AbstractActionController
 
             if ($form->isValid()) {
                 $category = $form->getData();
-                $this->categoryTable->save($category);
+                $this->categoryCommand->save($category);
 
                 return $this->redirect()->toRoute('category');
             }
@@ -74,7 +74,7 @@ class CategoryController extends AbstractActionController
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $this->categoryTable->save($category);
+                $this->categoryCommand->save($category);
                 return $this->redirect()->toRoute('category', ['action' => 'index']);
             }
         }
@@ -93,7 +93,7 @@ class CategoryController extends AbstractActionController
             return $this->redirect()->toRoute('category');
         }
 
-        $this->categoryTable->delete($id);
+        $this->categoryCommand->delete($id);
 
         return $this->redirect()->toRoute('category', ['action' => 'index']);
     }

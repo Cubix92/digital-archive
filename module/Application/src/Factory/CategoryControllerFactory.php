@@ -14,10 +14,10 @@ class CategoryControllerFactory extends AbstractActionController
 {
     public function __invoke(ContainerInterface $container)
     {
-        $categoryForm = $container->get(FormElementManager::class)->get(CategoryForm::class);
-        $categoryTable = $container->get(CategoryTable::class);
         $categoryRepository = $container->get(CategoryRepository::class);
+        $categoryForm = $container->get(FormElementManager::class)->get(CategoryForm::class);
 
-        return new CategoryController($categoryRepository, $categoryTable, $categoryForm);
+
+        return new CategoryController($categoryRepository, $categoryForm);
     }
 }
