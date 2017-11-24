@@ -72,6 +72,10 @@ class CategoryCommand
 
     public function delete(Category $category)
     {
+        if ($category->getNotes()) {
+            throw new \RuntimeException('Cannot delete category; category has related values.');
+        }
+
         if (!$category->getId()) {
             throw new \RuntimeException('Cannot delete category; missing identifier.');
         }
@@ -84,10 +88,7 @@ class CategoryCommand
         $result = $statement->execute();
 
         if (!$result instanceof ResultInterface) {
-            return false;
+            throw new \RuntimeException('Cannot delete category; undefined erro.');
         }
-
-        return true;
     }
-
 }

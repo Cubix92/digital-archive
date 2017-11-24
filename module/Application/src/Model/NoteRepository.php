@@ -23,13 +23,10 @@ class NoteRepository
     public function findAll()
     {
         $sql = new Sql($this->dbAdapter);
-        $noteSelect = $sql->select('note');
-        $noteStatement = $sql->prepareStatementForSqlObject($noteSelect);
-        $noteResult = $noteStatement->execute();
 
-        if (!$noteResult instanceof ResultInterface || !$noteResult->isQueryResult()) {
-            return [];
-        }
+        $noteSelect     = $sql->select('note');
+        $noteStatement  = $sql->prepareStatementForSqlObject($noteSelect);
+        $noteResult     = $noteStatement->execute();
 
         $noteResultSet = new HydratingResultSet(
             $this->noteHydrator,
@@ -44,17 +41,17 @@ class NoteRepository
          * @var Note $note
          */
         foreach ($noteResultSet as $note) {
-            $categorySelect = $sql->select('category')->where(['id' => $note->getCategory()->getId()]);
-            $categoryStatement = $sql->prepareStatementForSqlObject($categorySelect);
-            $categoryResult = $categoryStatement->execute();
+            $categorySelect     = $sql->select('category')->where(['id' => $note->getCategory()->getId()]);
+            $categoryStatement  = $sql->prepareStatementForSqlObject($categorySelect);
+            $categoryResult     = $categoryStatement->execute();
 
             $categoryResultSet = new HydratingResultSet(
                 new ReflectionHydrator(),
                 new Category()
             );
 
-            $categoryResultSet->initialize($categoryResult);
             /** @var Category $category */
+            $categoryResultSet->initialize($categoryResult);
             $category = $categoryResultSet->current();
             $note->setCategory($category);
             $notes[] = $note;
@@ -66,11 +63,12 @@ class NoteRepository
     public function findById($id): Note
     {
         $sql = new Sql($this->dbAdapter);
-        $noteSelect = $sql->select('note')->where(['id' => $id]);
-        $noteStatement = $sql->prepareStatementForSqlObject($noteSelect);
-        $noteResult = $noteStatement->execute();
 
-        if (!$noteResult instanceof ResultInterface || !$noteResult->isQueryResult()) {
+        $noteSelect     = $sql->select('note')->where(['id' => $id]);
+        $noteStatement  = $sql->prepareStatementForSqlObject($noteSelect);
+        $noteResult     = $noteStatement->execute();
+
+        if (!$noteResult->valid()) {
             throw new \InvalidArgumentException(sprintf('Note with identifier "%s" not found', $id));
         }
 

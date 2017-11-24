@@ -4,23 +4,30 @@ CREATE TABLE category
   name VARCHAR(255) NOT NULL,
   icon VARCHAR(255),
   position INT NOT NULL
-);
+)ENGINE = INNODB;
 
 CREATE TABLE note
 (
   id INT AUTO_INCREMENT PRIMARY KEY,
   category_id INT NOT NULL,
-  title VARCHAR(255) NOT NULL ,
+  title VARCHAR(255) NOT NULL,
   content TEXT,
   position INT NOT NULL,
   FOREIGN KEY(category_id) REFERENCES category(id)
-);
+)ENGINE = INNODB;
 
 CREATE TABLE tag
 (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL
-);
+)ENGINE = INNODB;
+
+CREATE TABLE note2tag
+(
+  note_id INT NOT NULL,
+  tag_id INT NOT NULL,
+  PRIMARY KEY (note_id, tag_id)
+)ENGINE = INNODB;
 
 CREATE TABLE user
 (
@@ -29,4 +36,4 @@ CREATE TABLE user
   role VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
   date_created DATETIME NOT NULL
-);
+)ENGINE = INNODB;
