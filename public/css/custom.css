@@ -403,7 +403,7 @@ div.tab div.tab-content:not(.active) {
 
 /* FORM INPUT */
 
-input.form-control {
+input.form-control, select.form-control {
     height: 44px;
 }
 
@@ -413,9 +413,21 @@ input[type="submit"] {
     margin-bottom: 10px;
 }
 
-input:not([type="submit"]), textarea.form-control {
+input:not([type="submit"]), textarea.form-control, select.form-control {
     -webkit-appearance: none;
     background: #fff;
     border: 1px solid #d9d9d9;
     border-radius: 0px !important;
+}
+
+.select-arrow {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid black;
+    position: relative;
+    bottom: 26px;
+    right: 10px;
+    float: right;
 }

@@ -4,15 +4,13 @@ namespace Auth\Model;
 
 use Zend\Crypt\Password\Bcrypt;
 
-/**
- * @Annotation\Name("user")
- * @Annotation\Hydrator("UserHydrator")
- */
 class User
 {
     protected $id;
 
     protected $email;
+
+    protected $role;
 
     protected $password;
 
@@ -45,6 +43,17 @@ class User
         return $this;
     }
 
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    public function setRole($role)
+    {
+        $this->role = $role;
+        return $this;
+    }
+
     public function getPassword()
     {
         return $this->password;
@@ -52,15 +61,9 @@ class User
 
     public function setPassword($password)
     {
-        $this->password = $password;
-        return $this;
-    }
-
-    public function setHashedPassword($password)
-    {
         $bcrypt = new Bcrypt();
-
         $this->password = $bcrypt->create($password);
+
         return $this;
     }
 

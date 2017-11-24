@@ -61,7 +61,6 @@ return [
     'service_manager' => [
         'factories' => [
             Model\UserTable::class => Factory\UserTableFactory::class,
-            Model\UserHydrator::class => InvokableFactory::class,
             AuthenticationService::class => Factory\AuthServiceFactory::class
         ],
     ],

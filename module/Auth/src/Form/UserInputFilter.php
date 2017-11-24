@@ -8,6 +8,7 @@ use Zend\Filter\ToInt;
 use Zend\Filter\ToNull;
 use Zend\InputFilter\InputFilter;
 use Zend\Validator\EmailAddress;
+use Zend\Validator\Identical;
 
 class UserInputFilter extends InputFilter
 {
@@ -32,6 +33,24 @@ class UserInputFilter extends InputFilter
             'validators' => [
                 ['name' => EmailAddress::class],
             ],
+        ]);
+
+        $this->add([
+            'name'       => 'password',
+            'required'   => true
+        ]);
+
+        $this->add([
+            'name'       => 'repeat_password',
+            'required'   => false,
+            'validators' => [
+                [
+                    'name' => Identical::class,
+                    'options' => [
+                        'token' => 'password'
+                    ],
+                ]
+            ]
         ]);
     }
 }
