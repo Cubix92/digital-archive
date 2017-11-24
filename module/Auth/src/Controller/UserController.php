@@ -51,7 +51,7 @@ class UserController extends AbstractActionController
 
     public function editAction()
     {
-        $id = (int) $this->params()->fromRoute('id', 0);
+        $id = (int)$this->params()->fromRoute('id', 0);
 
         if (0 === $id) {
             $this->flashMessenger()->addErrorMessage('Identifier not found');
@@ -88,7 +88,7 @@ class UserController extends AbstractActionController
 
     public function deleteAction()
     {
-        $id = (int) $this->params()->fromRoute('id', 0);
+        $id = (int)$this->params()->fromRoute('id', 0);
 
         if (!$id) {
             $this->flashMessenger()->addErrorMessage(sprintf('User with identifier "%s" not found', $id));

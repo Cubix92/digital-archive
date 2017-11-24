@@ -10,7 +10,7 @@ class UserTable
 
     public function __construct(TableGateway $tableGateway)
     {
-         $this->tableGateway = $tableGateway;
+        $this->tableGateway = $tableGateway;
     }
 
     public function findAll()
@@ -59,6 +59,6 @@ class UserTable
 
     public function delete($id)
     {
-        $this->tableGateway->delete(['id' => (int) $id]);
+        $this->tableGateway->delete(['id' => (int)$id]);
     }
 }

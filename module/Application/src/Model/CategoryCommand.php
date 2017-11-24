@@ -13,9 +13,9 @@ class CategoryCommand
 {
     protected $dbAdapter;
 
-    public function __construct(AdapterInterface  $dbAdapter)
+    public function __construct(AdapterInterface $dbAdapter)
     {
-         $this->dbAdapter = $dbAdapter;
+        $this->dbAdapter = $dbAdapter;
     }
 
     public function insert(Category $category)
@@ -32,7 +32,7 @@ class CategoryCommand
         $statement = $sql->prepareStatementForSqlObject($insert);
         $result = $statement->execute();
 
-        if (! $result instanceof ResultInterface) {
+        if (!$result instanceof ResultInterface) {
             throw new \RuntimeException(
                 'Database error occurred during category insert operation.'
             );
@@ -44,7 +44,7 @@ class CategoryCommand
 
     public function update(Category $category)
     {
-        if ( !$category->getId()) {
+        if (!$category->getId()) {
             throw new \RuntimeException('Cannot update post; missing identifier.');
         }
 
@@ -61,7 +61,7 @@ class CategoryCommand
         $statement = $sql->prepareStatementForSqlObject($update);
         $result = $statement->execute();
 
-        if (! $result instanceof ResultInterface) {
+        if (!$result instanceof ResultInterface) {
             throw new \RuntimeException(
                 'Database error occurred during category update operation'
             );
@@ -83,7 +83,7 @@ class CategoryCommand
         $statement = $sql->prepareStatementForSqlObject($delete);
         $result = $statement->execute();
 
-        if (! $result instanceof ResultInterface) {
+        if (!$result instanceof ResultInterface) {
             return false;
         }
 

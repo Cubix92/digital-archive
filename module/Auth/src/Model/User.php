@@ -67,7 +67,7 @@ class User
         return $this;
     }
 
-    public function getDateCreated():\DateTime
+    public function getDateCreated(): \DateTime
     {
         return $this->dateCreated;
     }

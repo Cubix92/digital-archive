@@ -55,7 +55,7 @@ class NoteController extends AbstractActionController
 
     public function editAction()
     {
-        $id = (int) $this->params()->fromRoute('id', 0);
+        $id = (int)$this->params()->fromRoute('id', 0);
 
         if (0 === $id) {
             return $this->redirect()->toRoute('note', ['action' => 'add']);
@@ -75,7 +75,7 @@ class NoteController extends AbstractActionController
 
         if ($request->isPost()) {
             $form->setData($request->getPost());
-            $this->flashMessenger()->addSuccessMessage('User was updated successfull.');
+            $this->flashMessenger()->addSuccessMessage('Note was updated successfull.');
             if ($form->isValid()) {
                 $this->noteCommand->save($note);
                 return $this->redirect()->toRoute('note', ['action' => 'index']);
@@ -90,7 +90,7 @@ class NoteController extends AbstractActionController
 
     public function deleteAction()
     {
-        $id = (int) $this->params()->fromRoute('id', 0);
+        $id = (int)$this->params()->fromRoute('id', 0);
 
         if (!$id) {
             return $this->redirect()->toRoute('note');

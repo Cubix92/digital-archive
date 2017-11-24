@@ -12,7 +12,7 @@ class NoteForm extends Form
     public function __construct(array $categories)
     {
         /** @var Category $category */
-        foreach((array)$categories as $category) {
+        foreach ((array)$categories as $category) {
             $this->categories[$category->getId()] = $category->getName();
         }
 

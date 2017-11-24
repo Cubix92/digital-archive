@@ -20,7 +20,8 @@ class Module
         $sharedEventManager = $eventManager->getSharedManager();
 
         $sharedEventManager->attach(AbstractActionController::class,
-            MvcEvent::EVENT_DISPATCH, [$this, 'checkIdentity'], 100);
+            MvcEvent::EVENT_DISPATCH, [$this, 'checkIdentity'], 100
+        );
     }
 
     public function checkIdentity(MvcEvent $e)
@@ -29,7 +30,7 @@ class Module
         $authService = $e->getApplication()->getServiceManager()->get(AuthenticationService::class);
         $controllerName = $e->getRouteMatch()->getParam('controller', null);
 
-        if(!$authService->getIdentity() && $controllerName != AuthController::class) {
+        if (!$authService->getIdentity() && $controllerName != AuthController::class) {
             return $controller->redirect()->toRoute('login');
         }
     }

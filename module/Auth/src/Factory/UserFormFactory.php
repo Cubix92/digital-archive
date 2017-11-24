@@ -1,4 +1,5 @@
 <?php
+
 namespace Auth\Factory;
 
 use Interop\Container\ContainerInterface;

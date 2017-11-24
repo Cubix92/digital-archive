@@ -15,18 +15,18 @@ class UserInputFilter extends InputFilter
     public function init()
     {
         $this->add([
-            'name'       => 'id',
-            'required'   => false,
-            'filters'    => [
+            'name' => 'id',
+            'required' => false,
+            'filters' => [
                 ['name' => ToInt::class],
                 ['name' => ToNull::class],
             ]
         ]);
 
         $this->add([
-            'name'       => 'email',
-            'required'   => true,
-            'filters'    => [
+            'name' => 'email',
+            'required' => true,
+            'filters' => [
                 ['name' => StringToLower::class],
                 ['name' => StringTrim::class],
             ],
@@ -36,13 +36,13 @@ class UserInputFilter extends InputFilter
         ]);
 
         $this->add([
-            'name'       => 'password',
-            'required'   => true
+            'name' => 'password',
+            'required' => true
         ]);
 
         $this->add([
-            'name'       => 'repeat_password',
-            'required'   => false,
+            'name' => 'repeat_password',
+            'required' => false,
             'validators' => [
                 [
                     'name' => Identical::class,

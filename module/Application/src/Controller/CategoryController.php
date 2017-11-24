@@ -55,7 +55,7 @@ class CategoryController extends AbstractActionController
 
     public function editAction()
     {
-        $id = (int) $this->params()->fromRoute('id', 0);
+        $id = (int)$this->params()->fromRoute('id', 0);
 
         if (0 === $id) {
             return $this->redirect()->toRoute('category', ['action' => 'add']);
@@ -75,7 +75,7 @@ class CategoryController extends AbstractActionController
 
         if ($request->isPost()) {
             $form->setData($request->getPost());
-            $this->flashMessenger()->addSuccessMessage('User was updated successfull.');
+            $this->flashMessenger()->addSuccessMessage('Category was updated successfull.');
             if ($form->isValid()) {
                 $this->categoryCommand->save($category);
                 return $this->redirect()->toRoute('category', ['action' => 'index']);
@@ -90,7 +90,7 @@ class CategoryController extends AbstractActionController
 
     public function deleteAction()
     {
-        $id = (int) $this->params()->fromRoute('id', 0);
+        $id = (int)$this->params()->fromRoute('id', 0);
 
         if (!$id) {
             return $this->redirect()->toRoute('category');

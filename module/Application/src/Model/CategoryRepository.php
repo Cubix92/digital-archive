@@ -12,19 +12,19 @@ class CategoryRepository
 {
     protected $dbAdapter;
 
-    public function __construct(AdapterInterface  $dbAdapter)
+    public function __construct(AdapterInterface $dbAdapter)
     {
-         $this->dbAdapter = $dbAdapter;
+        $this->dbAdapter = $dbAdapter;
     }
 
     public function findAll()
     {
-        $sql                = new Sql($this->dbAdapter);
-        $categorySelect     = $sql->select('category');
-        $categoryStatement  = $sql->prepareStatementForSqlObject($categorySelect);
-        $categoryResult     = $categoryStatement->execute();
+        $sql = new Sql($this->dbAdapter);
+        $categorySelect = $sql->select('category');
+        $categoryStatement = $sql->prepareStatementForSqlObject($categorySelect);
+        $categoryResult = $categoryStatement->execute();
 
-        if (! $categoryResult instanceof ResultInterface || ! $categoryResult->isQueryResult()) {
+        if (!$categoryResult instanceof ResultInterface || !$categoryResult->isQueryResult()) {
             return [];
         }
 
@@ -40,10 +40,10 @@ class CategoryRepository
         /**
          * @var Category $category
          */
-        foreach($categoryResultSet as $category) {
-            $noteSelect     = $sql->select('note')->where(['category_id' => $category->getId()]);
-            $noteStatement  = $sql->prepareStatementForSqlObject($noteSelect);
-            $noteResult     = $noteStatement->execute();
+        foreach ($categoryResultSet as $category) {
+            $noteSelect = $sql->select('note')->where(['category_id' => $category->getId()]);
+            $noteStatement = $sql->prepareStatementForSqlObject($noteSelect);
+            $noteResult = $noteStatement->execute();
 
             $noteResultSet = new HydratingResultSet(
                 new ReflectionHydrator(),
@@ -52,7 +52,7 @@ class CategoryRepository
 
             $noteResultSet->initialize($noteResult);
 
-            foreach($noteResultSet as $note) {
+            foreach ($noteResultSet as $note) {
                 $category->addNote($note);
             }
 
@@ -64,13 +64,13 @@ class CategoryRepository
 
     public function findById($id): Category
     {
-        $sql                = new Sql($this->dbAdapter);
-        $categorySelect     = $sql->select('category')->where(['id' => $id]);
-        $categoryStatement  = $sql->prepareStatementForSqlObject($categorySelect);
-        $categoryResult     = $categoryStatement->execute();
+        $sql = new Sql($this->dbAdapter);
+        $categorySelect = $sql->select('category')->where(['id' => $id]);
+        $categoryStatement = $sql->prepareStatementForSqlObject($categorySelect);
+        $categoryResult = $categoryStatement->execute();
 
-        if (! $categoryResult instanceof ResultInterface || !$categoryResult->isQueryResult()) {
-            throw new \InvalidArgumentException(sprintf('User with identifier "%s" not found', $id));
+        if (!$categoryResult instanceof ResultInterface || !$categoryResult->isQueryResult()) {
+            throw new \InvalidArgumentException(sprintf('Category with identifier "%s" not found', $id));
         }
 
         $categoryResultSet = new HydratingResultSet(
@@ -83,9 +83,9 @@ class CategoryRepository
         /** @var Category $category */
         $category = $categoryResultSet->current();
 
-        $noteSelect     = $sql->select('note')->where(['category_id' => $category->getId()]);
-        $noteStatement  = $sql->prepareStatementForSqlObject($noteSelect);
-        $noteResult     = $noteStatement->execute();
+        $noteSelect = $sql->select('note')->where(['category_id' => $category->getId()]);
+        $noteStatement = $sql->prepareStatementForSqlObject($noteSelect);
+        $noteResult = $noteStatement->execute();
 
         $noteResultSet = new HydratingResultSet(
             new ReflectionHydrator(),
@@ -97,7 +97,7 @@ class CategoryRepository
         /**
          * @var Note $note
          */
-        foreach($noteResultSet as $note) {
+        foreach ($noteResultSet as $note) {
             $category->addNote($note);
         }
 
