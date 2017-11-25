@@ -43,6 +43,16 @@ return [
                         'action'     => 'index'
                     ],
                 ],
+            ],
+            'tag' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route'    => '/tag[/:action[/:id]]',
+                    'defaults' => [
+                        'controller' => Controller\TagController::class,
+                        'action'     => 'index'
+                    ],
+                ],
             ]
         ],
     ],
@@ -53,6 +63,9 @@ return [
             Model\NoteRepository::class => Factory\NoteRepositoryFactory::class,
             Model\NoteCommand::class => Factory\NoteCommandFactory::class,
             Model\NoteHydrator::class => Factory\NoteHydratorFactory::class,
+            Model\TagRepository::class => Factory\TagRepositoryFactory::class,
+            Model\TagCommand::class => Factory\TagCommandFactory::class,
+            Service\TagService::class => Factory\TagServiceFactory::class,
         ],
     ],
     'form_elements' => [
@@ -66,6 +79,7 @@ return [
             Controller\IndexController::class => InvokableFactory::class,
             Controller\CategoryController::class => Factory\CategoryControllerFactory::class,
             Controller\NoteController::class => Factory\NoteControllerFactory::class,
+            Controller\TagController::class => Factory\TagControllerFactory::class,
         ],
     ],
     'navigation' => [
@@ -117,7 +131,18 @@ return [
                         'action' => 'edit',
                     ]
                 ],
-            ]
+            ],
+            [
+                'label' => 'Tagi',
+                'route' => 'tag',
+                'pages' => [
+                    [
+                        'label'  => 'Podgląd tagu',
+                        'route'  => 'tag',
+                        'action' => 'show',
+                    ]
+                ],
+            ],
         ],
     ],
     'view_manager' => [

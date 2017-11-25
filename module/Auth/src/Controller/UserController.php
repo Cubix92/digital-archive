@@ -53,14 +53,14 @@ class UserController extends AbstractActionController
     {
         $id = (int)$this->params()->fromRoute('id', 0);
 
-        if (0 === $id) {
-            $this->flashMessenger()->addErrorMessage('Identifier not found');
-            return $this->redirect()->toRoute('user', ['action' => 'add']);
+        if (!$id) {
+            return $this->notFoundAction();
         }
 
         try {
+            /** @var User $user */
             $user = $this->userTable->findById($id);
-        } catch (\Exception $e) {
+        } catch (\InvalidArgumentException $e) {
             $this->flashMessenger()->addErrorMessage($e);
             return $this->redirect()->toRoute('user', ['action' => 'index']);
         }
@@ -91,11 +91,18 @@ class UserController extends AbstractActionController
         $id = (int)$this->params()->fromRoute('id', 0);
 
         if (!$id) {
-            $this->flashMessenger()->addErrorMessage(sprintf('User with identifier "%s" not found', $id));
-            return $this->redirect()->toRoute('user');
+            return $this->notFoundAction();
         }
 
-        $this->userTable->delete($id);
+        try {
+            /** @var User $user */
+            $user = $this->userTable->findById($id);
+        } catch (\InvalidArgumentException $e) {
+            $this->flashMessenger()->addSuccessMessage($e->getMessage());
+            return $this->redirect()->toRoute('user', ['action' => 'index']);
+        }
+
+        $this->userTable->delete($user->getId());
         $this->flashMessenger()->addSuccessMessage('User was deleted successful');
         return $this->redirect()->toRoute('user', ['action' => 'index']);
     }

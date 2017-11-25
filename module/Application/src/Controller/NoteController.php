@@ -3,6 +3,7 @@
 namespace Application\Controller;
 
 use Application\Form\NoteForm;
+use Application\Service\TagService;
 use Application\Model\Note;
 use Application\Model\NoteCommand;
 use Application\Model\NoteRepository;
@@ -17,11 +18,14 @@ class NoteController extends AbstractActionController
 
     protected $noteForm;
 
-    public function __construct(NoteRepository $noteRepository, NoteCommand $noteCommand, NoteForm $noteForm)
+    protected $tagService;
+
+    public function __construct(NoteRepository $noteRepository, NoteCommand $noteCommand, NoteForm $noteForm, TagService $tagService)
     {
         $this->noteRepository = $noteRepository;
         $this->noteCommand = $noteCommand;
         $this->noteForm = $noteForm;
+        $this->tagService = $tagService;
     }
 
     public function indexAction()
@@ -40,9 +44,13 @@ class NoteController extends AbstractActionController
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $note = $form->getData();
                 /** @var Note $note */
+                $note = $form->getData();
+                $tags = $this->tagService->prepare($note->getTags());
+
+                $note->setTags($tags);
                 $this->noteCommand->insert($note);
+
                 $this->flashMessenger()->addSuccessMessage('Note was added successfull.');
                 return $this->redirect()->toRoute('note');
             }
@@ -63,7 +71,7 @@ class NoteController extends AbstractActionController
 
         try {
             $note = $this->noteRepository->findById($id);
-        } catch (\Exception $e) {
+        } catch (\InvalidArgumentException $e) {
             $this->flashMessenger()->addSuccessMessage($e->getMessage());
             return $this->redirect()->toRoute('note', ['action' => 'index']);
         }
@@ -75,9 +83,13 @@ class NoteController extends AbstractActionController
 
         if ($request->isPost()) {
             $form->setData($request->getPost());
-            $this->flashMessenger()->addSuccessMessage('Note was updated successfull.');
+
             if ($form->isValid()) {
+                $tags = $this->tagService->prepare($note->getTags());
+                $note->setTags($tags);
                 $this->noteCommand->update($note);
+
+                $this->flashMessenger()->addSuccessMessage('Note was updated successfull.');
                 return $this->redirect()->toRoute('note', ['action' => 'index']);
             }
         }
@@ -98,12 +110,12 @@ class NoteController extends AbstractActionController
 
         try {
             $note = $this->noteRepository->findById($id);
-            $this->noteCommand->delete($note);
-        } catch (\Exception $e) {
+        } catch (\InvalidArgumentException $e) {
             $this->flashMessenger()->addSuccessMessage($e->getMessage());
             return $this->redirect()->toRoute('note', ['action' => 'index']);
         }
 
+        $this->noteCommand->delete($note);
         $this->flashMessenger()->addSuccessMessage('Note was deleted successfull.');
         return $this->redirect()->toRoute('note', ['action' => 'index']);
     }

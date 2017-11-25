@@ -14,6 +14,11 @@ class Category
 
     protected $position;
 
+    public function __construct()
+    {
+        $this->notes = [];
+    }
+
     public function getId()
     {
         return $this->id;

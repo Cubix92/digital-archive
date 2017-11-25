@@ -8,11 +8,19 @@ class Note
 
     protected $category;
 
+    protected $tags;
+
     protected $title;
 
     protected $content;
 
     protected $position;
+
+    public function __construct()
+    {
+        $this->tags = [];
+        $this->category = new Category();
+    }
 
     public function getId()
     {
@@ -25,7 +33,7 @@ class Note
         return $this;
     }
 
-    public function getCategory(): ?Category
+    public function getCategory(): Category
     {
         return $this->category;
     }
@@ -33,6 +41,17 @@ class Note
     public function setCategory(Category $category)
     {
         $this->category = $category;
+        return $this;
+    }
+
+    public function getTags(): array
+    {
+        return $this->tags;
+    }
+
+    public function setTags(array $tags)
+    {
+        $this->tags = $tags;
         return $this;
     }
 

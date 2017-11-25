@@ -7,8 +7,6 @@ use Zend\Db\Adapter\Driver\ResultInterface;
 use Zend\Db\Sql\Delete;
 use Zend\Db\Sql\Insert;
 use Zend\Db\Sql\Sql;
-use Zend\Db\Sql\Update;
-use Zend\Hydrator\Reflection as ReflectionHydrator;
 
 class TagCommand
 {
@@ -21,7 +19,9 @@ class TagCommand
 
     public function insert(Note $note)
     {
-        $insert = new Insert('tag');
+        $this->dbAdapter->getDriver()->getConnection()->beginTransaction();
+
+        $insert = new Insert('note');
 
         $insert->values([
             'category_id' => $note->getCategory()->getId(),
@@ -35,10 +35,13 @@ class TagCommand
         $result = $statement->execute();
 
         if (!$result instanceof ResultInterface) {
+            $this->dbAdapter->getDriver()->getConnection()->rollback();
             throw new \RuntimeException(
                 'Database error occurred during note insert operation'
             );
         }
+
+        $this->dbAdapter->getDriver()->getConnection()->commit();
 
         $id = $result->getGeneratedValue();
         return $id;

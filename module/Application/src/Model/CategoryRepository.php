@@ -71,7 +71,7 @@ class CategoryRepository
         $categoryResult     = $categoryStatement->execute();
 
         if (!$categoryResult->valid()) {
-            throw new \InvalidArgumentException(sprintf('Note with identifier "%s" not found', $id));
+            throw new \InvalidArgumentException(sprintf('Category with identifier "%s" not found', $id));
         }
 
         $categoryResultSet = new HydratingResultSet(

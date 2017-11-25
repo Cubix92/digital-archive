@@ -63,7 +63,7 @@ class CategoryController extends AbstractActionController
 
         try {
             $category = $this->categoryRepository->findById($id);
-        } catch (\Exception $e) {
+        } catch (\InvalidArgumentException $e) {
             $this->flashMessenger()->addSuccessMessage($e->getMessage());
             return $this->redirect()->toRoute('category', ['action' => 'index']);
         }
@@ -75,9 +75,10 @@ class CategoryController extends AbstractActionController
 
         if ($request->isPost()) {
             $form->setData($request->getPost());
-            $this->flashMessenger()->addSuccessMessage('Category was updated successfull.');
+
             if ($form->isValid()) {
                 $this->categoryCommand->update($category);
+                $this->flashMessenger()->addSuccessMessage('Category was updated successfull.');
                 return $this->redirect()->toRoute('category', ['action' => 'index']);
             }
         }
@@ -98,12 +99,12 @@ class CategoryController extends AbstractActionController
 
         try {
             $category = $this->categoryRepository->findById($id);
-            $this->categoryCommand->delete($category);
-        } catch (\Exception $e) {
+        } catch (\InvalidArgumentException $e) {
             $this->flashMessenger()->addErrorMessage($e->getMessage());
             return $this->redirect()->toRoute('category', ['action' => 'index']);
         }
 
+        $this->categoryCommand->delete($category);
         $this->flashMessenger()->addSuccessMessage('Category was deleted successfull.');
         return $this->redirect()->toRoute('category', ['action' => 'index']);
     }

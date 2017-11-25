@@ -68,6 +68,24 @@ class NoteForm extends Form
         ]);
 
         $this->add([
+            'type' => 'collection',
+            'name' => 'tags',
+            'options' => [
+                'label' => 'Powiązane tagi',
+                'count' => 1,
+                'should_create_template' => true,
+                'allow_add' => true,
+                'template_placeholder' => '__index__',
+                'target_element' => [
+                    'type' => TagFieldset::class,
+                ]
+            ],
+            'attributes' => [
+                'id' => 'tag-collection'
+            ]
+        ]);
+
+        $this->add([
             'name' => 'submit',
             'type' => 'submit',
             'attributes' => [

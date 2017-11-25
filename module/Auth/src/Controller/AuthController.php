@@ -3,6 +3,7 @@
 namespace Auth\Controller;
 
 use Auth\Form\LoginForm;
+use Auth\Model\User;
 use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -35,9 +36,11 @@ class AuthController extends AbstractActionController
             $result = $this->authService->authenticate();
 
             if ($result->isValid()) {
+                /** @var User $user */
                 $user = $this->authService->getAdapter()->getResultRowObject();
                 $this->authService->getStorage()->write($user);
 
+                $this->flashMessenger()->addInfoMessage(sprintf('Zalogowałeś się do systemu jako %s', $user->getEmail()));
                 return $this->redirect()->toRoute('home');
             } else {
                 foreach ($result->getMessages() as $message) {
@@ -56,7 +59,7 @@ class AuthController extends AbstractActionController
     public function logoutAction()
     {
         $this->authService->clearIdentity();
-
+        $this->flashMessenger()->addInfoMessage(sprintf('Zostałeś wylogowany z systemu.'));
         return $this->redirect()->toRoute('login');
     }
 

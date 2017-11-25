@@ -33,6 +33,10 @@ class NoteHydrator extends AbstractHydrator
             $object->setCategory($category);
         };
 
+        if (array_key_exists('tags', $data)) {
+            $object->setTags($data['tags']);
+        };
+
         if (array_key_exists('title', $data)) {
             $object->setTitle($data['title']);
         };

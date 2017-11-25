@@ -4,6 +4,7 @@ namespace Application\Factory;
 
 use Application\Controller\NoteController;
 use Application\Form\NoteForm;
+use Application\Service\TagService;
 use Application\Model\NoteCommand;
 use Application\Model\NoteRepository;
 use Interop\Container\ContainerInterface;
@@ -17,7 +18,8 @@ class NoteControllerFactory extends AbstractActionController
         $noteRepository = $container->get(NoteRepository::class);
         $noteCommand = $container->get(NoteCommand::class);
         $noteForm = $container->get(FormElementManager::class)->get(NoteForm::class);
+        $tagService = $container->get(TagService::class);
 
-        return new NoteController($noteRepository, $noteCommand, $noteForm);
+        return new NoteController($noteRepository, $noteCommand, $noteForm, $tagService);
     }
 }

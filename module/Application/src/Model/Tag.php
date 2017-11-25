@@ -6,7 +6,14 @@ class Tag
 {
     protected $id;
 
+    protected $notes;
+
     protected $name;
+
+    public function __construct()
+    {
+        $this->notes = [];
+    }
 
     public function getId()
     {
@@ -17,6 +24,22 @@ class Tag
     {
         $this->id = $id;
         return $this;
+    }
+
+    public function getNotes(): array
+    {
+        return $this->notes;
+    }
+
+    public function setNotes(array $notes)
+    {
+        $this->notes = $notes;
+        return $this;
+    }
+
+    public function addNote(Note $note)
+    {
+        $this->notes[] = $note;
     }
 
     public function getName()

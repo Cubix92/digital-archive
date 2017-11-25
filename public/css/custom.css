@@ -427,3 +427,7 @@ input:not([type="submit"]), textarea.form-control, select.form-control {
     right: 10px;
     float: right;
 }
+
+.collection-label span {
+    float: left;
+}

@@ -6,54 +6,27 @@ use Application\Form\NoteForm;
 use Application\Model\Note;
 use Application\Model\NoteCommand;
 use Application\Model\NoteRepository;
+use Application\Model\TagRepository;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class NoteController extends AbstractActionController
+class TagController extends AbstractActionController
 {
-    protected $noteRepository;
+    protected $tagRepository;
 
-    protected $noteCommand;
-
-    protected $noteForm;
-
-    public function __construct(NoteRepository $noteRepository, NoteCommand $noteCommand, NoteForm $noteForm)
+    public function __construct(TagRepository $tagRepository)
     {
-        $this->noteRepository = $noteRepository;
-        $this->noteCommand = $noteCommand;
-        $this->noteForm = $noteForm;
+        $this->tagRepository = $tagRepository;
     }
 
     public function indexAction()
     {
         return new ViewModel([
-            'notes' => $this->noteRepository->findAll()
+            'tags' => $this->tagRepository->findAll()
         ]);
     }
 
-    public function addAction()
-    {
-        $request = $this->getRequest();
-        $form = $this->noteForm;
-
-        if ($request->isPost()) {
-            $form->setData($request->getPost());
-
-            if ($form->isValid()) {
-                $note = $form->getData();
-                /** @var Note $note */
-                $this->noteCommand->insert($note);
-                $this->flashMessenger()->addSuccessMessage('Note was added successfull.');
-                return $this->redirect()->toRoute('note');
-            }
-        }
-
-        return new ViewModel([
-            'form' => $form
-        ]);
-    }
-
-    public function editAction()
+    public function showAction()
     {
         $id = (int)$this->params()->fromRoute('id', 0);
 
@@ -62,49 +35,14 @@ class NoteController extends AbstractActionController
         }
 
         try {
-            $note = $this->noteRepository->findById($id);
-        } catch (\Exception $e) {
+            $tag = $this->tagRepository->findById($id);
+        } catch(\InvalidArgumentException $e) {
             $this->flashMessenger()->addSuccessMessage($e->getMessage());
-            return $this->redirect()->toRoute('note', ['action' => 'index']);
-        }
-
-        $form = $this->noteForm;
-        $form->bind($note);
-
-        $request = $this->getRequest();
-
-        if ($request->isPost()) {
-            $form->setData($request->getPost());
-            $this->flashMessenger()->addSuccessMessage('Note was updated successfull.');
-            if ($form->isValid()) {
-                $this->noteCommand->update($note);
-                return $this->redirect()->toRoute('note', ['action' => 'index']);
-            }
+            return $this->redirect()->toRoute('tag', ['action' => 'index']);
         }
 
         return new ViewModel([
-            'note' => $note,
-            'form' => $form
+            'tag' => $tag
         ]);
-    }
-
-    public function deleteAction()
-    {
-        $id = (int)$this->params()->fromRoute('id', 0);
-
-        if (!$id) {
-            return $this->notFoundAction();
-        }
-
-        try {
-            $note = $this->noteRepository->findById($id);
-            $this->noteCommand->delete($note);
-        } catch (\Exception $e) {
-            $this->flashMessenger()->addSuccessMessage($e->getMessage());
-            return $this->redirect()->toRoute('note', ['action' => 'index']);
-        }
-
-        $this->flashMessenger()->addSuccessMessage('Note was deleted successfull.');
-        return $this->redirect()->toRoute('note', ['action' => 'index']);
     }
 }
