@@ -2,7 +2,7 @@
 
 namespace Application\Factory;
 
-use Application\Model\TagCommand;
+use Application\Model\TagAdapter;
 use Interop\Container\ContainerInterface;
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -13,6 +13,6 @@ class TagCommandFactory extends AbstractActionController
     {
         $dbAdapter = $container->get(AdapterInterface::class);
 
-        return new TagCommand($dbAdapter);
+        return new TagAdapter($dbAdapter);
     }
 }

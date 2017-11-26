@@ -9,15 +9,8 @@ use Zend\Db\Sql\Insert;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Update;
 
-class CategoryCommand
+class CategoryAdapter extends AdapterAbstract
 {
-    protected $dbAdapter;
-
-    public function __construct(AdapterInterface $dbAdapter)
-    {
-        $this->dbAdapter = $dbAdapter;
-    }
-
     public function insert(Category $category)
     {
         $insert = new Insert('category');
@@ -28,17 +21,9 @@ class CategoryCommand
             'position' => $category->getPosition() ? $category->getPosition() : 0
         ]);
 
-        $sql = new Sql($this->dbAdapter);
-        $statement = $sql->prepareStatementForSqlObject($insert);
-        $result = $statement->execute();
-
-        if (!$result instanceof ResultInterface) {
-            throw new \RuntimeException(
-                'Database error occurred during category insert operation.'
-            );
-        }
-
+        $result = $this->executeStatement($insert);
         $id = $result->getGeneratedValue();
+
         return $id;
     }
 
@@ -57,17 +42,7 @@ class CategoryCommand
         ]);
         $update->where(['id = ?' => $category->getId()]);
 
-        $sql = new Sql($this->dbAdapter);
-        $statement = $sql->prepareStatementForSqlObject($update);
-        $result = $statement->execute();
-
-        if (!$result instanceof ResultInterface) {
-            throw new \RuntimeException(
-                'Database error occurred during category update operation'
-            );
-        }
-
-        return $category;
+        $this->executeStatement($update);
     }
 
     public function delete(Category $category)
@@ -80,15 +55,9 @@ class CategoryCommand
             throw new \RuntimeException('Cannot delete category; missing identifier.');
         }
 
-        $delete = new Delete('category');
-        $delete->where(['id' => $category->getId()]);
+        $delete = (new Delete('category'))
+            ->where(['id' => $category->getId()]);
 
-        $sql = new Sql($this->dbAdapter);
-        $statement = $sql->prepareStatementForSqlObject($delete);
-        $result = $statement->execute();
-
-        if (!$result instanceof ResultInterface) {
-            throw new \RuntimeException('Cannot delete category; undefined erro.');
-        }
+        $this->executeStatement($delete);
     }
 }

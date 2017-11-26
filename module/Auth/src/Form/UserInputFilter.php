@@ -37,7 +37,15 @@ class UserInputFilter extends InputFilter
 
         $this->add([
             'name' => 'password',
-            'required' => true
+            'required' => true,
+            'validators' => [
+                [
+                    'name' => Identical::class,
+                    'options' => [
+                        'token' => 'repeat_password'
+                    ],
+                ]
+            ]
         ]);
 
         $this->add([

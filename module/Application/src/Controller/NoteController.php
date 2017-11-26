@@ -5,7 +5,7 @@ namespace Application\Controller;
 use Application\Form\NoteForm;
 use Application\Service\TagService;
 use Application\Model\Note;
-use Application\Model\NoteCommand;
+use Application\Model\NoteAdapter;
 use Application\Model\NoteRepository;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -20,7 +20,7 @@ class NoteController extends AbstractActionController
 
     protected $tagService;
 
-    public function __construct(NoteRepository $noteRepository, NoteCommand $noteCommand, NoteForm $noteForm, TagService $tagService)
+    public function __construct(NoteRepository $noteRepository, NoteAdapter $noteCommand, NoteForm $noteForm, TagService $tagService)
     {
         $this->noteRepository = $noteRepository;
         $this->noteCommand = $noteCommand;
@@ -47,7 +47,6 @@ class NoteController extends AbstractActionController
                 /** @var Note $note */
                 $note = $form->getData();
                 $tags = $this->tagService->prepare($note->getTags());
-
                 $note->setTags($tags);
                 $this->noteCommand->insert($note);
 
@@ -76,9 +75,7 @@ class NoteController extends AbstractActionController
             return $this->redirect()->toRoute('note', ['action' => 'index']);
         }
 
-        $form = $this->noteForm;
-        $form->bind($note);
-
+        $form = $this->noteForm->bind($note);
         $request = $this->getRequest();
 
         if ($request->isPost()) {

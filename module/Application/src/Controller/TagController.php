@@ -4,7 +4,7 @@ namespace Application\Controller;
 
 use Application\Form\NoteForm;
 use Application\Model\Note;
-use Application\Model\NoteCommand;
+use Application\Model\NoteAdapter;
 use Application\Model\NoteRepository;
 use Application\Model\TagRepository;
 use Zend\Mvc\Controller\AbstractActionController;

@@ -65,9 +65,8 @@ class UserController extends AbstractActionController
             return $this->redirect()->toRoute('user', ['action' => 'index']);
         }
 
-        $form = $this->userForm;
-        $form->bind($user);
-
+        $this->userForm->getInputFilter()->get('password')->setRequired(false);
+        $form = $this->userForm->bind($user);
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -75,7 +74,7 @@ class UserController extends AbstractActionController
 
             if ($form->isValid()) {
                 $this->userTable->save($user);
-                $this->flashMessenger()->addSuccessMessage('User was updated successfull');
+                $this->flashMessenger()->addSuccessMessage('User was updated successfull.');
                 return $this->redirect()->toRoute('user', ['action' => 'index']);
             }
         }
@@ -103,7 +102,7 @@ class UserController extends AbstractActionController
         }
 
         $this->userTable->delete($user->getId());
-        $this->flashMessenger()->addSuccessMessage('User was deleted successful');
+        $this->flashMessenger()->addSuccessMessage('User was deleted successful.');
         return $this->redirect()->toRoute('user', ['action' => 'index']);
     }
 }

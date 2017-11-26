@@ -55,6 +55,10 @@ class Note
         return $this;
     }
 
+    public function addTag(Tag $tag) {
+        $this->tags[] = $tag;
+    }
+
     public function getTitle()
     {
         return $this->title;

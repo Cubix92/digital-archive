@@ -3,7 +3,7 @@
 namespace Application\Service;
 
 use Application\Model\Tag;
-use Application\Model\TagCommand;
+use Application\Model\TagAdapter;
 use Application\Model\TagRepository;
 
 class TagService
@@ -12,7 +12,7 @@ class TagService
 
     protected $tagCommand;
 
-    public function __construct(TagRepository $tagRepository, TagCommand $tagCommand)
+    public function __construct(TagRepository $tagRepository, TagAdapter $tagCommand)
     {
         $this->tagRepository = $tagRepository;
         $this->tagCommand = $tagCommand;
@@ -20,7 +20,7 @@ class TagService
 
     public function prepare(array $tags): array
     {
-        $tags = [];
+        $filteredTags = [];
 
         /**
          * @var Tag $tag
@@ -28,18 +28,16 @@ class TagService
         foreach($tags as $tag) {
             if (!$tag->getId()) {
                 try {
+                    $tag = $this->tagRepository->findByName($tag->getName());
+                } catch(\InvalidArgumentException $e) {
                     $id = $this->tagCommand->insert($tag);
                     $tag->setId($id);
-                } catch(\RuntimeException $e) {
-                    throw new \RuntimeException($e->getMessage());
                 }
             }
 
-            if ($this->tagRepository->findByName($tag->getName())) {
-
-            }
-
-            $tags[] = $tag;
+            $filteredTags[] = $tag;
         }
+
+        return $filteredTags;
     }
 }

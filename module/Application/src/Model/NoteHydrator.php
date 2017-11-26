@@ -61,6 +61,8 @@ class NoteHydrator extends AbstractHydrator
         return [
             'id' => $object->getId(),
             'category' => $object->getCategory(),
+            'category_id' => $object->getCategory()->getId(),
+            'tags' => $object->getTags(),
             'title' => $object->getTitle(),
             'content' => $object->getContent(),
             'position' => $object->getPosition()

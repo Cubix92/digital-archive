@@ -5,7 +5,7 @@ namespace Application\Factory;
 use Application\Controller\NoteController;
 use Application\Form\NoteForm;
 use Application\Service\TagService;
-use Application\Model\NoteCommand;
+use Application\Model\NoteAdapter;
 use Application\Model\NoteRepository;
 use Interop\Container\ContainerInterface;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -16,7 +16,7 @@ class NoteControllerFactory extends AbstractActionController
     public function __invoke(ContainerInterface $container)
     {
         $noteRepository = $container->get(NoteRepository::class);
-        $noteCommand = $container->get(NoteCommand::class);
+        $noteCommand = $container->get(NoteAdapter::class);
         $noteForm = $container->get(FormElementManager::class)->get(NoteForm::class);
         $tagService = $container->get(TagService::class);
 

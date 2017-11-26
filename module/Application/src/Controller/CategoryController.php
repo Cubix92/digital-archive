@@ -4,7 +4,7 @@ namespace Application\Controller;
 
 use Application\Form\CategoryForm;
 use Application\Model\Category;
-use Application\Model\CategoryCommand;
+use Application\Model\CategoryAdapter;
 use Application\Model\CategoryRepository;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -17,7 +17,7 @@ class CategoryController extends AbstractActionController
 
     protected $categoryForm;
 
-    public function __construct(CategoryRepository $categoryRepository, CategoryCommand $categoryCommand, CategoryForm $categoryForm)
+    public function __construct(CategoryRepository $categoryRepository, CategoryAdapter $categoryCommand, CategoryForm $categoryForm)
     {
         $this->categoryRepository = $categoryRepository;
         $this->categoryCommand = $categoryCommand;
@@ -68,9 +68,7 @@ class CategoryController extends AbstractActionController
             return $this->redirect()->toRoute('category', ['action' => 'index']);
         }
 
-        $form = $this->categoryForm;
-        $form->bind($category);
-
+        $form = $this->categoryForm->bind($category);
         $request = $this->getRequest();
 
         if ($request->isPost()) {

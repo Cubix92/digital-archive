@@ -36,11 +36,10 @@ class AuthController extends AbstractActionController
             $result = $this->authService->authenticate();
 
             if ($result->isValid()) {
-                /** @var User $user */
                 $user = $this->authService->getAdapter()->getResultRowObject();
                 $this->authService->getStorage()->write($user);
 
-                $this->flashMessenger()->addInfoMessage(sprintf('Zalogowałeś się do systemu jako %s', $user->getEmail()));
+                $this->flashMessenger()->addInfoMessage(sprintf('Zalogowałeś się do systemu jako %s', $user->email));
                 return $this->redirect()->toRoute('home');
             } else {
                 foreach ($result->getMessages() as $message) {
