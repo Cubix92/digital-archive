@@ -59,12 +59,12 @@ return [
     'service_manager' => [
         'factories' => [
             Model\CategoryRepository::class => Factory\CategoryRepositoryFactory::class,
-            Model\CategoryAdapter::class => Factory\CategoryCommandFactory::class,
+            Model\CategoryCommand::class => Factory\CategoryCommandFactory::class,
             Model\NoteRepository::class => Factory\NoteRepositoryFactory::class,
-            Model\NoteAdapter::class => Factory\NoteCommandFactory::class,
+            Model\NoteCommand::class => Factory\NoteCommandFactory::class,
             Model\NoteHydrator::class => Factory\NoteHydratorFactory::class,
             Model\TagRepository::class => Factory\TagRepositoryFactory::class,
-            Model\TagAdapter::class => Factory\TagCommandFactory::class,
+            Model\TagCommand::class => Factory\TagCommandFactory::class,
             Service\TagService::class => Factory\TagServiceFactory::class,
         ],
     ],

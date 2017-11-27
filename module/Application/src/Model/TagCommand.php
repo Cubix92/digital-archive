@@ -8,7 +8,7 @@ use Zend\Db\Sql\Delete;
 use Zend\Db\Sql\Insert;
 use Zend\Db\Sql\Sql;
 
-class TagAdapter extends AdapterAbstract
+class TagCommand extends AdapterAbstract
 {
     public function insert(Tag $tag)
     {
@@ -30,9 +30,13 @@ class TagAdapter extends AdapterAbstract
             throw new \RuntimeException('Cannot delete tag; missing identifier.');
         }
 
+        $deleteNoteTags = (new Delete('note_tag'))
+            ->where(['tag_id' => $tag->getId()]);
+
         $delete = (new Delete('note'))
             ->where(['id' => $tag->getId()]);
 
+        $this->executeStatement($deleteNoteTags);
         $this->executeStatement($delete);
     }
 }

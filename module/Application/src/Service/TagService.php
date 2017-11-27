@@ -3,7 +3,7 @@
 namespace Application\Service;
 
 use Application\Model\Tag;
-use Application\Model\TagAdapter;
+use Application\Model\TagCommand;
 use Application\Model\TagRepository;
 
 class TagService
@@ -12,7 +12,7 @@ class TagService
 
     protected $tagCommand;
 
-    public function __construct(TagRepository $tagRepository, TagAdapter $tagCommand)
+    public function __construct(TagRepository $tagRepository, TagCommand $tagCommand)
     {
         $this->tagRepository = $tagRepository;
         $this->tagCommand = $tagCommand;

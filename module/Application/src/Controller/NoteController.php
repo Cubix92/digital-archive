@@ -5,7 +5,7 @@ namespace Application\Controller;
 use Application\Form\NoteForm;
 use Application\Service\TagService;
 use Application\Model\Note;
-use Application\Model\NoteAdapter;
+use Application\Model\NoteCommand;
 use Application\Model\NoteRepository;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -20,7 +20,7 @@ class NoteController extends AbstractActionController
 
     protected $tagService;
 
-    public function __construct(NoteRepository $noteRepository, NoteAdapter $noteCommand, NoteForm $noteForm, TagService $tagService)
+    public function __construct(NoteRepository $noteRepository, NoteCommand $noteCommand, NoteForm $noteForm, TagService $tagService)
     {
         $this->noteRepository = $noteRepository;
         $this->noteCommand = $noteCommand;
@@ -70,8 +70,8 @@ class NoteController extends AbstractActionController
 
         try {
             $note = $this->noteRepository->findById($id);
-        } catch (\InvalidArgumentException $e) {
-            $this->flashMessenger()->addSuccessMessage($e->getMessage());
+        } catch (\UnexpectedValueException $e) {
+            $this->flashMessenger()->addSuccessMessage(sprintf('Note with identifier "%s" not found', $id));
             return $this->redirect()->toRoute('note', ['action' => 'index']);
         }
 
@@ -107,8 +107,8 @@ class NoteController extends AbstractActionController
 
         try {
             $note = $this->noteRepository->findById($id);
-        } catch (\InvalidArgumentException $e) {
-            $this->flashMessenger()->addSuccessMessage($e->getMessage());
+        } catch (\UnexpectedValueException $e) {
+            $this->flashMessenger()->addSuccessMessage(sprintf('Note with identifier "%s" not found', $id));
             return $this->redirect()->toRoute('note', ['action' => 'index']);
         }
 

@@ -2,7 +2,7 @@
 
 namespace Application\Factory;
 
-use Application\Model\CategoryAdapter;
+use Application\Model\CategoryCommand;
 use Interop\Container\ContainerInterface;
 use Zend\Db\Adapter\AdapterInterface;
 
@@ -12,6 +12,6 @@ class CategoryCommandFactory
     {
         $dbAdapter = $container->get(AdapterInterface::class);
 
-        return new CategoryAdapter($dbAdapter);
+        return new CategoryCommand($dbAdapter);
     }
 }

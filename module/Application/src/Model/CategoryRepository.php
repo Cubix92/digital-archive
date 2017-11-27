@@ -49,7 +49,7 @@ class CategoryRepository extends AdapterAbstract
         $categoryResult = $this->executeStatement($categorySelect);
 
         if (!$categoryResult->valid()) {
-            throw new \InvalidArgumentException(sprintf('Category with identifier "%s" not found', $id));
+            throw new \UnexpectedValueException('Category not found');
         }
 
         $categoryResultSet = new HydratingResultSet(new ReflectionHydrator(), new Category());

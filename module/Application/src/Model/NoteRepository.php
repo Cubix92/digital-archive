@@ -52,7 +52,7 @@ class NoteRepository extends AdapterAbstract
         $noteResult = $this->executeStatement($noteSelect);
 
         if (!$noteResult->valid()) {
-            throw new \InvalidArgumentException(sprintf('Note with identifier "%s" not found', $id));
+            throw new \UnexpectedValueException('Note not found');
         }
 
         $noteResultSet = new HydratingResultSet($this->noteHydrator, new Note());

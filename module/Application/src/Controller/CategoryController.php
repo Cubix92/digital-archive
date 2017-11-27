@@ -4,7 +4,7 @@ namespace Application\Controller;
 
 use Application\Form\CategoryForm;
 use Application\Model\Category;
-use Application\Model\CategoryAdapter;
+use Application\Model\CategoryCommand;
 use Application\Model\CategoryRepository;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -17,7 +17,7 @@ class CategoryController extends AbstractActionController
 
     protected $categoryForm;
 
-    public function __construct(CategoryRepository $categoryRepository, CategoryAdapter $categoryCommand, CategoryForm $categoryForm)
+    public function __construct(CategoryRepository $categoryRepository, CategoryCommand $categoryCommand, CategoryForm $categoryForm)
     {
         $this->categoryRepository = $categoryRepository;
         $this->categoryCommand = $categoryCommand;
@@ -43,6 +43,7 @@ class CategoryController extends AbstractActionController
                 /** @var Category $category */
                 $category = $form->getData();
                 $this->categoryCommand->insert($category);
+
                 $this->flashMessenger()->addSuccessMessage('Category was added successfull.');
                 return $this->redirect()->toRoute('category');
             }
@@ -63,8 +64,8 @@ class CategoryController extends AbstractActionController
 
         try {
             $category = $this->categoryRepository->findById($id);
-        } catch (\InvalidArgumentException $e) {
-            $this->flashMessenger()->addSuccessMessage($e->getMessage());
+        } catch (\UnexpectedValueException $e) {
+            $this->flashMessenger()->addSuccessMessage(sprintf('Category with identifier "%s" not found', $id));
             return $this->redirect()->toRoute('category', ['action' => 'index']);
         }
 
@@ -98,7 +99,7 @@ class CategoryController extends AbstractActionController
         try {
             $category = $this->categoryRepository->findById($id);
         } catch (\InvalidArgumentException $e) {
-            $this->flashMessenger()->addErrorMessage($e->getMessage());
+            $this->flashMessenger()->addErrorMessage(sprintf('Category with identifier "%s" not found', $id));
             return $this->redirect()->toRoute('category', ['action' => 'index']);
         }
 

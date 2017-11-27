@@ -40,7 +40,7 @@ class TagRepository extends AdapterAbstract
         $result = $this->executeStatement($select);
 
         if (!$result->valid()) {
-            throw new \InvalidArgumentException(sprintf('Tag with identifier "%s" not found', $id));
+            throw new \UnexpectedValueException('Tag not found');
         }
 
         $resultSet = new HydratingResultSet(new ReflectionHydrator(), new Tag());
@@ -73,7 +73,7 @@ class TagRepository extends AdapterAbstract
         $result = $this->executeStatement($select);
 
         if (!$result->valid()) {
-            throw new \InvalidArgumentException(sprintf('Tag with name "%s" not found', $name));
+            throw new \UnexpectedValueException('Tag not found');
         }
 
         $resultSet = new HydratingResultSet(new ReflectionHydrator(), new Tag());

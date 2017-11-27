@@ -16,9 +16,9 @@ abstract class AdapterAbstract
         $this->sql = new Sql($dbAdapter);
     }
 
-    protected function executeStatement(AbstractPreparableSql $command)
+    protected function executeStatement(AbstractPreparableSql $operation)
     {
-        $statement = $this->sql->prepareStatementForSqlObject($command);
+        $statement = $this->sql->prepareStatementForSqlObject($operation);
         $result = $statement->execute();
 
         if (!$result instanceof ResultInterface) {

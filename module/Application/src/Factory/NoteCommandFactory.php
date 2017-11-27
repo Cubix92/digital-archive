@@ -2,7 +2,7 @@
 
 namespace Application\Factory;
 
-use Application\Model\NoteAdapter;
+use Application\Model\NoteCommand;
 use Interop\Container\ContainerInterface;
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -13,6 +13,6 @@ class NoteCommandFactory extends AbstractActionController
     {
         $dbAdapter = $container->get(AdapterInterface::class);
 
-        return new NoteAdapter($dbAdapter);
+        return new NoteCommand($dbAdapter);
     }
 }

@@ -6,7 +6,7 @@ use Zend\Db\Sql\Delete;
 use Zend\Db\Sql\Insert;
 use Zend\Db\Sql\Update;
 
-class NoteAdapter extends AdapterAbstract
+class NoteCommand extends AdapterAbstract
 {
     public function insert(Note $note)
     {
@@ -54,13 +54,13 @@ class NoteAdapter extends AdapterAbstract
             throw new \RuntimeException('Cannot delete note; missing identifier.');
         }
 
-        $deleteTags = (new Delete('note_tag'))
+        $deleteNoteTags = (new Delete('note_tag'))
             ->where(['note_id' => $note->getId()]);
 
         $delete = (new Delete('note'))
             ->where(['id' => $note->getId()]);
 
-        $this->executeStatement($deleteTags);
+        $this->executeStatement($deleteNoteTags);
         $this->executeStatement($delete);
     }
 

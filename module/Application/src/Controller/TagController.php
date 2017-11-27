@@ -4,7 +4,7 @@ namespace Application\Controller;
 
 use Application\Form\NoteForm;
 use Application\Model\Note;
-use Application\Model\NoteAdapter;
+use Application\Model\NoteCommand;
 use Application\Model\NoteRepository;
 use Application\Model\TagRepository;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -36,8 +36,8 @@ class TagController extends AbstractActionController
 
         try {
             $tag = $this->tagRepository->findById($id);
-        } catch(\InvalidArgumentException $e) {
-            $this->flashMessenger()->addSuccessMessage($e->getMessage());
+        } catch(\UnexpectedValueException $e) {
+            $this->flashMessenger()->addSuccessMessage(sprintf('Tag with identifier "%s" not found', $id));
             return $this->redirect()->toRoute('tag', ['action' => 'index']);
         }
 

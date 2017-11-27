@@ -9,7 +9,7 @@ use Zend\Db\Sql\Insert;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Update;
 
-class CategoryAdapter extends AdapterAbstract
+class CategoryCommand extends AdapterAbstract
 {
     public function insert(Category $category)
     {
