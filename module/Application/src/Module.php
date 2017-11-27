@@ -7,6 +7,8 @@
 
 namespace Application;
 
+use Zend\I18n\Translator\Loader\PhpArray;
+use Zend\Mvc\I18n\Translator;
 use Zend\Mvc\MvcEvent;
 
 class Module
@@ -22,5 +24,11 @@ class Module
     {
         $viewModel = $e->getApplication()->getMvcEvent()->getViewModel();
         $viewModel->isHomePage = $e->getRequest()->getUri()->getPath() == '/';
+
+        /**
+         * @var Translator $translator
+         */
+        $translator->addTranslationFile(PhpArray::class, __DIR__ . '/../../../vendor/zendframework/zend-i18n-resources/languages/pl/Zend_Validate.php');
+        $translator->addTranslationFile(PhpArray::class, __DIR__ . '/../../../data/languages/pl_PL.php');
     }
 }
