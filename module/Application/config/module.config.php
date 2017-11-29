@@ -7,6 +7,7 @@
 
 namespace Application;
 
+use Zend\Mvc\I18n\Translator;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
@@ -66,6 +67,11 @@ return [
             Model\TagRepository::class => Factory\TagRepositoryFactory::class,
             Model\TagCommand::class => Factory\TagCommandFactory::class,
             Service\TagService::class => Factory\TagServiceFactory::class,
+        ],
+        'delegators' => [
+            Translator::class => [
+                Delegator\TranslatorDelegator::class
+            ]
         ],
     ],
     'form_elements' => [
