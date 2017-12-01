@@ -4,7 +4,6 @@ namespace Application\Delegator;
 
 use Interop\Container\ContainerInterface;
 use Zend\I18n\Translator\Loader\PhpArray;
-use Zend\I18n\Translator\Resources;
 use Zend\Mvc\I18n\Translator;
 use Zend\ServiceManager\Factory\DelegatorFactoryInterface;
 

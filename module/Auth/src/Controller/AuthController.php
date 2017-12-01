@@ -28,22 +28,21 @@ class AuthController extends AbstractActionController
         $form = $this->loginForm;
 
         if ($request->isPost()) {
+            $form->setData($request->getPost());
 
-            $this->authService->getAdapter()
-                ->setIdentity($request->getPost('email'))
-                ->setCredential($request->getPost('password'));
+            if ($form->isValid()) {
+                $this->authService->getAdapter()
+                    ->setIdentity($request->getPost('email'))
+                    ->setCredential($request->getPost('password'));
 
-            $result = $this->authService->authenticate();
+                $result = $this->authService->authenticate();
 
-            if ($result->isValid()) {
-                $user = $this->authService->getAdapter()->getResultRowObject();
-                $this->authService->getStorage()->write($user);
+                if ($result->isValid()) {
+                    $user = $this->authService->getAdapter()->getResultRowObject();
+                    $this->authService->getStorage()->write($user);
 
-                $this->flashMessenger()->addInfoMessage(sprintf('Zalogowałeś się do systemu jako %s', $user->email));
-                return $this->redirect()->toRoute('home');
-            } else {
-                foreach ($result->getMessages() as $message) {
-                    echo "$message\n";
+                    $this->flashMessenger()->addInfoMessage(sprintf('You are logged as %s', $user->email));
+                    return $this->redirect()->toRoute('home');
                 }
             }
         }

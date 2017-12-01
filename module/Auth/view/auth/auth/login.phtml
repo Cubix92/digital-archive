@@ -30,6 +30,9 @@
     <?= $this->formElement($this->form->get('password')) ?>
     <?= $this->formElementErrors($this->form->get('password')) ?>
 
+    <?= $this->formElement($this->form->get('csrf')) ?>
+    <?= $this->formElementErrors($this->form->get('csrf')) ?>
+
     <?= $this->formSubmit($this->form->get('submit')) ?>
     <?= $this->form()->closeTag(); ?>
 

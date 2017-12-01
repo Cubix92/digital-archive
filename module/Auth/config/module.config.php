@@ -4,8 +4,9 @@ namespace Auth;
 
 use Zend\Router\Http\Segment;
 use Zend\Router\Http\Literal;
+use Zend\Authentication\AuthenticationService as AuthService;
+use Zend\Authentication\Adapter\DbTable\CallbackCheckAdapter as AuthAdapter;
 use Zend\ServiceManager\Factory\InvokableFactory;
-use Zend\Authentication\AuthenticationService;
 
 return [
     'router' => [
@@ -61,7 +62,8 @@ return [
     'service_manager' => [
         'factories' => [
             Model\UserTable::class => Factory\UserTableFactory::class,
-            AuthenticationService::class => Factory\AuthServiceFactory::class
+            AuthService::class => Factory\AuthServiceFactory::class,
+            AuthAdapter::class => Factory\AuthAdapterFactory::class,
         ],
     ],
     'form_elements' => [
@@ -73,6 +75,7 @@ return [
     'input_filters' => [
         'factories' => [
             Form\UserInputFilter::class => InvokableFactory::class,
+            Form\LoginInputFilter::class => Factory\LoginInputFilterFactory::class,
         ],
     ],
     'view_manager' => [
