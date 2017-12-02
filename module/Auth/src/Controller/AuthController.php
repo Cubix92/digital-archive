@@ -31,19 +31,9 @@ class AuthController extends AbstractActionController
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $this->authService->getAdapter()
-                    ->setIdentity($request->getPost('email'))
-                    ->setCredential($request->getPost('password'));
-
-                $result = $this->authService->authenticate();
-
-                if ($result->isValid()) {
-                    $user = $this->authService->getAdapter()->getResultRowObject();
-                    $this->authService->getStorage()->write($user);
-
-                    $this->flashMessenger()->addInfoMessage(sprintf('You are logged as %s', $user->email));
-                    return $this->redirect()->toRoute('home');
-                }
+                $user = $this->authService->getAdapter()->getResultRowObject();
+                $this->authService->getStorage()->write($user);
+                return $this->redirect()->toRoute('home');
             }
         }
 
@@ -57,7 +47,6 @@ class AuthController extends AbstractActionController
     public function logoutAction()
     {
         $this->authService->clearIdentity();
-        $this->flashMessenger()->addInfoMessage(sprintf('Zostałeś wylogowany z systemu.'));
         return $this->redirect()->toRoute('login');
     }
 

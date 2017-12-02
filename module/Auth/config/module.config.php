@@ -6,7 +6,6 @@ use Zend\Router\Http\Segment;
 use Zend\Router\Http\Literal;
 use Zend\Authentication\AuthenticationService as AuthService;
 use Zend\Authentication\Adapter\DbTable\CallbackCheckAdapter as AuthAdapter;
-use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'router' => [
@@ -74,7 +73,7 @@ return [
     ],
     'input_filters' => [
         'factories' => [
-            Form\UserInputFilter::class => InvokableFactory::class,
+            Form\UserInputFilter::class => Factory\UserInputFilterFactory::class,
             Form\LoginInputFilter::class => Factory\LoginInputFilterFactory::class,
         ],
     ],

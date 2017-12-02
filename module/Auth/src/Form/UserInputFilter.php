@@ -2,16 +2,54 @@
 
 namespace Auth\Form;
 
+use Zend\Db\Adapter\AdapterInterface;
 use Zend\Filter\StringToLower;
 use Zend\Filter\StringTrim;
 use Zend\Filter\ToInt;
 use Zend\Filter\ToNull;
 use Zend\InputFilter\InputFilter;
+use Zend\Validator\Db\NoRecordExists;
 use Zend\Validator\EmailAddress;
 use Zend\Validator\Identical;
 
 class UserInputFilter extends InputFilter
 {
+    public $dbAdapter;
+
+    public function __construct(AdapterInterface $dbAdapter)
+    {
+        $this->dbAdapter = $dbAdapter;
+    }
+
+    public function excludeEmail(string $email)
+    {
+        $this->remove('email');
+
+        $this->add([
+            'name' => 'email',
+            'required' => true,
+            'filters' => [
+                ['name' => StringToLower::class],
+                ['name' => StringTrim::class],
+            ],
+            'validators' => [
+                ['name' => EmailAddress::class],
+                [
+                    'name' => NoRecordExists::class,
+                    'options' => [
+                        'table'   => 'user',
+                        'field'   => 'email',
+                        'adapter' => $this->dbAdapter,
+                        'exclude' => [
+                            'field' => 'email',
+                            'value' => $email
+                        ]
+                    ]
+                ]
+            ],
+        ]);
+    }
+
     public function init()
     {
         $this->add([
@@ -32,6 +70,14 @@ class UserInputFilter extends InputFilter
             ],
             'validators' => [
                 ['name' => EmailAddress::class],
+                [
+                    'name' => NoRecordExists::class,
+                    'options' => [
+                        'table'   => 'user',
+                        'field'   => 'email',
+                        'adapter' => $this->dbAdapter,
+                    ]
+                ]
             ],
         ]);
 

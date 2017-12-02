@@ -61,11 +61,12 @@ class UserController extends AbstractActionController
             /** @var User $user */
             $user = $this->userTable->findById($id);
         } catch (\InvalidArgumentException $e) {
-            $this->flashMessenger()->addErrorMessage($e);
+            $this->flashMessenger()->addErrorMessage('User with identifier not found');
             return $this->redirect()->toRoute('user', ['action' => 'index']);
         }
 
         $this->userForm->getInputFilter()->get('password')->setRequired(false);
+        $this->userForm->getInputFilter()->excludeEmail($user->getEmail());
         $form = $this->userForm->bind($user);
         $request = $this->getRequest();
 
@@ -74,7 +75,7 @@ class UserController extends AbstractActionController
 
             if ($form->isValid()) {
                 $this->userTable->save($user);
-                $this->flashMessenger()->addSuccessMessage('User was updated successfull.');
+                $this->flashMessenger()->addSuccessMessage('User was updated successfull');
                 return $this->redirect()->toRoute('user', ['action' => 'index']);
             }
         }
@@ -97,12 +98,12 @@ class UserController extends AbstractActionController
             /** @var User $user */
             $user = $this->userTable->findById($id);
         } catch (\InvalidArgumentException $e) {
-            $this->flashMessenger()->addSuccessMessage($e->getMessage());
+            $this->flashMessenger()->addSuccessMessage('User with identifier not found');
             return $this->redirect()->toRoute('user', ['action' => 'index']);
         }
 
         $this->userTable->delete($user->getId());
-        $this->flashMessenger()->addSuccessMessage('User was deleted successful.');
+        $this->flashMessenger()->addSuccessMessage('User was deleted successful');
         return $this->redirect()->toRoute('user', ['action' => 'index']);
     }
 }

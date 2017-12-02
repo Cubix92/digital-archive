@@ -24,7 +24,7 @@ class UserTable
         $user = $resultSet->current();
 
         if (!$user) {
-            throw new \InvalidArgumentException(sprintf('User with identifier "%s" not found.', $id));
+            throw new \InvalidArgumentException('User with identifier not found');
         }
 
         return $user;
@@ -47,7 +47,7 @@ class UserTable
         }
 
         if (!$this->findById($id)) {
-            throw new \RuntimeException(sprintf('Cannot update user with identifier %d; does not exist', $id));
+            throw new \RuntimeException(sprintf('Cannot update user that does not exist'));
         }
 
         if (!$data['password']) {
