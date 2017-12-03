@@ -6,6 +6,7 @@ use Zend\Router\Http\Segment;
 use Zend\Router\Http\Literal;
 use Zend\Authentication\AuthenticationService as AuthService;
 use Zend\Authentication\Adapter\DbTable\CallbackCheckAdapter as AuthAdapter;
+use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'router' => [
@@ -63,6 +64,7 @@ return [
             Model\UserTable::class => Factory\UserTableFactory::class,
             AuthService::class => Factory\AuthServiceFactory::class,
             AuthAdapter::class => Factory\AuthAdapterFactory::class,
+            Listener\AuthListener::class => InvokableFactory::class,
         ],
     ],
     'form_elements' => [
