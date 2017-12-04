@@ -2,12 +2,21 @@
 
 namespace Application\Model;
 
+use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\Sql\Delete;
 use Zend\Db\Sql\Insert;
+use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Update;
 
-class NoteCommand extends AdapterAbstract
+class NoteCommand
 {
+    protected $sql;
+
+    public function __construct(AdapterInterface $dbAdapter)
+    {
+        $this->sql = new Sql($dbAdapter);
+    }
+
     public function insert(Note $note)
     {
         $insert = new Insert('note');
@@ -19,11 +28,11 @@ class NoteCommand extends AdapterAbstract
             'position' => $note->getPosition() ? $note->getPosition() : 0
         ]);
 
-        $result = $this->executeStatement($insert);
+        $result = $this->sql->prepareStatementForSqlObject($insert)->execute();
         $id = $result->getGeneratedValue();
 
         $note->setId($id);
-        $this->linkNoteToTags($note);
+        $this->linkTags($note);
 
         return $id;
     }
@@ -44,8 +53,8 @@ class NoteCommand extends AdapterAbstract
         ]);
         $update->where(['id = ?' => $note->getId()]);
 
-        $this->executeStatement($update);
-        $this->linkNoteToTags($note);
+        $this->sql->prepareStatementForSqlObject($update)->execute();
+        $this->linkTags($note);
     }
 
     public function delete(Note $note)
@@ -60,23 +69,17 @@ class NoteCommand extends AdapterAbstract
         $delete = (new Delete('note'))
             ->where(['id' => $note->getId()]);
 
-        $this->executeStatement($deleteNoteTags);
-        $this->executeStatement($delete);
+        $this->sql->prepareStatementForSqlObject($deleteNoteTags)->execute();
+        $this->sql->prepareStatementForSqlObject($delete)->execute();
     }
 
-    protected function linkNoteToTags($note)
+    protected function linkTags(Note $note)
     {
         $this->sql->getAdapter()->getDriver()->getConnection()->beginTransaction();
 
         $delete = new Delete('note_tag');
         $delete->where(['note_id' => $note->getId()]);
-
-        try {
-            $this->executeStatement($delete);
-        } catch(\Exception $e) {
-            $this->sql->getAdapter()->getDriver()->getConnection()->rollback();
-            throw new \Exception($e);
-        }
+        $this->sql->prepareStatementForSqlObject($delete)->execute();
 
         $insert = new Insert('note_tag');
 
@@ -89,12 +92,7 @@ class NoteCommand extends AdapterAbstract
                 'tag_id' => $tag->getId()
             ]);
 
-            try {
-                $this->executeStatement($insert);
-            } catch(\Exception $e) {
-                $this->sql->getAdapter()->getDriver()->getConnection()->rollback();
-                throw new \Exception($e);
-            }
+            $this->sql->prepareStatementForSqlObject($insert)->execute();
         }
 
         $this->sql->getAdapter()->getDriver()->getConnection()->commit();

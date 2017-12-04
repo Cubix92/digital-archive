@@ -9,8 +9,15 @@ use Zend\Db\Sql\Insert;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Update;
 
-class CategoryCommand extends AdapterAbstract
+class CategoryCommand
 {
+    protected $sql;
+
+    public function __construct(AdapterInterface $dbAdapter)
+    {
+        $this->sql = new Sql($dbAdapter);
+    }
+
     public function insert(Category $category)
     {
         $insert = new Insert('category');
@@ -21,7 +28,7 @@ class CategoryCommand extends AdapterAbstract
             'position' => $category->getPosition() ? $category->getPosition() : 0
         ]);
 
-        $result = $this->executeStatement($insert);
+        $result = $this->sql->prepareStatementForSqlObject($insert)->execute();
         $id = $result->getGeneratedValue();
 
         return $id;
@@ -42,22 +49,22 @@ class CategoryCommand extends AdapterAbstract
         ]);
         $update->where(['id = ?' => $category->getId()]);
 
-        $this->executeStatement($update);
+        $this->sql->prepareStatementForSqlObject($update)->execute();
     }
 
     public function delete(Category $category)
     {
         if ($category->getNotes()) {
-            throw new \RuntimeException('Cannot delete category; category has related values.');
+            throw new \RuntimeException('Cannot delete category; category has related values');
         }
 
         if (!$category->getId()) {
-            throw new \RuntimeException('Cannot delete category; missing identifier.');
+            throw new \RuntimeException('Cannot delete category; missing identifier');
         }
 
         $delete = (new Delete('category'))
             ->where(['id' => $category->getId()]);
 
-        $this->executeStatement($delete);
+        $this->sql->prepareStatementForSqlObject($delete)->execute();
     }
 }

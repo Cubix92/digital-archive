@@ -8,8 +8,15 @@ use Zend\Db\Sql\Delete;
 use Zend\Db\Sql\Insert;
 use Zend\Db\Sql\Sql;
 
-class TagCommand extends AdapterAbstract
+class TagCommand
 {
+    protected $sql;
+
+    public function __construct(AdapterInterface $dbAdapter)
+    {
+        $this->sql = new Sql($dbAdapter);
+    }
+
     public function insert(Tag $tag)
     {
         $insert = new Insert('tag');
@@ -18,7 +25,7 @@ class TagCommand extends AdapterAbstract
             'name' => $tag->getName()
         ]);
 
-        $result = $this->executeStatement($insert);
+        $result = $this->sql->prepareStatementForSqlObject($insert)->execute();
         $id = $result->getGeneratedValue();
 
         return $id;
@@ -36,7 +43,7 @@ class TagCommand extends AdapterAbstract
         $delete = (new Delete('note'))
             ->where(['id' => $tag->getId()]);
 
-        $this->executeStatement($deleteNoteTags);
-        $this->executeStatement($delete);
+        $this->sql->prepareStatementForSqlObject($deleteNoteTags)->execute();
+        $this->sql->prepareStatementForSqlObject($delete)->execute();
     }
 }

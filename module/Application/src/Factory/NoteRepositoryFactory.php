@@ -12,9 +12,9 @@ class NoteRepositoryFactory extends AbstractActionController
 {
     public function __invoke(ContainerInterface $container)
     {
-        $noteHydrator = $container->get(NoteHydrator::class);
         $dbAdapter = $container->get(AdapterInterface::class);
+        $noteHydrator = $container->get(NoteHydrator::class);
 
-        return new NoteRepository($noteHydrator, $dbAdapter);
+        return new NoteRepository($dbAdapter, $noteHydrator);
     }
 }
