@@ -5,15 +5,18 @@ namespace Application\Model;
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Db\Sql\Select;
+use Zend\Db\Sql\Sql;
 use Zend\Hydrator\Reflection as ReflectionHydrator;
 
-class NoteRepository extends AdapterAbstract
+class NoteRepository
 {
     protected $noteHydrator;
 
-    public function __construct(NoteHydrator $noteHydrator, AdapterInterface $dbAdapter)
+    protected $sql;
+
+    public function __construct(AdapterInterface $dbAdapter, NoteHydrator $noteHydrator)
     {
-        parent::__construct($dbAdapter);
+        $this->sql = new Sql($dbAdapter);
         $this->noteHydrator = $noteHydrator;
     }
 
@@ -21,7 +24,7 @@ class NoteRepository extends AdapterAbstract
     {
         $notes = [];
         $noteSelect = new Select('note');
-        $noteResult = $this->executeStatement($noteSelect);
+        $noteResult = $this->sql->prepareStatementForSqlObject($noteSelect)->execute();
         $noteResultSet = new HydratingResultSet($this->noteHydrator, new Note());
 
         $noteResultSet->initialize($noteResult);
@@ -33,7 +36,7 @@ class NoteRepository extends AdapterAbstract
             $categorySelect = (new Select('category'))
                 ->where(['id' => $note->getCategory()->getId()]);
 
-            $categoryResult = $this->executeStatement($categorySelect);
+            $categoryResult = $this->sql->prepareStatementForSqlObject($categorySelect)->execute();
             $categoryResultSet = new HydratingResultSet(new ReflectionHydrator(), new Category());
             $categoryResultSet->initialize($categoryResult);
 
@@ -49,7 +52,7 @@ class NoteRepository extends AdapterAbstract
     public function findById($id): Note
     {
         $noteSelect = $this->sql->select('note')->where(['id' => $id]);
-        $noteResult = $this->executeStatement($noteSelect);
+        $noteResult = $this->sql->prepareStatementForSqlObject($noteSelect)->execute();
 
         if (!$noteResult->valid()) {
             throw new \UnexpectedValueException('Note not found');
@@ -66,7 +69,7 @@ class NoteRepository extends AdapterAbstract
             ->join(['n' => 'note'], 'n.id = nt.note_id', [])
             ->where(['n.id' => $id]);
 
-        $tagResult = $this->executeStatement($tagSelect);
+        $tagResult = $this->sql->prepareStatementForSqlObject($tagSelect)->execute();
         $tagResultSet = new HydratingResultSet(new ReflectionHydrator(), new Tag());
         $tagResultSet->initialize($tagResult);
 

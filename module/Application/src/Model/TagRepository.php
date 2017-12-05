@@ -9,13 +9,20 @@ use Zend\Db\Sql\Sql;
 use Zend\Hydrator\Reflection as ReflectionHydrator;
 use Zend\Hydrator\Reflection;
 
-class TagRepository extends AdapterAbstract
+class TagRepository
 {
+    protected $sql;
+
+    public function __construct(AdapterInterface $dbAdapter)
+    {
+        $this->sql = new Sql($dbAdapter);
+    }
+
     public function findAll()
     {
         $tags = [];
-        $select = new Select('tag');
-        $result = $this->executeStatement($select);
+        $tagSelect = new Select('tag');
+        $result = $this->sql->prepareStatementForSqlObject($tagSelect)->execute();
 
         $resultSet = new HydratingResultSet(
             new ReflectionHydrator(),
@@ -36,8 +43,8 @@ class TagRepository extends AdapterAbstract
 
     public function findById($id): Tag
     {
-        $select = (new Select('tag'))->where(['id' => $id]);
-        $result = $this->executeStatement($select);
+        $tagSelect = (new Select('tag'))->where(['id' => $id]);
+        $result = $this->sql->prepareStatementForSqlObject($tagSelect)->execute();
 
         if (!$result->valid()) {
             throw new \UnexpectedValueException('Tag not found');
@@ -54,7 +61,7 @@ class TagRepository extends AdapterAbstract
             ->join(['n' => 'note'], 'n.id = nt.note_id')
             ->where(['t.id' => $id]);
 
-        $notesResult = $this->executeStatement($notesSelect);
+        $notesResult = $this->sql->prepareStatementForSqlObject($notesSelect)->execute();
 
         $noteResultSet = new HydratingResultSet(new ReflectionHydrator(), new Note());
         $noteResultSet->initialize($notesResult);
@@ -69,8 +76,8 @@ class TagRepository extends AdapterAbstract
 
     public function findByName($name): Tag
     {
-        $select = (new Select('tag'))->where(['name' => $name]);
-        $result = $this->executeStatement($select);
+        $tagSelect = (new Select('tag'))->where(['name' => $name]);
+        $result = $this->sql->prepareStatementForSqlObject($tagSelect)->execute();
 
         if (!$result->valid()) {
             throw new \UnexpectedValueException('Tag not found');
@@ -87,7 +94,7 @@ class TagRepository extends AdapterAbstract
             ->join(['n' => 'note'], 'n.id = nt.note_id', [])
             ->where(['t.id' => $tag->getId()]);
 
-        $notesResult = $this->executeStatement($notesSelect);
+        $notesResult = $this->sql->prepareStatementForSqlObject($notesSelect)->execute();
 
         $noteResultSet = new HydratingResultSet(new ReflectionHydrator(), new Note());
         $noteResultSet->initialize($notesResult);
