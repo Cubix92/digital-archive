@@ -1,3 +1,12 @@
+.login-container form ul li {
+    list-style-type: none;
+    color: red;
+}
+
+.login-container form ul {
+    padding: 0;
+}
+
 /* LOGIN PAGE */
 .login-container {
     padding: 30px;
