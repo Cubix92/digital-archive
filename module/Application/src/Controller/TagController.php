@@ -37,7 +37,7 @@ class TagController extends AbstractActionController
         try {
             $tag = $this->tagRepository->findById($id);
         } catch(\UnexpectedValueException $e) {
-            $this->flashMessenger()->addErrorMessage(sprintf('Tag with identifier not found');
+            $this->flashMessenger()->addErrorMessage('Tag with identifier not found');
             return $this->redirect()->toRoute('tag', ['action' => 'index']);
         }
 
