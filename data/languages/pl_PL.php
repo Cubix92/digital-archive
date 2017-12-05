@@ -10,10 +10,10 @@ return [
     'Category was added successfull' => 'Kategoria została dodana',
     'Category was updated successfull' => 'Kategoria została zmodyfikowana',
     'Category was deleted successfull' => 'Kategoria została usunięta',
-    'Tag not found' => 'Nie znaleziono taga',
     'Tag with identifier not found' => 'Nie znaleziono taga o przesłanym identyfikatorze',
     'User with identifier not found' => 'Nie znaleziono użytkownika o podanym identyfikatorze',
     'Category with identifier not found' => 'Nie znaleziono kategorii o podanym identyfikatorze',
     'Note with identifier not found' => 'Nie znaleziono notatki o podanym identyfikatorze',
+    'Tag not found' => 'Nie znaleziono taga',
     'Cannot update user that does not exist' => 'Nie można zaktualizować użytkownika, który nie istnieje',
 ];

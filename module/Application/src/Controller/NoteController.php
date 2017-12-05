@@ -46,11 +46,11 @@ class NoteController extends AbstractActionController
             if ($form->isValid()) {
                 /** @var Note $note */
                 $note = $form->getData();
-
                 $tags = $this->tagService->prepare($note->getTags());
                 $note->setTags($tags);
                 $this->noteCommand->insert($note);
 
+                $this->getEventManager()->trigger('noteAdded');
                 $this->flashMessenger()->addSuccessMessage('Note was added successfull');
                 return $this->redirect()->toRoute('note');
             }
@@ -87,6 +87,7 @@ class NoteController extends AbstractActionController
                 $note->setTags($tags);
                 $this->noteCommand->update($note);
 
+                $this->getEventManager()->trigger('noteEdited');
                 $this->flashMessenger()->addSuccessMessage('Note was updated successfull');
                 return $this->redirect()->toRoute('note', ['action' => 'index']);
             }
