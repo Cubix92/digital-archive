@@ -98,7 +98,7 @@ class UserController extends AbstractActionController
             /** @var User $user */
             $user = $this->userTable->findById($id);
         } catch (\InvalidArgumentException $e) {
-            $this->flashMessenger()->addSuccessMessage('User with identifier not found');
+            $this->flashMessenger()->addErrorMessage('User with identifier not found');
             return $this->redirect()->toRoute('user', ['action' => 'index']);
         }
 

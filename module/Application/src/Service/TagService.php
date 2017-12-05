@@ -29,7 +29,7 @@ class TagService
             if (!$tag->getId()) {
                 try {
                     $tag = $this->tagRepository->findByName($tag->getName());
-                } catch(\InvalidArgumentException $e) {
+                } catch(\UnexpectedValueException $e) {
                     $id = $this->tagCommand->insert($tag);
                     $tag->setId($id);
                 }

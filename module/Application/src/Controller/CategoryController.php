@@ -44,7 +44,7 @@ class CategoryController extends AbstractActionController
                 $category = $form->getData();
                 $this->categoryCommand->insert($category);
 
-                $this->flashMessenger()->addSuccessMessage('Category was added successfull.');
+                $this->flashMessenger()->addSuccessMessage('Category was added successfull');
                 return $this->redirect()->toRoute('category');
             }
         }
@@ -65,7 +65,7 @@ class CategoryController extends AbstractActionController
         try {
             $category = $this->categoryRepository->findById($id);
         } catch (\UnexpectedValueException $e) {
-            $this->flashMessenger()->addSuccessMessage(sprintf('Category with identifier "%s" not found', $id));
+            $this->flashMessenger()->addErrorMessage('Category with identifier not found');
             return $this->redirect()->toRoute('category', ['action' => 'index']);
         }
 
@@ -77,7 +77,7 @@ class CategoryController extends AbstractActionController
 
             if ($form->isValid()) {
                 $this->categoryCommand->update($category);
-                $this->flashMessenger()->addSuccessMessage('Category was updated successfull.');
+                $this->flashMessenger()->addSuccessMessage('Category was updated successfull');
                 return $this->redirect()->toRoute('category', ['action' => 'index']);
             }
         }
@@ -99,12 +99,12 @@ class CategoryController extends AbstractActionController
         try {
             $category = $this->categoryRepository->findById($id);
         } catch (\InvalidArgumentException $e) {
-            $this->flashMessenger()->addErrorMessage(sprintf('Category with identifier "%s" not found', $id));
+            $this->flashMessenger()->addErrorMessage('Category with identifier not found');
             return $this->redirect()->toRoute('category', ['action' => 'index']);
         }
 
         $this->categoryCommand->delete($category);
-        $this->flashMessenger()->addSuccessMessage('Category was deleted successfull.');
+        $this->flashMessenger()->addSuccessMessage('Category was deleted successfull');
         return $this->redirect()->toRoute('category', ['action' => 'index']);
     }
 }
