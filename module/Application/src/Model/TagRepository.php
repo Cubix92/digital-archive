@@ -41,6 +41,32 @@ class TagRepository
         return $tags;
     }
 
+    public function findUnassigned()
+    {
+        $tags = [];
+        $tagSelect = (new Select(['t' => 'tag']))
+            ->join(['nt' => 'note_tag'], 'nt.tag_id = t.id', '*', Select::JOIN_LEFT)
+            ->where('nt.tag_id IS NULL');
+
+        $result = $this->sql->prepareStatementForSqlObject($tagSelect)->execute();
+
+        $resultSet = new HydratingResultSet(
+            new ReflectionHydrator(),
+            new Tag()
+        );
+
+        $resultSet->initialize($result);
+
+        /**
+         * @var Tag $tag
+         */
+        foreach ($resultSet as $tag) {
+            $tags[] = $tag;
+        }
+
+        return $tags;
+    }
+
     public function findById($id): Tag
     {
         $tagSelect = (new Select('tag'))->where(['id' => $id]);

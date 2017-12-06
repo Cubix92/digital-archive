@@ -51,7 +51,7 @@ class NoteRepository
 
     public function findById($id): Note
     {
-        $noteSelect = $this->sql->select('note')->where(['id' => $id]);
+        $noteSelect = (new Select('note'))->where(['id' => $id]);
         $noteResult = $this->sql->prepareStatementForSqlObject($noteSelect)->execute();
 
         if (!$noteResult->valid()) {
@@ -64,7 +64,7 @@ class NoteRepository
         /** @var Note $note */
         $note = $noteResultSet->current();
 
-        $tagSelect = $this->sql->select(['t' => 'tag'])
+        $tagSelect = (new Select(['t' => 'tag']))
             ->join(['nt' => 'note_tag'], 'nt.tag_id = t.id', [])
             ->join(['n' => 'note'], 'n.id = nt.note_id', [])
             ->where(['n.id' => $id]);

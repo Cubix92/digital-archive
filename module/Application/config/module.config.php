@@ -67,7 +67,7 @@ return [
             Model\TagRepository::class => Factory\TagRepositoryFactory::class,
             Model\TagCommand::class => Factory\TagCommandFactory::class,
             Service\TagService::class => Factory\TagServiceFactory::class,
-            Listener\TagListener::class => InvokableFactory::class,
+            Listener\TagListener::class => Factory\TagListenerFactory::class,
         ],
         'delegators' => [
             Translator::class => [
