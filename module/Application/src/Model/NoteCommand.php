@@ -25,7 +25,8 @@ class NoteCommand
             'category_id' => $note->getCategory()->getId(),
             'title' => $note->getTitle(),
             'content' => $note->getContent(),
-            'position' => $note->getPosition() ? $note->getPosition() : 0
+            'url' => $note->getUrl(),
+            'date_published' => $note->getDatePublished()
         ]);
 
         $result = $this->sql->prepareStatementForSqlObject($insert)->execute();
@@ -49,7 +50,8 @@ class NoteCommand
             'category_id' => $note->getCategory()->getId(),
             'title' => $note->getTitle(),
             'content' => $note->getContent(),
-            'position' => $note->getPosition()
+            'url' => $note->getUrl(),
+            'date_published' => $note->getDatePublished()
         ]);
         $update->where(['id = ?' => $note->getId()]);
 

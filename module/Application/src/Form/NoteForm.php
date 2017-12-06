@@ -29,11 +29,6 @@ class NoteForm extends Form
         ]);
 
         $this->add([
-            'name' => 'position',
-            'type' => 'hidden'
-        ]);
-
-        $this->add([
             'name' => 'title',
             'type' => 'text',
             'attributes' => [

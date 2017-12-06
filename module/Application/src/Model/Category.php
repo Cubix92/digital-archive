@@ -12,8 +12,6 @@ class Category
 
     protected $icon;
 
-    protected $position;
-
     public function __construct()
     {
         $this->notes = [];
@@ -65,17 +63,6 @@ class Category
     public function setIcon($icon)
     {
         $this->icon = $icon;
-        return $this;
-    }
-
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    public function setPosition($position)
-    {
-        $this->position = $position;
         return $this;
     }
 }

@@ -45,8 +45,8 @@ class NoteHydrator extends AbstractHydrator
             $object->setContent($data['content']);
         };
 
-        if (array_key_exists('position', $data)) {
-            $object->setPosition($data['position']);
+        if (array_key_exists('date_published', $data)) {
+            $object->setDatePublished($data['date_published']);
         };
 
         return $object;
@@ -65,7 +65,7 @@ class NoteHydrator extends AbstractHydrator
             'tags' => $object->getTags(),
             'title' => $object->getTitle(),
             'content' => $object->getContent(),
-            'position' => $object->getPosition()
+            'date_published' => $object->getDatePublished()
         ];
     }
 }

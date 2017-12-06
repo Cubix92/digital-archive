@@ -14,7 +14,9 @@ class Note
 
     protected $content;
 
-    protected $position;
+    protected $url;
+
+    protected $datePublished;
 
     public function __construct()
     {
@@ -81,14 +83,25 @@ class Note
         return $this;
     }
 
-    public function getPosition()
+    public function getUrl()
     {
-        return $this->position;
+        return $this->url;
     }
 
-    public function setPosition($position)
+    public function setUrl($url)
     {
-        $this->position = $position;
+        $this->url = $url;
+        return $this;
+    }
+
+    public function getDatePublished()
+    {
+        return $this->datePublished;
+    }
+
+    public function setDatePublished($datePublished)
+    {
+        $this->datePublished = $datePublished;
         return $this;
     }
 }

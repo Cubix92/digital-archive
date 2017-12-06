@@ -24,8 +24,7 @@ class CategoryCommand
 
         $insert->values([
             'name' => $category->getName(),
-            'icon' => $category->getIcon(),
-            'position' => $category->getPosition() ? $category->getPosition() : 0
+            'icon' => $category->getIcon()
         ]);
 
         $result = $this->sql->prepareStatementForSqlObject($insert)->execute();
@@ -37,15 +36,14 @@ class CategoryCommand
     public function update(Category $category)
     {
         if (!$category->getId()) {
-            throw new \RuntimeException('Cannot update post; missing identifier.');
+            throw new \RuntimeException('Cannot update category; missing identifier.');
         }
 
         $update = new Update('category');
 
         $update->set([
             'name' => $category->getName(),
-            'icon' => $category->getIcon(),
-            'position' => $category->getPosition()
+            'icon' => $category->getIcon()
         ]);
         $update->where(['id = ?' => $category->getId()]);
 

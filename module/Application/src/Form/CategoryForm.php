@@ -16,11 +16,6 @@ class CategoryForm extends Form
         ]);
 
         $this->add([
-            'name' => 'position',
-            'type' => 'hidden'
-        ]);
-
-        $this->add([
             'name' => 'name',
             'type' => 'text',
             'attributes' => [
