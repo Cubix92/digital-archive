@@ -6,6 +6,7 @@ use Zend\Filter\StringTrim;
 use Zend\InputFilter\InputFilter;
 use Zend\Validator\InArray;
 use Zend\Validator\StringLength;
+use Zend\Validator\Uri;
 
 class NoteInputFilter extends InputFilter
 {
@@ -47,6 +48,22 @@ class NoteInputFilter extends InputFilter
                     'name' => InArray::class,
                     'options' => [
                         'haystack' => $this->categories
+                    ]
+                ],
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'url',
+            'required' => true,
+            'filters' => [
+                ['name' => StringTrim::class],
+            ],
+            'validators' => [
+                [
+                    'name' => Uri::class,
+                    'options' => [
+                        'allowRelative' => false
                     ]
                 ],
             ],
