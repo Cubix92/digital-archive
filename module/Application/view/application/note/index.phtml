@@ -12,6 +12,7 @@
                         <th style="width: 60px;">ID</th>
                         <th>Tytuł</th>
                         <th>Kategoria</th>
+                        <th>Data dodania</th>
                         <th style="width: 80px;">Akcje</th>
                     </tr>
                 </thead>
@@ -21,6 +22,7 @@
                         <td style="width: 60px;"><?= $note->getId() ?></td>
                         <td><?= $note->getTitle() ?></td>
                         <td><?= $note->getCategory()->getName() ?></td>
+                        <td><?= $note->getDatePublished()->format('Y-m-d H:i:s') ?></td>
                         <td>
                             <a href="<?= $this->url('note', ['action' => 'edit', 'id' => $note->getId()]) ?>" class="btn btn-success btn-xs" title="Edytuj">
                                 <span class="glyphicon glyphicon-edit"></span>

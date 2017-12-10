@@ -36,12 +36,12 @@ a, a:hover, a:active, a:focus {
     color: rgba(255, 255, 255, 1);
 }
 
-.form-group ul {
+.form-group ul, #tag-collection ul {
     padding: 0px;
     margin-top: 6px;
 }
 
-.form-group ul li {
+.form-group ul li, #tag-collection ul li {
     list-style-type: none;
     color: red;
 }
@@ -431,3 +431,14 @@ input:not([type="submit"]), textarea.form-control, select.form-control {
 .collection-label span {
     float: left;
 }
+
+span.remove-element {
+    cursor: pointer;
+    font-size: 22px;
+    position: absolute;
+    left: 332px;
+    top: 6px;
+    overflow: hidden;
+}
+
+

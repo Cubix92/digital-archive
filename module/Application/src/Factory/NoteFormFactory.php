@@ -3,11 +3,11 @@
 namespace Application\Factory;
 
 use Application\Form\NoteForm;
+use Application\Form\NoteInputFilter;
 use Application\Model\CategoryRepository;
 use Application\Model\Note;
 use Application\Model\NoteHydrator;
 use Interop\Container\ContainerInterface;
-use Zend\Hydrator\ClassMethods;
 
 class NoteFormFactory
 {
@@ -17,7 +17,7 @@ class NoteFormFactory
         $categories = $categoryRepository->findAll();
         $form = new NoteForm($categories);
         $form->setHydrator($container->get(NoteHydrator::class));
-//        $form->setInputFilter($container->get('InputFilterManager')->get(CategoryInputFilter::class));
+        $form->setInputFilter($container->get('InputFilterManager')->get(NoteInputFilter::class));
         $form->setObject(new Note());
 
         return $form;

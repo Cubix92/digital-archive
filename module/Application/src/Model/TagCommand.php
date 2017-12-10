@@ -40,7 +40,7 @@ class TagCommand
         $deleteNoteTags = (new Delete('note_tag'))
             ->where(['tag_id' => $tag->getId()]);
 
-        $delete = (new Delete('note'))
+        $delete = (new Delete('tag'))
             ->where(['id' => $tag->getId()]);
 
         $this->sql->prepareStatementForSqlObject($deleteNoteTags)->execute();

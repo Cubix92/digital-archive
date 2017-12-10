@@ -26,7 +26,7 @@ class NoteCommand
             'title' => $note->getTitle(),
             'content' => $note->getContent(),
             'url' => $note->getUrl(),
-            'date_published' => $note->getDatePublished()
+            'date_published' => (new \DateTime())->format('Y-m-d H:i:s')
         ]);
 
         $result = $this->sql->prepareStatementForSqlObject($insert)->execute();
@@ -50,8 +50,7 @@ class NoteCommand
             'category_id' => $note->getCategory()->getId(),
             'title' => $note->getTitle(),
             'content' => $note->getContent(),
-            'url' => $note->getUrl(),
-            'date_published' => $note->getDatePublished()
+            'url' => $note->getUrl()
         ]);
         $update->where(['id = ?' => $note->getId()]);
 

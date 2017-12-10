@@ -75,18 +75,24 @@ return [
             ]
         ],
     ],
-    'form_elements' => [
-        'factories' => [
-            Form\CategoryForm::class => Factory\CategoryFormFactory::class,
-            Form\NoteForm::class => Factory\NoteFormFactory::class,
-        ],
-    ],
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
             Controller\CategoryController::class => Factory\CategoryControllerFactory::class,
             Controller\NoteController::class => Factory\NoteControllerFactory::class,
             Controller\TagController::class => Factory\TagControllerFactory::class,
+        ],
+    ],
+    'form_elements' => [
+        'factories' => [
+            Form\CategoryForm::class => Factory\CategoryFormFactory::class,
+            Form\NoteForm::class => Factory\NoteFormFactory::class,
+        ],
+    ],
+    'input_filters' => [
+        'factories' => [
+            Form\CategoryInputFilter::class => InvokableFactory::class,
+            Form\NoteInputFilter::class => Factory\NoteInputFilterFactory::class,
         ],
     ],
     'navigation' => [

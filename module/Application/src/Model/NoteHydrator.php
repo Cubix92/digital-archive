@@ -41,12 +41,16 @@ class NoteHydrator extends AbstractHydrator
             $object->setTitle($data['title']);
         };
 
+        if (array_key_exists('url', $data)) {
+            $object->setUrl($data['url']);
+        };
+
         if (array_key_exists('content', $data)) {
             $object->setContent($data['content']);
         };
 
         if (array_key_exists('date_published', $data)) {
-            $object->setDatePublished($data['date_published']);
+            $object->setDatePublished(new \DateTime($data['date_published']));
         };
 
         return $object;
@@ -60,12 +64,12 @@ class NoteHydrator extends AbstractHydrator
     {
         return [
             'id' => $object->getId(),
-            'category' => $object->getCategory(),
             'category_id' => $object->getCategory()->getId(),
             'tags' => $object->getTags(),
             'title' => $object->getTitle(),
+            'url' => $object->getUrl(),
             'content' => $object->getContent(),
-            'date_published' => $object->getDatePublished()
+            'date_published' => $object->getDatePublished() ? $object->getDatePublished()->format('Y-m-d H:i:s') : null,
         ];
     }
 }

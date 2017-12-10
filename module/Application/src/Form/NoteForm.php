@@ -40,17 +40,6 @@ class NoteForm extends Form
         ]);
 
         $this->add([
-            'name' => 'content',
-            'type' => 'textarea',
-            'attributes' => [
-                'class' => 'form-control'
-            ],
-            'options' => [
-                'label' => 'Treść'
-            ]
-        ]);
-
-        $this->add([
             'name' => 'category_id',
             'type' => 'select',
             'attributes' => [
@@ -63,11 +52,34 @@ class NoteForm extends Form
         ]);
 
         $this->add([
+            'name' => 'url',
+            'type' => 'text',
+            'attributes' => [
+                'class' => 'form-control'
+            ],
+            'options' => [
+                'label' => 'Url'
+            ]
+        ]);
+
+        $this->add([
+            'name' => 'content',
+            'type' => 'textarea',
+            'attributes' => [
+                'class' => 'form-control',
+                'rows' => 10
+            ],
+            'options' => [
+                'label' => 'Treść'
+            ]
+        ]);
+
+        $this->add([
             'type' => 'collection',
             'name' => 'tags',
             'options' => [
                 'label' => 'Powiązane tagi',
-                'count' => 1,
+                'count' => 0,
                 'should_create_template' => true,
                 'allow_add' => true,
                 'template_placeholder' => '__index__',
