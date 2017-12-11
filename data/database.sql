@@ -3,7 +3,6 @@ CREATE TABLE category
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
   icon VARCHAR(255),
-  position INT NOT NULL
 )ENGINE = INNODB;
 
 CREATE TABLE note
@@ -12,7 +11,8 @@ CREATE TABLE note
   category_id INT NOT NULL,
   title VARCHAR(255) NOT NULL,
   content TEXT,
-  position INT NOT NULL,
+  url VARCHAR(255) NOT NULL,
+  date_created DATETIME NOT NULL
   FOREIGN KEY(category_id) REFERENCES category(id)
 )ENGINE = INNODB;
 
