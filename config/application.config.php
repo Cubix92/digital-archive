@@ -6,7 +6,7 @@
  * @see https://docs.zendframework.com/tutorials/advanced-config/#environment-specific-application-configuration
  */
 return [
-    // Retrieve list of modules used in this user.
+    // Retrieve list of modules used in this app.
     'modules' => require __DIR__ . '/modules.config.php',
 
     // These are various options for the listeners attached to the ModuleManager

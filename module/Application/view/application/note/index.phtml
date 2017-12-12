@@ -1,0 +1,42 @@
+<div class="row margin-top-20 margin-bottom-20">
+    <div class="col-md-12">
+        <a class="btn btn-blk pull-right" href="<?= $this->url('note', ['action' => 'add']) ?>">Dodaj notatkę</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <?php if($this->notes): ?>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th style="width: 60px;">ID</th>
+                        <th>Tytuł</th>
+                        <th>Kategoria</th>
+                        <th>Data dodania</th>
+                        <th style="width: 80px;">Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach($this->notes as $note): ?>
+                    <tr>
+                        <td style="width: 60px;"><?= $note->getId() ?></td>
+                        <td><?= $note->getTitle() ?></td>
+                        <td><?= $note->getCategory()->getName() ?></td>
+                        <td><?= $note->getDatePublished()->format('Y-m-d H:i:s') ?></td>
+                        <td>
+                            <a href="<?= $this->url('note', ['action' => 'edit', 'id' => $note->getId()]) ?>" class="btn btn-success btn-xs" title="Edytuj">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                            <a href="<?= $this->url('note', ['action' => 'delete', 'id' => $note->getId()]) ?>" class="btn btn-danger btn-xs" title="Usuń">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <div class="alert alert-warning" role="alert">Lista notatek jest pusta.</div>
+        <?php endif; ?>
+    </div>
+</div>

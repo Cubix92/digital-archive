@@ -2,10 +2,10 @@
 
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <?= $this->headTitle('Digital Game Archive')->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?= $this->headTitle('Digital Code Repository')->setSeparator(' - ')->setAutoEscape(false) ?>
 
         <?= $this->headMeta()
+            ->appendName('charset', 'UTF-8')
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
         ?>
@@ -14,6 +14,8 @@
             ->prependStylesheet($this->basePath('css/custom.css'))
             ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
         ?>
+
+        <?= $this->headStyle() ?>
 
         <?= $this->headScript()
             ->prependFile($this->basePath('js/bootstrap.min.js'))
@@ -43,13 +45,14 @@
                     ?>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a class="logout" href="login.html">Wyloguj</a>
+                            <a class="logout" href="<?= $this->url('logout') ?>">Wyloguj</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
         <div class="container">
+            <?= $this->partial('/partial/messages.phtml') ?>
             <?= $this->content ?>
 
             <footer class="footer">

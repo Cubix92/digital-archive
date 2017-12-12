@@ -1,0 +1,30 @@
+<div class="row margin-top-30">
+    <div class="col-md-12">
+        <?php if($this->tags): ?>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th style="width: 60px;">ID</th>
+                        <th>Nazwa</th>
+                        <th style="width: 80px;">Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach($this->tags as $tag): ?>
+                    <tr>
+                        <td style="width: 60px;"><?= $tag->getId() ?></td>
+                        <td><?= $tag->getName() ?></td>
+                        <td>
+                            <a href="<?= $this->url('tag', ['action' => 'show', 'id' => $tag->getId()]) ?>" class="btn btn-info btn-xs" title="Usuń">
+                                <span class="glyphicon glyphicon-list-alt"></span>
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <div class="alert alert-warning" role="alert">Lista tagów jest pusta.</div>
+        <?php endif; ?>
+    </div>
+</div>

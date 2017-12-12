@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1>Lista notatek tagu <strong><?= $this->tag->getName() ?></strong></h1>
+    </div>
+</div>
+<div class="row margin-top-20">
+    <div class="col-md-12">
+        <?php if($this->tag->getNotes()): ?>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th style="width: 60px;">ID</th>
+                        <th>Nazwa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach($this->tag->getNotes() as $note): ?>
+                    <tr>
+                        <td style="width: 60px;"><?= $note->getId() ?></td>
+                        <td><?= $note->getTitle() ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <div class="alert alert-warning" role="alert">Lista notatek jest pusta.</div>
+        <?php endif; ?>
+    </div>
+</div>

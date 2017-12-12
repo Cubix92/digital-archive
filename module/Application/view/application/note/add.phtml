@@ -1,0 +1,57 @@
+<h1>Formularz dodawania notatki</h1>
+
+<?php $this->form->prepare(); ?>
+<div class="row margin-top-20">
+    <?= $this->form()->openTag($this->form); ?>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <?= $this->formLabel($this->form->get('title')) ?>
+                    <?= $this->formElement($this->form->get('title')) ?>
+                    <?= $this->formElementErrors($this->form->get('title')) ?>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <?= $this->formLabel($this->form->get('category_id')) ?>
+                    <?= $this->formElement($this->form->get('category_id')) ?>
+                    <?= $this->formElementErrors($this->form->get('category_id')) ?>
+                    <div class="select-arrow"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <?= $this->formLabel($this->form->get('url')) ?>
+                    <?= $this->formElement($this->form->get('url')) ?>
+                    <?= $this->formElementErrors($this->form->get('url')) ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <?= $this->formLabel($this->form->get('content')) ?>
+                    <?= $this->formElement($this->form->get('content')) ?>
+                    <?= $this->formElementErrors($this->form->get('content')) ?>
+                </div>
+            </div>
+        </div>
+
+        <?= $this->formCollection($this->form->get('tags')->setAttribute('class', 'col-md-12')) ?>
+
+        <div class="col-md-12 margin-top-20 margin-bottom-20">
+            <button onclick="return add_tag()" class="btn btn-blk">Dodaj tag</button>
+        </div>
+
+        <div class="col-md-8 col-md-offset-2 text-right">
+            <?= $this->formSubmit($this->form->get('submit')) ?>
+        </div>
+    <?= $this->form()->closeTag(); ?>
+</div>
+
+<?php $this->inlineScript()->prependFile($this->basePath('js/add_tag.js')) ?>

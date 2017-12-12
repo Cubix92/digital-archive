@@ -7,6 +7,7 @@
 
 namespace Application;
 
+use Zend\Mvc\I18n\Translator;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
@@ -20,15 +21,78 @@ return [
                     'route'    => '/',
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
-                        'action'     => 'index',
+                        'action'     => 'index'
                     ],
                 ],
+            ],
+            'category' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route'    => '/category[/:action[/:id]]',
+                    'defaults' => [
+                        'controller' => Controller\CategoryController::class,
+                        'action'     => 'index'
+                    ],
+                ],
+            ],
+            'note' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route'    => '/note[/:action[/:id]]',
+                    'defaults' => [
+                        'controller' => Controller\NoteController::class,
+                        'action'     => 'index'
+                    ],
+                ],
+            ],
+            'tag' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route'    => '/tag[/:action[/:id]]',
+                    'defaults' => [
+                        'controller' => Controller\TagController::class,
+                        'action'     => 'index'
+                    ],
+                ],
+            ]
+        ],
+    ],
+    'service_manager' => [
+        'factories' => [
+            Model\CategoryRepository::class => Factory\CategoryRepositoryFactory::class,
+            Model\CategoryCommand::class => Factory\CategoryCommandFactory::class,
+            Model\NoteRepository::class => Factory\NoteRepositoryFactory::class,
+            Model\NoteCommand::class => Factory\NoteCommandFactory::class,
+            Model\NoteHydrator::class => Factory\NoteHydratorFactory::class,
+            Model\TagRepository::class => Factory\TagRepositoryFactory::class,
+            Model\TagCommand::class => Factory\TagCommandFactory::class,
+            Service\TagService::class => Factory\TagServiceFactory::class,
+            Listener\TagListener::class => Factory\TagListenerFactory::class,
+        ],
+        'delegators' => [
+            Translator::class => [
+                Delegator\TranslatorDelegator::class
             ]
         ],
     ],
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
+            Controller\CategoryController::class => Factory\CategoryControllerFactory::class,
+            Controller\NoteController::class => Factory\NoteControllerFactory::class,
+            Controller\TagController::class => Factory\TagControllerFactory::class,
+        ],
+    ],
+    'form_elements' => [
+        'factories' => [
+            Form\CategoryForm::class => Factory\CategoryFormFactory::class,
+            Form\NoteForm::class => Factory\NoteFormFactory::class,
+        ],
+    ],
+    'input_filters' => [
+        'factories' => [
+            Form\CategoryInputFilter::class => InvokableFactory::class,
+            Form\NoteInputFilter::class => Factory\NoteInputFilterFactory::class,
         ],
     ],
     'navigation' => [
@@ -46,6 +110,49 @@ return [
                         'label'  => 'Edycja użytkownika',
                         'route'  => 'user',
                         'action' => 'edit',
+                    ]
+                ]
+            ],
+            [
+                'label' => 'Kategorie',
+                'route' => 'category',
+                'pages' => [
+                    [
+                        'label'  => 'Dodawanie kategorii',
+                        'route'  => 'category',
+                        'action' => 'add',
+                    ],
+                    [
+                        'label'  => 'Edycja kategorii',
+                        'route'  => 'category',
+                        'action' => 'edit',
+                    ]
+                ],
+            ],
+            [
+                'label' => 'Notatki',
+                'route' => 'note',
+                'pages' => [
+                    [
+                        'label'  => 'Dodawanie notatki',
+                        'route'  => 'note',
+                        'action' => 'add',
+                    ],
+                    [
+                        'label'  => 'Edycja notatki',
+                        'route'  => 'note',
+                        'action' => 'edit',
+                    ]
+                ],
+            ],
+            [
+                'label' => 'Tagi',
+                'route' => 'tag',
+                'pages' => [
+                    [
+                        'label'  => 'Podgląd tagu',
+                        'route'  => 'tag',
+                        'action' => 'show',
                     ]
                 ],
             ],

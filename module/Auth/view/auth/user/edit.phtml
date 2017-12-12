@@ -1,0 +1,46 @@
+<h1>Formularz użytkownika <strong><?= $user->getEmail() ?></strong></h1>
+<?php $this->form->prepare(); ?>
+<div class="row margin-top-20">
+    <?= $this->form()->openTag($this->form); ?>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <?= $this->formLabel($this->form->get('email')) ?>
+                    <?= $this->formElement($this->form->get('email')) ?>
+                    <?= $this->formElementErrors($this->form->get('email')) ?>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <?= $this->formLabel($this->form->get('role')) ?>
+                    <?= $this->formElement($this->form->get('role')) ?>
+                    <?= $this->formElementErrors($this->form->get('role')) ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <?= $this->formLabel($this->form->get('password')->setLabel('Zmień hasło')) ?>
+                    <?= $this->formElement($this->form->get('password')) ?>
+                    <?= $this->formElementErrors($this->form->get('password')) ?>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <?= $this->formLabel($this->form->get('repeat_password')) ?>
+                    <?= $this->formElement($this->form->get('repeat_password')) ?>
+                    <?= $this->formElementErrors($this->form->get('repeat_password')) ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 col-md-offset-2 text-right">
+            <?= $this->formElement($this->form->get('csrf')) ?>
+            <?= $this->formSubmit($this->form->get('submit')) ?>
+        </div>
+    <?= $this->form()->closeTag(); ?>
+</div>

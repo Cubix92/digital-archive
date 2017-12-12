@@ -1,0 +1,38 @@
+<div class="row margin-top-20 margin-bottom-20">
+    <div class="col-md-12">
+        <a class="btn btn-blk pull-right" href="<?= $this->url('category', ['action' => 'add']) ?>">Dodaj kategorię</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <?php if($this->categories): ?>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th style="width: 60px;">ID</th>
+                        <th>Nazwa</th>
+                        <th style="width: 80px;">Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach($this->categories as $category): ?>
+                    <tr>
+                        <td><?= $category->getId() ?></td>
+                        <td><?= $category->getName() ?></td>
+                        <td>
+                            <a href="<?= $this->url('category', ['action' => 'edit', 'id' => $category->getId()]) ?>" class="btn btn-success btn-xs" title="Edytuj">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                            <a href="<?= $this->url('category', ['action' => 'delete', 'id' => $category->getId()]) ?>" class="btn btn-danger btn-xs" title="Usuń">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <div class="alert alert-warning" role="alert">Lista kategorii jest pusta.</div>
+        <?php endif; ?>
+    </div>
+</div>
