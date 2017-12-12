@@ -25,4 +25,11 @@ class Module
         $tagListener = $serviceManager->get(TagListener::class);
         $tagListener->attach($eventManager);
     }
+
+    public function getModuleDependencies()
+    {
+        return [
+            'Auth'
+        ];
+    }
 }
