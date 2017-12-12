@@ -2,8 +2,8 @@
 
 namespace Application\Controller\Api;
 
-use Application\Model\CategoryCommand;
-use Application\Model\CategoryRepository;
+use Application\Model\NoteCommand;
+use Application\Model\NoteRepository;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
 
@@ -13,7 +13,7 @@ class NoteController extends AbstractRestfulController
 
     protected $categoryCommand;
 
-    public function __construct(CategoryRepository $categoryRepository, CategoryCommand $categoryCommand)
+    public function __construct(NoteRepository $categoryRepository, NoteCommand $categoryCommand)
     {
         $this->categoryRepository = $categoryRepository;
         $this->categoryCommand = $categoryCommand;
@@ -21,26 +21,26 @@ class NoteController extends AbstractRestfulController
 
     public function get($id):JsonModel
     {
-        return parent::get($id);
+        parent::get($id);
     }
 
     public function getList():JsonModel
     {
-        return parent::getList();
+        parent::getList();
     }
 
     public function create($data):JsonModel
     {
-        return parent::create($data);
+        parent::create($data);
     }
 
     public function update($id, $data):JsonModel
     {
-        return parent::update($id, $data);
+        parent::update($id, $data);
     }
 
     public function delete($id):JsonModel
     {
-        return parent::delete($id);
+        parent::delete($id);
     }
 }

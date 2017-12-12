@@ -96,7 +96,7 @@ return [
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
-            Controller\Api\NoteController::class => Factory\ApiNoteControllerFactory::class,
+            Controller\Api\NoteController::class => Factory\Api\NoteControllerFactory::class,
             Controller\CategoryController::class => Factory\CategoryControllerFactory::class,
             Controller\NoteController::class => Factory\NoteControllerFactory::class,
             Controller\TagController::class => Factory\TagControllerFactory::class,

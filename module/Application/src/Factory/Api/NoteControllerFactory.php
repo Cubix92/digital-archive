@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Factory;
+namespace Application\Factory\Api;
 
 use Application\Controller\Api\NoteController;
 use Application\Model\NoteCommand;
