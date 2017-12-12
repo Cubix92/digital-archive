@@ -18,8 +18,7 @@ class NoteControllerFactory extends AbstractActionController
         $noteRepository = $container->get(NoteRepository::class);
         $noteCommand = $container->get(NoteCommand::class);
         $noteForm = $container->get(FormElementManager::class)->get(NoteForm::class);
-        $tagService = $container->get(TagService::class);
 
-        return new NoteController($noteRepository, $noteCommand, $noteForm, $tagService);
+        return new NoteController($noteRepository, $noteCommand, $noteForm);
     }
 }

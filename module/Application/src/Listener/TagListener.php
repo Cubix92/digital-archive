@@ -29,7 +29,7 @@ class TagListener implements ListenerAggregateInterface
 
         $this->listeners[] = $sharedManager->attach(
             AbstractController::class,
-            'noteAdded',
+            'noteDeleted',
             [$this, 'onNoteChange'],
             $priority
         );

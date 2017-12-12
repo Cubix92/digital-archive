@@ -2,6 +2,7 @@
 
 namespace Application\Model;
 
+use Application\Service\TagService;
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\Sql\Delete;
 use Zend\Db\Sql\Insert;
@@ -12,13 +13,17 @@ class NoteCommand
 {
     protected $sql;
 
-    public function __construct(AdapterInterface $dbAdapter)
+    public function __construct(AdapterInterface $dbAdapter, TagService $tagService)
     {
         $this->sql = new Sql($dbAdapter);
+        $this->tagService = $tagService;
     }
 
     public function insert(Note $note)
     {
+        $tags = $this->tagService->prepare($note->getTags());
+        $note->setTags($tags);
+
         $insert = new Insert('note');
 
         $insert->values([
@@ -43,6 +48,9 @@ class NoteCommand
         if (!$note->getId()) {
             throw new \RuntimeException('Cannot update post; missing identifier.');
         }
+
+        $tags = $this->tagService->prepare($note->getTags());
+        $note->setTags($tags);
 
         $update = new Update('note');
 

@@ -3,7 +3,6 @@
 namespace Application\Controller;
 
 use Application\Form\NoteForm;
-use Application\Service\TagService;
 use Application\Model\Note;
 use Application\Model\NoteCommand;
 use Application\Model\NoteRepository;
@@ -18,14 +17,11 @@ class NoteController extends AbstractActionController
 
     protected $noteForm;
 
-    protected $tagService;
-
-    public function __construct(NoteRepository $noteRepository, NoteCommand $noteCommand, NoteForm $noteForm, TagService $tagService)
+    public function __construct(NoteRepository $noteRepository, NoteCommand $noteCommand, NoteForm $noteForm)
     {
         $this->noteRepository = $noteRepository;
         $this->noteCommand = $noteCommand;
         $this->noteForm = $noteForm;
-        $this->tagService = $tagService;
     }
 
     public function indexAction()
@@ -37,19 +33,15 @@ class NoteController extends AbstractActionController
 
     public function addAction()
     {
-        $request = $this->getRequest();
         $form = $this->noteForm;
 
-        if ($request->isPost()) {
-            $form->setData($request->getPost());
+        if ($this->getRequest()->isPost()) {
+            $form->setData($this->getRequest()->getPost());
 
             if ($form->isValid()) {
                 /** @var Note $note */
                 $note = $form->getData();
-                $tags = $this->tagService->prepare($note->getTags());
-                $note->setTags($tags);
                 $this->noteCommand->insert($note);
-
                 $this->getEventManager()->trigger('noteAdded');
                 $this->flashMessenger()->addSuccessMessage('Note was added successfull');
                 return $this->redirect()->toRoute('note');
@@ -77,16 +69,12 @@ class NoteController extends AbstractActionController
         }
 
         $form = $this->noteForm->bind($note);
-        $request = $this->getRequest();
 
-        if ($request->isPost()) {
-            $form->setData($request->getPost());
+        if ($this->getRequest()->isPost()) {
+            $form->setData($this->getRequest()->getPost());
 
             if ($form->isValid()) {
-                $tags = $this->tagService->prepare($note->getTags());
-                $note->setTags($tags);
                 $this->noteCommand->update($note);
-
                 $this->getEventManager()->trigger('noteEdited');
                 $this->flashMessenger()->addSuccessMessage('Note was updated successfull');
                 return $this->redirect()->toRoute('note', ['action' => 'index']);
@@ -115,6 +103,7 @@ class NoteController extends AbstractActionController
         }
 
         $this->noteCommand->delete($note);
+        $this->getEventManager()->trigger('noteDeleted');
         $this->flashMessenger()->addSuccessMessage('Note was deleted successfull');
         return $this->redirect()->toRoute('note', ['action' => 'index']);
     }
