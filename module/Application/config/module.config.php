@@ -35,7 +35,7 @@ return [
                     'api-notes' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/notes[:id]',
+                            'route' => '/notes[/:id]',
                             'defaults' => [
                                 'controller' => Controller\Api\NoteController::class
                             ],
@@ -192,5 +192,8 @@ return [
         'template_path_stack' => [
             __DIR__ . '/../view',
         ],
-    ],
+        'strategies' => [
+            'ViewJsonStrategy',
+        ],
+    ]
 ];

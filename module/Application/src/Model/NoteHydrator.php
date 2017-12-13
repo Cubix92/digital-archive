@@ -28,8 +28,8 @@ class NoteHydrator extends AbstractHydrator
             $object->setId($data['id']);
         };
 
-        if (array_key_exists('category_id', $data)) {
-            $category = $this->categoryRepository->findById($data['category_id']);
+        if (array_key_exists('category', $data)) {
+            $category = $this->categoryRepository->findById($data['category']);
             $object->setCategory($category);
         };
 
@@ -64,7 +64,7 @@ class NoteHydrator extends AbstractHydrator
     {
         return [
             'id' => $object->getId(),
-            'category_id' => $object->getCategory()->getId(),
+            'category' => $object->getCategory(),
             'tags' => $object->getTags(),
             'title' => $object->getTitle(),
             'url' => $object->getUrl(),

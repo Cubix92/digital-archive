@@ -27,7 +27,7 @@ class NoteCommand
         $insert = new Insert('note');
 
         $insert->values([
-            'category_id' => $note->getCategory()->getId(),
+            'category' => $note->getCategory()->getId(),
             'title' => $note->getTitle(),
             'content' => $note->getContent(),
             'url' => $note->getUrl(),
@@ -55,7 +55,7 @@ class NoteCommand
         $update = new Update('note');
 
         $update->set([
-            'category_id' => $note->getCategory()->getId(),
+            'category' => $note->getCategory()->getId(),
             'title' => $note->getTitle(),
             'content' => $note->getContent(),
             'url' => $note->getUrl()

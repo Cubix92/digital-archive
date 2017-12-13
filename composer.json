@@ -27,7 +27,9 @@
         "zendframework/zend-mvc-plugin-identity": "^1.0",
         "zendframework/zend-mvc-plugin-flashmessenger": "^1.0",
         "zendframework/zend-i18n": "^2.7",
-        "zendframework/zend-i18n-resources": "^2.5"
+        "zendframework/zend-i18n-resources": "^2.5",
+        "zendframework/zend-json": "^3.0",
+        "zendframework/zend-serializer": "^2.8"
     },
     "autoload": {
         "psr-4": {
