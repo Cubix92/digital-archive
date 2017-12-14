@@ -12,7 +12,7 @@ CREATE TABLE note
   title VARCHAR(255) NOT NULL,
   content TEXT,
   url VARCHAR(255) NOT NULL,
-  date_created DATETIME NOT NULL
+  date_published DATETIME NOT NULL
   FOREIGN KEY(category_id) REFERENCES category(id)
 )ENGINE = INNODB;
 

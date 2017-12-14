@@ -50,7 +50,7 @@ class TagListener implements ListenerAggregateInterface
         }
     }
 
-    public function onNoteChange(EventInterface $event)
+    public function onNoteChange()
     {
         $tags = $this->tagRepository->findUnassigned();
 
