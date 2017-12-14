@@ -25,6 +25,24 @@ return [
                     ],
                 ],
             ],
+            'api' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route'    => '/api',
+                ],
+                'may_terminate' => false,
+                'child_routes' => [
+                    'api-notes' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/notes[/:id]',
+                            'defaults' => [
+                                'controller' => Controller\Api\NoteController::class
+                            ],
+                        ]
+                    ]
+                ]
+            ],
             'category' => [
                 'type' => Segment::class,
                 'options' => [
@@ -54,7 +72,7 @@ return [
                         'action'     => 'index'
                     ],
                 ],
-            ]
+            ],
         ],
     ],
     'service_manager' => [
@@ -78,6 +96,7 @@ return [
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
+            Controller\Api\NoteController::class => Factory\Api\NoteControllerFactory::class,
             Controller\CategoryController::class => Factory\CategoryControllerFactory::class,
             Controller\NoteController::class => Factory\NoteControllerFactory::class,
             Controller\TagController::class => Factory\TagControllerFactory::class,
@@ -173,5 +192,8 @@ return [
         'template_path_stack' => [
             __DIR__ . '/../view',
         ],
-    ],
+        'strategies' => [
+            'ViewJsonStrategy',
+        ],
+    ]
 ];

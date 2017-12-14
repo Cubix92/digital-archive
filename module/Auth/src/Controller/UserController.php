@@ -29,16 +29,16 @@ class UserController extends AbstractActionController
 
     public function addAction()
     {
-        $request = $this->getRequest();
         $form = $this->userForm;
 
-        if ($request->isPost()) {
-            $form->setData($request->getPost());
+        if ($this->getRequest()->isPost()) {
+            $form->setData($this->getRequest()->getPost());
 
             if ($this->userForm->isValid()) {
                 /** @var User $user */
                 $user = $form->getData();
                 $this->userTable->save($user);
+                $this->getEventManager()->trigger('userAdded');
                 $this->flashMessenger()->addSuccessMessage('User was added successfull');
                 return $this->redirect()->toRoute('user');
             }
@@ -68,13 +68,13 @@ class UserController extends AbstractActionController
         $this->userForm->getInputFilter()->get('password')->setRequired(false);
         $this->userForm->getInputFilter()->excludeEmail($user->getEmail());
         $form = $this->userForm->bind($user);
-        $request = $this->getRequest();
 
-        if ($request->isPost()) {
-            $form->setData($request->getPost());
+        if ($this->getRequest()->isPost()) {
+            $form->setData($this->getRequest()->getPost());
 
             if ($form->isValid()) {
                 $this->userTable->save($user);
+                $this->getEventManager()->trigger('userEdited');
                 $this->flashMessenger()->addSuccessMessage('User was updated successfull');
                 return $this->redirect()->toRoute('user', ['action' => 'index']);
             }
@@ -98,6 +98,7 @@ class UserController extends AbstractActionController
             /** @var User $user */
             $user = $this->userTable->findById($id);
         } catch (\InvalidArgumentException $e) {
+            $this->getEventManager()->trigger('userDeleted');
             $this->flashMessenger()->addErrorMessage('User with identifier not found');
             return $this->redirect()->toRoute('user', ['action' => 'index']);
         }

@@ -10,7 +10,7 @@ class TagFieldset extends Fieldset implements InputFilterProviderInterface
 {
     public function __construct()
     {
-        parent::__construct('tag');
+        parent::__construct('tags');
 
         $this->setHydrator(new ClassMethodsHydrator(false));
         $this->setObject(new Tag());

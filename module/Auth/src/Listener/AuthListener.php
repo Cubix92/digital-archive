@@ -36,6 +36,10 @@ class AuthListener implements ListenerAggregateInterface
         $authService = $event->getApplication()->getServiceManager()->get(AuthenticationService::class);
         $controllerName = $event->getRouteMatch()->getParam('controller', null);
 
+        if ($controllerName == 'Application\Controller\Api\NoteController') {
+            return 0;
+        }
+
         if (!$authService->getIdentity() && $controllerName != AuthController::class) {
             return $controller->redirect()->toRoute('login');
         }

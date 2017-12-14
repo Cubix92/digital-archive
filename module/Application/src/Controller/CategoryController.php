@@ -33,17 +33,16 @@ class CategoryController extends AbstractActionController
 
     public function addAction()
     {
-        $request = $this->getRequest();
         $form = $this->categoryForm;
 
-        if ($request->isPost()) {
-            $form->setData($request->getPost());
+        if ($this->getRequest()->isPost()) {
+            $form->setData($this->getRequest()->getPost());
 
             if ($form->isValid()) {
                 /** @var Category $category */
                 $category = $form->getData();
                 $this->categoryCommand->insert($category);
-
+                $this->getEventManager()->trigger('categoryAdded');
                 $this->flashMessenger()->addSuccessMessage('Category was added successfull');
                 return $this->redirect()->toRoute('category');
             }
@@ -70,13 +69,13 @@ class CategoryController extends AbstractActionController
         }
 
         $form = $this->categoryForm->bind($category);
-        $request = $this->getRequest();
 
-        if ($request->isPost()) {
-            $form->setData($request->getPost());
+        if ($this->getRequest()->isPost()) {
+            $form->setData($this->getRequest()->getPost());
 
             if ($form->isValid()) {
                 $this->categoryCommand->update($category);
+                $this->getEventManager()->trigger('categoryEdited');
                 $this->flashMessenger()->addSuccessMessage('Category was updated successfull');
                 return $this->redirect()->toRoute('category', ['action' => 'index']);
             }
@@ -104,6 +103,7 @@ class CategoryController extends AbstractActionController
         }
 
         $this->categoryCommand->delete($category);
+        $this->getEventManager()->trigger('categoryDeleted');
         $this->flashMessenger()->addSuccessMessage('Category was deleted successfull');
         return $this->redirect()->toRoute('category', ['action' => 'index']);
     }

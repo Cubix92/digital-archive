@@ -2,18 +2,18 @@ CREATE TABLE category
 (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  icon VARCHAR(255),
+  icon VARCHAR(255)
 )ENGINE = INNODB;
 
 CREATE TABLE note
 (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  category_id INT NOT NULL,
+  category INT NOT NULL,
   title VARCHAR(255) NOT NULL,
   content TEXT,
   url VARCHAR(255) NOT NULL,
-  date_published DATETIME NOT NULL
-  FOREIGN KEY(category_id) REFERENCES category(id)
+  date_created DATETIME NOT NULL
+  FOREIGN KEY(category) REFERENCES category(id)
 )ENGINE = INNODB;
 
 CREATE TABLE tag
