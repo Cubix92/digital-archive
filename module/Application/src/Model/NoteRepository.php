@@ -10,9 +10,9 @@ use Zend\Hydrator\Reflection as ReflectionHydrator;
 
 class NoteRepository
 {
-    protected $noteHydrator;
-
     protected $sql;
+
+    protected $noteHydrator;
 
     public function __construct(AdapterInterface $dbAdapter, NoteHydrator $noteHydrator)
     {
@@ -25,7 +25,8 @@ class NoteRepository
         $notes = [];
         $noteSelect = new Select('note');
         $noteResult = $this->sql->prepareStatementForSqlObject($noteSelect)->execute();
-        $noteResultSet = new HydratingResultSet($this->noteHydrator, new Note());
+
+        $noteResultSet = new HydratingResultSet($this->noteHydrator->build(), new Note());
 
         $noteResultSet->initialize($noteResult);
 
@@ -58,7 +59,7 @@ class NoteRepository
             throw new \UnexpectedValueException('Note not found');
         }
 
-        $noteResultSet = new HydratingResultSet($this->noteHydrator, new Note());
+        $noteResultSet = new HydratingResultSet($this->noteHydrator->build(), new Note());
         $noteResultSet->initialize($noteResult);
 
         /** @var Note $note */

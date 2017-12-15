@@ -16,7 +16,7 @@ class NoteFormFactory
         $categoryRepository = $container->get(CategoryRepository::class);
         $categories = $categoryRepository->findAll();
         $form = new NoteForm($categories);
-        $form->setHydrator($container->get(NoteHydrator::class));
+        $form->setHydrator($container->get(NoteHydrator::class)->build());
         $form->setInputFilter($container->get('InputFilterManager')->get(NoteInputFilter::class));
         $form->setObject(new Note());
 
