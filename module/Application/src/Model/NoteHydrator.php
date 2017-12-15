@@ -78,7 +78,7 @@ class NoteHydrator extends AbstractHydrator
 
     public function build()
     {
-        $closureStrategy = new ClosureStrategy(
+        $categoryStrategy = new ClosureStrategy(
             function($object){
                 return $object;
             },
@@ -102,7 +102,7 @@ class NoteHydrator extends AbstractHydrator
 
         $reflectionHydrator = (new ReflectionHydrator())
             ->setNamingStrategy($namingStrategy)
-            ->addStrategy('category', $closureStrategy)
+            ->addStrategy('category', $categoryStrategy)
             ->addStrategy('datePublished', $dateStrategy);
 
         return $reflectionHydrator;
