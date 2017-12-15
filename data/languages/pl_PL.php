@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'Invalid password' => 'Wpisane hasło jest niepoprawne',
     'User was added successfull' => 'Użytkownik został dodany',
     'User was updated successfull' => 'Użytkownik został zmodyfikowany',
     'User was deleted successful' => 'Użytkownik został usunięty',
