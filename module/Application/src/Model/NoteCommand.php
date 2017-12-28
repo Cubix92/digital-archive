@@ -50,7 +50,7 @@ class NoteCommand
         if (!$note->getId()) {
             throw new \RuntimeException('Cannot update post; missing identifier.');
         }
-        var_dump($note->getTags());die;
+
         $tags = $this->tagService->prepare($note->getTags());
         $note->setTags($tags);
 

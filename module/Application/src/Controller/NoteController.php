@@ -45,8 +45,6 @@ class NoteController extends AbstractActionController
                 $this->getEventManager()->trigger('noteAdded');
                 $this->flashMessenger()->addSuccessMessage('Note was added successfull');
                 return $this->redirect()->toRoute('note');
-            } else {
-                var_dump($form->getMessages());die;
             }
         }
 
