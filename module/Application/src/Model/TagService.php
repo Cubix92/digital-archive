@@ -1,10 +1,6 @@
 <?php
 
-namespace Application\Service;
-
-use Application\Model\Tag;
-use Application\Model\TagCommand;
-use Application\Model\TagRepository;
+namespace Application\Model;
 
 class TagService
 {

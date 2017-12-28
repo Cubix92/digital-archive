@@ -2,7 +2,6 @@
 
 namespace Application\Model;
 
-use Application\Service\TagService;
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\Sql\Delete;
 use Zend\Db\Sql\Insert;
@@ -12,6 +11,8 @@ use Zend\Db\Sql\Update;
 class NoteCommand
 {
     protected $sql;
+
+    protected $tagService;
 
     public function __construct(AdapterInterface $dbAdapter, TagService $tagService)
     {

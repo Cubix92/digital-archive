@@ -4,7 +4,6 @@ namespace Application\Factory;
 
 use Application\Controller\NoteController;
 use Application\Form\NoteForm;
-use Application\Service\TagService;
 use Application\Model\NoteCommand;
 use Application\Model\NoteRepository;
 use Interop\Container\ContainerInterface;
