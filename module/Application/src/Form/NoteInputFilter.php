@@ -38,7 +38,7 @@ class NoteInputFilter extends InputFilter
         ]);
 
         $this->add([
-            'name' => 'category_id',
+            'name' => 'category',
             'required' => true,
             'filters' => [
                 ['name' => StringTrim::class],
