@@ -2,7 +2,6 @@
 
 namespace Application\Model;
 
-use Application\Service\TagService;
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\Sql\Delete;
 use Zend\Db\Sql\Insert;

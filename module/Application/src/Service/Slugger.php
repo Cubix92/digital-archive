@@ -1,12 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Jakub Książek
- * Date: 28.12.2017
- * Time: 10:09
- */
+
+namespace Application\Service;
 
 class Slugger
 {
+    public function transform(string $value):string
+    {
+        $filteredValue = str_replace(' ', '-', trim($value));
 
+        return $filteredValue;
+    }
 }

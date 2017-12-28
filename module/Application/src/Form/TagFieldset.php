@@ -2,6 +2,7 @@
 namespace Application\Form;
 
 use Application\Model\Tag;
+use Application\Service\Slugger;
 use Zend\Filter\Callback;
 use Zend\Filter\StringToLower;
 use Zend\Filter\StringTrim;
@@ -11,10 +12,13 @@ use Zend\Hydrator\ClassMethods as ClassMethodsHydrator;
 
 class TagFieldset extends Fieldset implements InputFilterProviderInterface
 {
-    public function __construct()
+    protected $slugger;
+
+    public function __construct(Slugger $slugger)
     {
         parent::__construct('tags');
 
+        $this->slugger = $slugger;
         $this->setHydrator(new ClassMethodsHydrator(false));
         $this->setObject(new Tag());
 
@@ -45,10 +49,7 @@ class TagFieldset extends Fieldset implements InputFilterProviderInterface
                     [
                         'name' => Callback::class,
                         'options' => [
-                            'callback' => function($tag) {
-                                $tag = str_replace(' ', '-', $tag);
-                                return $tag;
-                            }
+                            'callback' => [$this->slugger, 'transform']
                         ]
                     ],
                 ]

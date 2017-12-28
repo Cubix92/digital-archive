@@ -84,8 +84,9 @@ return [
             Model\NoteHydrator::class => Factory\NoteHydratorFactory::class,
             Model\TagRepository::class => Factory\TagRepositoryFactory::class,
             Model\TagCommand::class => Factory\TagCommandFactory::class,
-            Service\TagService::class => Factory\TagServiceFactory::class,
+            Model\TagService::class => Factory\TagServiceFactory::class,
             Listener\TagListener::class => Factory\TagListenerFactory::class,
+            Service\Slugger::class => InvokableFactory::class,
         ],
         'delegators' => [
             Translator::class => [
@@ -106,7 +107,8 @@ return [
         'factories' => [
             Form\CategoryForm::class => Factory\CategoryFormFactory::class,
             Form\NoteForm::class => Factory\NoteFormFactory::class,
-        ],
+            Form\TagFieldset::class => Factory\TagFieldsetFactory::class,
+        ]
     ],
     'input_filters' => [
         'factories' => [

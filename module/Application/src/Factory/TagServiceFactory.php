@@ -2,7 +2,7 @@
 
 namespace Application\Factory;
 
-use Application\Service\TagService;
+use Application\Model\TagService;
 use Application\Model\TagCommand;
 use Application\Model\TagRepository;
 use Interop\Container\ContainerInterface;
