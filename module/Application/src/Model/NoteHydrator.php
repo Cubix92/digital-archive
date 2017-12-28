@@ -3,9 +3,6 @@
 namespace Application\Model;
 
 use Zend\Hydrator\AbstractHydrator;
-use Zend\Hydrator\NamingStrategy\MapNamingStrategy;
-use Zend\Hydrator\Strategy\ClosureStrategy;
-use Zend\Hydrator\Reflection as ReflectionHydrator;
 
 class NoteHydrator extends AbstractHydrator
 {
@@ -65,46 +62,23 @@ class NoteHydrator extends AbstractHydrator
      */
     public function extract($object)
     {
+        $tags = [];
+
+        /**
+         * @var Tag $tag
+         */
+        foreach ((array)$object->getTags() as $tag) {
+            $tags[] = $tag->getName();
+        }
+
         return [
             'id' => $object->getId(),
-            'category' => $object->getCategory(),
-            'tags' => $object->getTags(),
+            'category' => $object->getCategory()->getId(),
+            'tags' => $tags,
             'title' => $object->getTitle(),
             'url' => $object->getUrl(),
             'content' => $object->getContent(),
             'date_published' => $object->getDatePublished() ? $object->getDatePublished()->format('Y-m-d H:i:s') : null,
         ];
-    }
-
-    public function build()
-    {
-        $categoryStrategy = new ClosureStrategy(
-            function($object){
-                return $object;
-            },
-            function($value){
-                return (new Category())->setId($value);
-            }
-        );
-
-        $dateStrategy = new ClosureStrategy(
-            function($object){
-                return $object->format('Y-m-d H:i:s');
-            },
-            function($value){
-                return new \DateTime($value);
-            }
-        );
-
-        $namingStrategy = new MapNamingStrategy(array(
-            'date_published' => 'datePublished'
-        ));
-
-        $reflectionHydrator = (new ReflectionHydrator())
-            ->setNamingStrategy($namingStrategy)
-            ->addStrategy('category', $categoryStrategy)
-            ->addStrategy('datePublished', $dateStrategy);
-
-        return $reflectionHydrator;
     }
 }

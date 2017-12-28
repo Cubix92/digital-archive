@@ -26,7 +26,7 @@ class NoteRepository
         $noteSelect = new Select('note');
         $noteResult = $this->sql->prepareStatementForSqlObject($noteSelect)->execute();
 
-        $noteResultSet = new HydratingResultSet($this->noteHydrator->build(), new Note());
+        $noteResultSet = new HydratingResultSet($this->noteHydrator, new Note());
 
         $noteResultSet->initialize($noteResult);
 
@@ -59,7 +59,7 @@ class NoteRepository
             throw new \UnexpectedValueException('Note not found');
         }
 
-        $noteResultSet = new HydratingResultSet($this->noteHydrator->build(), new Note());
+        $noteResultSet = new HydratingResultSet($this->noteHydrator, new Note());
         $noteResultSet->initialize($noteResult);
 
         /** @var Note $note */
