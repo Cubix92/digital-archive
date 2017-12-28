@@ -46,7 +46,8 @@ class TagFieldset extends Fieldset implements InputFilterProviderInterface
                         'name' => Callback::class,
                         'options' => [
                             'callback' => function($tag) {
-                                var_dump($tag);die;
+                                $tag = str_replace(' ', '-', $tag);
+                                return $tag;
                             }
                         ]
                     ],
