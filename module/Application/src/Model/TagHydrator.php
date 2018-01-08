@@ -22,7 +22,12 @@ class TagHydrator extends AbstractHydrator
         };
 
         if (array_key_exists('notes', $data)) {
+            foreach($data['notes'] as $noteId) {
+                $note = new Note();
+                $note->setId($noteId);
 
+                $object->addNote($note);
+            }
         };
 
         if (array_key_exists('name', $data)) {
