@@ -3,7 +3,7 @@
 namespace Application\Factory;
 
 use Application\Model\NoteCommand;
-use Application\Service\TagService;
+use Application\Model\TagService;
 use Interop\Container\ContainerInterface;
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Mvc\Controller\AbstractActionController;

@@ -2,7 +2,6 @@
 
 namespace Application\Model;
 
-use Application\Service\TagService;
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\Sql\Delete;
 use Zend\Db\Sql\Insert;
@@ -12,6 +11,8 @@ use Zend\Db\Sql\Update;
 class NoteCommand
 {
     protected $sql;
+
+    protected $tagService;
 
     public function __construct(AdapterInterface $dbAdapter, TagService $tagService)
     {
@@ -27,7 +28,7 @@ class NoteCommand
         $insert = new Insert('note');
 
         $insert->values([
-            'category_id' => $note->getCategory()->getId(),
+            'category' => $note->getCategory()->getId(),
             'title' => $note->getTitle(),
             'content' => $note->getContent(),
             'url' => $note->getUrl(),
@@ -55,7 +56,7 @@ class NoteCommand
         $update = new Update('note');
 
         $update->set([
-            'category_id' => $note->getCategory()->getId(),
+            'category' => $note->getCategory()->getId(),
             'title' => $note->getTitle(),
             'content' => $note->getContent(),
             'url' => $note->getUrl()

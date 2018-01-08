@@ -1,4 +1,4 @@
-function add_remove_element() {
+function add_remove_button() {
     $('span.remove-element').remove();
 
     $('form fieldset#tag-collection fieldset').each(function(index, element){
@@ -17,12 +17,16 @@ function add_tag() {
 
     $('form fieldset#tag-collection').append(template);
 
-    add_remove_element();
+    add_remove_button();
 
     return false;
 }
 
-console.log('ok');
 $(document).ready(function() {
-    add_remove_element();
+
+    $('form fieldset#tag-collection fieldset input.form-control').each(function(index, element) {
+        $(element).prop('readonly', true);
+    });
+
+    add_remove_button();
 });

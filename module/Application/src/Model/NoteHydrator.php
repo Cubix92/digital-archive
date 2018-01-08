@@ -6,17 +6,10 @@ use Zend\Hydrator\AbstractHydrator;
 
 class NoteHydrator extends AbstractHydrator
 {
-    protected $categoryRepository;
-
-    public function __construct(CategoryRepository $categoryRepository)
-    {
-        $this->categoryRepository = $categoryRepository;
-    }
-
     /**
      * @param Note $object
      * @param array $data
-     * @return object|array
+     * @return Note|array
      */
     public function hydrate(array $data, $object)
     {
@@ -28,13 +21,23 @@ class NoteHydrator extends AbstractHydrator
             $object->setId($data['id']);
         };
 
-        if (array_key_exists('category_id', $data)) {
-            $category = $this->categoryRepository->findById($data['category_id']);
+        if (array_key_exists('category', $data)) {
+            $category = (new Category())
+                ->setId($data['category']['id'])
+                ->setName($data['category']['name'])
+                ->setIcon($data['category']['icon']);
+
             $object->setCategory($category);
         };
 
         if (array_key_exists('tags', $data)) {
-            $object->setTags($data['tags']);
+            foreach ($data['tags'] as $tagSet) {
+                $tag = (new Tag)
+                    ->setId($tagSet['id'])
+                    ->setName($tagSet['name']);
+
+                $object->addTag($tag);
+            }
         };
 
         if (array_key_exists('title', $data)) {
@@ -62,13 +65,27 @@ class NoteHydrator extends AbstractHydrator
      */
     public function extract($object)
     {
+        $tags = [];
+
+        /** @var Tag $tag */
+        foreach ((array)$object->getTags() as $tag) {
+            $tags[] = [
+                'id' => $tag->getId(),
+                'name' => $tag->getName()
+            ];
+        }
+
         return [
             'id' => $object->getId(),
-            'category_id' => $object->getCategory()->getId(),
-            'tags' => $object->getTags(),
+            'category' => [
+                'id' => $object->getCategory()->getId(),
+                'name' => $object->getCategory()->getName(),
+                'icon' => $object->getCategory()->getIcon()
+            ],
+            'tags' => $tags,
             'title' => $object->getTitle(),
-            'url' => $object->getUrl(),
             'content' => $object->getContent(),
+            'url' => $object->getUrl(),
             'date_published' => $object->getDatePublished() ? $object->getDatePublished()->format('Y-m-d H:i:s') : null,
         ];
     }

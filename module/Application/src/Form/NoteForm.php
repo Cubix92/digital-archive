@@ -40,7 +40,7 @@ class NoteForm extends Form
         ]);
 
         $this->add([
-            'name' => 'category_id',
+            'name' => 'category',
             'type' => 'select',
             'attributes' => [
                 'class' => 'form-control'

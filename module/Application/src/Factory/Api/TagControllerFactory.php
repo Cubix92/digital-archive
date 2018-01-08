@@ -1,20 +1,22 @@
 <?php
 
-namespace Application\Factory;
+namespace Application\Factory\Api;
 
-use Application\Model\TagService;
+use Application\Controller\Api\TagController;
 use Application\Model\TagCommand;
+use Application\Model\TagHydrator;
 use Application\Model\TagRepository;
 use Interop\Container\ContainerInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 
-class TagServiceFactory extends AbstractActionController
+class TagControllerFactory extends AbstractActionController
 {
     public function __invoke(ContainerInterface $container)
     {
         $tagRepository = $container->get(TagRepository::class);
         $tagCommand = $container->get(TagCommand::class);
+        $tagHydrator = $container->get(TagHydrator::class);
 
-        return new TagService($tagRepository, $tagCommand);
+        return new TagController($tagRepository, $tagCommand, $tagHydrator);
     }
 }

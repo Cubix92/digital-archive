@@ -17,7 +17,7 @@ class CategoryRepository
         $this->sql = new Sql($dbAdapter);
     }
 
-    public function findAll()
+    public function findAll():array
     {
         $categories = [];
         $categorySelect = new Select('category');
@@ -30,7 +30,7 @@ class CategoryRepository
          * @var Category $category
          */
         foreach ($categoryResultSet as $category) {
-            $noteSelect = (new Select('note'))->where(['category_id' => $category->getId()]);
+            $noteSelect = (new Select('note'))->where(['category' => $category->getId()]);
             $noteResult = $this->sql->prepareStatementForSqlObject($noteSelect)->execute();
 
             $noteResultSet = new HydratingResultSet(new ReflectionHydrator(),new Note());
@@ -63,7 +63,7 @@ class CategoryRepository
 
         /** @var Category $category */
         $category = $categoryResultSet->current();
-        $noteSelect = (new Select('note'))->where(['category_id' => $category->getId()]);
+        $noteSelect = (new Select('note'))->where(['category' => $category->getId()]);
         $noteResult = $this->sql->prepareStatementForSqlObject($noteSelect)->execute();
 
         $noteResultSet = new HydratingResultSet(new ReflectionHydrator(), new Note());

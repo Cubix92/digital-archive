@@ -25,6 +25,42 @@ return [
                     ],
                 ],
             ],
+            'api' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route'    => '/api',
+                ],
+                'may_terminate' => false,
+                'child_routes' => [
+                    'api-notes' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/notes[/:id]',
+                            'defaults' => [
+                                'controller' => Controller\Api\NoteController::class
+                            ],
+                        ]
+                    ],
+                    'api-tags' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/tags[/:id]',
+                            'defaults' => [
+                                'controller' => Controller\Api\TagController::class
+                            ],
+                        ]
+                    ],
+                    'api-categories' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/categories[/:id]',
+                            'defaults' => [
+                                'controller' => Controller\Api\CategoryController::class
+                            ],
+                        ]
+                    ],
+                ]
+            ],
             'category' => [
                 'type' => Segment::class,
                 'options' => [
@@ -54,20 +90,23 @@ return [
                         'action'     => 'index'
                     ],
                 ],
-            ]
+            ],
         ],
     ],
     'service_manager' => [
         'factories' => [
             Model\CategoryRepository::class => Factory\CategoryRepositoryFactory::class,
             Model\CategoryCommand::class => Factory\CategoryCommandFactory::class,
+            Model\CategoryHydrator::class => InvokableFactory::class,
             Model\NoteRepository::class => Factory\NoteRepositoryFactory::class,
             Model\NoteCommand::class => Factory\NoteCommandFactory::class,
-            Model\NoteHydrator::class => Factory\NoteHydratorFactory::class,
+            Model\NoteHydrator::class => InvokableFactory::class,
             Model\TagRepository::class => Factory\TagRepositoryFactory::class,
             Model\TagCommand::class => Factory\TagCommandFactory::class,
-            Service\TagService::class => Factory\TagServiceFactory::class,
+            Model\TagService::class => Factory\TagServiceFactory::class,
+            Model\TagHydrator::class => InvokableFactory::class,
             Listener\TagListener::class => Factory\TagListenerFactory::class,
+            Service\Slugger::class => InvokableFactory::class,
         ],
         'delegators' => [
             Translator::class => [
@@ -78,6 +117,9 @@ return [
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
+            Controller\Api\NoteController::class => Factory\Api\NoteControllerFactory::class,
+            Controller\Api\TagController::class => Factory\Api\TagControllerFactory::class,
+            Controller\Api\CategoryController::class => Factory\Api\CategoryControllerFactory::class,
             Controller\CategoryController::class => Factory\CategoryControllerFactory::class,
             Controller\NoteController::class => Factory\NoteControllerFactory::class,
             Controller\TagController::class => Factory\TagControllerFactory::class,
@@ -87,7 +129,8 @@ return [
         'factories' => [
             Form\CategoryForm::class => Factory\CategoryFormFactory::class,
             Form\NoteForm::class => Factory\NoteFormFactory::class,
-        ],
+            Form\TagFieldset::class => Factory\TagFieldsetFactory::class,
+        ]
     ],
     'input_filters' => [
         'factories' => [
@@ -173,5 +216,8 @@ return [
         'template_path_stack' => [
             __DIR__ . '/../view',
         ],
-    ],
+        'strategies' => [
+            'ViewJsonStrategy',
+        ],
+    ]
 ];
