@@ -11,8 +11,8 @@
  * This should be an array of module namespaces used in the user.
  */
 return [
-    'Zend\Mvc\Console',
     'Zend\Serializer',
+    'Zend\Mvc\Console',
     'Zend\Mvc\Plugin\FlashMessenger',
     'Zend\Mvc\Plugin\Identity',
     'Zend\Session',
