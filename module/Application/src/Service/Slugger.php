@@ -6,8 +6,11 @@ class Slugger
 {
     public function transform(string $value):string
     {
-        $filteredValue = str_replace(' ', '-', trim($value));
+        $trimmedValue   = trim($value);
+        $lowerValue     = strtolower($trimmedValue);
+        $filteredValue  = str_replace(' ', '-', $lowerValue);
+        $slug           = str_replace('-', '_', $filteredValue);
 
-        return $filteredValue;
+        return $slug;
     }
 }

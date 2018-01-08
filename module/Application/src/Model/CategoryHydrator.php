@@ -49,18 +49,22 @@ class CategoryHydrator extends AbstractHydrator
     {
         $notes = [];
 
-        /**
-         * @var Note $note
-         */
+        /** @var Note $note */
         foreach ((array)$object->getNotes() as $note) {
-            $notes[] = $note->getId();
+            $notes[] = [
+                'id' => $note->getId(),
+                'title' => $note->getTitle(),
+                'content' => $note->getContent(),
+                'url' => $note->getUrl(),
+                'date_published' => $note->getDatePublished(),
+            ];
         }
 
         return [
             'id' => $object->getId(),
             'notes' => $notes,
-            'name' => $object->getCategory(),
-            'icon' => $object->getTags()
+            'name' => $object->getName(),
+            'icon' => $object->getIcon()
         ];
     }
 }

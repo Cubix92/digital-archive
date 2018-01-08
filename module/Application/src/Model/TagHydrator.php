@@ -6,13 +6,6 @@ use Zend\Hydrator\AbstractHydrator;
 
 class TagHydrator extends AbstractHydrator
 {
-    protected $categoryRepository;
-
-    public function __construct(NoteRepository $categoryRepository)
-    {
-        $this->categoryRepository = $categoryRepository;
-    }
-
     /**
      * @param Note $object
      * @param array $data
@@ -40,19 +33,28 @@ class TagHydrator extends AbstractHydrator
     }
 
     /**
-     * @param Note $object
+     * @param Tag $object
      * @return array
      */
     public function extract($object)
     {
+        $notes = [];
+
+        /** @var Note $note */
+        foreach ((array)$object->getNotes() as $note) {
+            $notes[] = [
+                'id' => $note->getId(),
+                'title' => $note->getTitle(),
+                'content' => $note->getContent(),
+                'url' => $note->getUrl(),
+                'date_published' => $note->getDatePublished(),
+            ];
+        }
+
         return [
             'id' => $object->getId(),
-            'category' => $object->getCategory(),
-            'tags' => $object->getTags(),
-            'title' => $object->getTitle(),
-            'url' => $object->getUrl(),
-            'content' => $object->getContent(),
-            'date_published' => $object->getDatePublished() ? $object->getDatePublished()->format('Y-m-d H:i:s') : null,
+            'notes' => $notes,
+            'name' => $object->getName(),
         ];
     }
 }

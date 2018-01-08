@@ -17,7 +17,7 @@ class CategoryRepository
         $this->sql = new Sql($dbAdapter);
     }
 
-    public function findAll()
+    public function findAll():array
     {
         $categories = [];
         $categorySelect = new Select('category');

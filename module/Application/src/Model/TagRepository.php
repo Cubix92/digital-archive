@@ -18,7 +18,7 @@ class TagRepository
         $this->sql = new Sql($dbAdapter);
     }
 
-    public function findAll()
+    public function findAll(): array
     {
         $tags = [];
         $tagSelect = new Select('tag');
@@ -35,13 +35,28 @@ class TagRepository
          * @var Tag $tag
          */
         foreach ($resultSet as $tag) {
+            $notesSelect = (new Select(['t' => 'tag']))
+                ->join(['nt' => 'note_tag'], 'nt.tag_id = t.id', [])
+                ->join(['n' => 'note'], 'n.id = nt.note_id', [])
+                ->where(['t.id' => $tag->getId()]);
+
+            $notesResult = $this->sql->prepareStatementForSqlObject($notesSelect)->execute();
+
+            $noteResultSet = new HydratingResultSet(new ReflectionHydrator(), new Note());
+            $noteResultSet->initialize($notesResult);
+
+            /** @var Note $note */
+            foreach($noteResultSet as $note) {
+                $tag->addNote($note);
+            }
+
             $tags[] = $tag;
         }
 
         return $tags;
     }
 
-    public function findUnassigned()
+    public function findUnassigned(): array
     {
         $tags = [];
         $tagSelect = (new Select(['t' => 'tag']))
@@ -50,11 +65,7 @@ class TagRepository
 
         $result = $this->sql->prepareStatementForSqlObject($tagSelect)->execute();
 
-        $resultSet = new HydratingResultSet(
-            new ReflectionHydrator(),
-            new Tag()
-        );
-
+        $resultSet = new HydratingResultSet(new ReflectionHydrator(), new Tag());
         $resultSet->initialize($result);
 
         /**

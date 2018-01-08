@@ -3,31 +3,31 @@
 namespace Application\Controller\Api;
 
 use Application\Model\Note;
-use Application\Model\NoteCommand;
-use Application\Model\NoteHydrator;
-use Application\Model\NoteRepository;
+use Application\Model\CategoryCommand;
+use Application\Model\CategoryHydrator;
+use Application\Model\CategoryRepository;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
 
-class NoteController extends AbstractRestfulController
+class CategoryController extends AbstractRestfulController
 {
-    protected $noteRepository;
+    protected $categoryRepository;
 
-    protected $noteCommand;
+    protected $categoryCommand;
 
-    protected $noteHydrator;
+    protected $categoryHydrator;
 
-    public function __construct(NoteRepository $noteRepository, NoteCommand $noteCommand, NoteHydrator $noteHydrator)
+    public function __construct(CategoryRepository $categoryRepository, CategoryCommand $categoryCommand, CategoryHydrator $categoryHydrator)
     {
-        $this->noteRepository = $noteRepository;
-        $this->noteCommand = $noteCommand;
-        $this->noteHydrator = $noteHydrator;
+        $this->categoryRepository = $categoryRepository;
+        $this->categoryCommand = $categoryCommand;
+        $this->categoryHydrator = $categoryHydrator;
     }
 
     public function get($id):JsonModel
     {
         try {
-            $note = $this->noteRepository->findById($id);
+            $note = $this->categoryRepository->findById($id);
         } catch(\UnexpectedValueException $e) {
             return new JsonModel([
                 'status' => 'error',
@@ -35,7 +35,7 @@ class NoteController extends AbstractRestfulController
             ]);
         }
 
-        $data = $this->noteHydrator->extract($note);
+        $data = $this->categoryHydrator->extract($note);
 
         return new JsonModel([
             'status' => 'success',
@@ -45,12 +45,14 @@ class NoteController extends AbstractRestfulController
 
     public function getList():JsonModel
     {
-        /** @var Note $note */
-        $notes = $this->noteRepository->findAll();
+        /**
+         * @var Note $note
+         */
+        $categories = $this->categoryRepository->findAll();
         $data = [];
 
-        foreach($notes as $note) {
-            $data[] = $this->noteHydrator->extract($note);
+        foreach($categories as $category) {
+            $data[] = $this->categoryHydrator->extract($category);
         }
 
         return new JsonModel([

@@ -4,6 +4,7 @@ namespace Application;
 
 use Application\Listener\TagListener;
 use Zend\Mvc\MvcEvent;
+use Zend\Http\PhpEnvironment\Request as HttpRequest;
 
 class Module
 {
@@ -16,8 +17,10 @@ class Module
 
     public function onBootstrap(MvcEvent $e)
     {
-        $viewModel = $e->getApplication()->getMvcEvent()->getViewModel();
-        $viewModel->isHomePage = $e->getRequest()->getUri()->getPath() == '/';
+        if ($e->getRequest() instanceof HttpRequest) {
+            $viewModel = $e->getApplication()->getMvcEvent()->getViewModel();
+            $viewModel->isHomePage = $e->getRequest()->getUri()->getPath() == '/';
+        }
 
         $serviceManager = $e->getApplication()->getServiceManager();
         $eventManager = $e->getTarget()->getEventManager();

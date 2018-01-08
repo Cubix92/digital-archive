@@ -30,7 +30,7 @@ class AuthListener implements ListenerAggregateInterface
         $this->listeners[] = $sharedManager->attach(
             AbstractRestfulController::class,
             MvcEvent::EVENT_DISPATCH,
-            [$this, 'checkIdentity'],
+            [$this, 'checkToken'],
             $priority
         );
     }
@@ -53,6 +53,11 @@ class AuthListener implements ListenerAggregateInterface
             return $controller->redirect()->toRoute('login');
         }
 
+        return 0;
+    }
+
+    public function checkToken(EventInterface $event)
+    {
         return 0;
     }
 }

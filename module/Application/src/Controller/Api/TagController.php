@@ -2,32 +2,32 @@
 
 namespace Application\Controller\Api;
 
-use Application\Model\Note;
-use Application\Model\NoteCommand;
-use Application\Model\NoteHydrator;
-use Application\Model\NoteRepository;
+use Application\Model\Tag;
+use Application\Model\TagCommand;
+use Application\Model\TagHydrator;
+use Application\Model\TagRepository;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
 
-class NoteController extends AbstractRestfulController
+class TagController extends AbstractRestfulController
 {
-    protected $noteRepository;
+    protected $tagRepository;
 
-    protected $noteCommand;
+    protected $tagCommand;
 
-    protected $noteHydrator;
+    protected $tagHydrator;
 
-    public function __construct(NoteRepository $noteRepository, NoteCommand $noteCommand, NoteHydrator $noteHydrator)
+    public function __construct(TagRepository $tagRepository, TagCommand $tagCommand, TagHydrator $tagHydrator)
     {
-        $this->noteRepository = $noteRepository;
-        $this->noteCommand = $noteCommand;
-        $this->noteHydrator = $noteHydrator;
+        $this->tagRepository = $tagRepository;
+        $this->tagCommand = $tagCommand;
+        $this->tagHydrator = $tagHydrator;
     }
 
     public function get($id):JsonModel
     {
         try {
-            $note = $this->noteRepository->findById($id);
+            $tag = $this->tagRepository->findById($id);
         } catch(\UnexpectedValueException $e) {
             return new JsonModel([
                 'status' => 'error',
@@ -35,7 +35,7 @@ class NoteController extends AbstractRestfulController
             ]);
         }
 
-        $data = $this->noteHydrator->extract($note);
+        $data = $this->tagHydrator->extract($tag);
 
         return new JsonModel([
             'status' => 'success',
@@ -45,12 +45,12 @@ class NoteController extends AbstractRestfulController
 
     public function getList():JsonModel
     {
-        /** @var Note $note */
-        $notes = $this->noteRepository->findAll();
+        /** @var Tag $tag */
+        $tags = $this->tagRepository->findAll();
         $data = [];
 
-        foreach($notes as $note) {
-            $data[] = $this->noteHydrator->extract($note);
+        foreach($tags as $tag) {
+            $data[] = $this->tagHydrator->extract($tag);
         }
 
         return new JsonModel([

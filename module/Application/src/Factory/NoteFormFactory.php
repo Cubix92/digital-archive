@@ -16,9 +16,6 @@ class NoteFormFactory
 {
     public function __invoke(ContainerInterface $container)
     {
-        $categoryRepository = $container->get(CategoryRepository::class);
-        $categories = $categoryRepository->findAll();
-
         $categoryStrategy = new ClosureStrategy(
             function($object){
                 return $object;
@@ -45,6 +42,9 @@ class NoteFormFactory
             ->setNamingStrategy($namingStrategy)
             ->addStrategy('category', $categoryStrategy)
             ->addStrategy('datePublished', $dateStrategy);
+
+        $categoryRepository = $container->get(CategoryRepository::class);
+        $categories = $categoryRepository->findAll();
 
         $form = new NoteForm($categories);
         $form->setHydrator($reflectionHydrator);
