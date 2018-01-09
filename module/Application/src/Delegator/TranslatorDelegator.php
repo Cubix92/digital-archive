@@ -21,7 +21,7 @@ class TranslatorDelegator implements DelegatorFactoryInterface
             __DIR__ . '/../../../../vendor/zendframework/zend-i18n-resources/languages/pl/Zend_Validate.php'
         );
 
-        $translator->addTranslationFile(PhpArray::class, ROOT_PATH . '/data/languages/pl_PL.php');
+        $translator->addTranslationFile(PhpArray::class, './data/languages/pl_PL.php');
 
         return $translator;
     }

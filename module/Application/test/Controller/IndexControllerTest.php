@@ -1,12 +1,8 @@
 <?php
-/**
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
 
 namespace ApplicationTest\Controller;
 
+use Zend\Authentication\AuthenticationService;
 use Application\Controller\IndexController;
 use Zend\Stdlib\ArrayUtils;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
@@ -23,13 +19,20 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         ));
 
         parent::setUp();
+
+        $mockAuth = $this->getMockBuilder(AuthenticationService::class)->disableOriginalConstructor()->getMock();
+        $mockAuth->expects($this->any())->method('hasIdentity')->willReturn(true);
+
+        $this->getApplicationServiceLocator()->setAllowOverride(true);
+        $this->getApplicationServiceLocator()->setService(AuthenticationService::class, $mockAuth);
+        $this->getApplicationServiceLocator()->setAllowOverride(false);
     }
 
     public function testIndexActionCanBeAccessed()
     {
         $this->dispatch('/', 'GET');
         $this->assertResponseStatusCode(200);
-        $this->assertModuleName('user');
+        $this->assertModuleName('application');
         $this->assertControllerName(IndexController::class);
         $this->assertControllerClass('IndexController');
         $this->assertMatchedRouteName('home');
@@ -38,7 +41,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
     public function testIndexActionViewModelTemplateRenderedWithinLayout()
     {
         $this->dispatch('/', 'GET');
-        $this->assertQuery('.container .jumbotron');
+        $this->assertQuery('.container');
     }
 
     public function testInvalidRouteDoesNotCrash()

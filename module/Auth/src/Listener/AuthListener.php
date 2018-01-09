@@ -8,7 +8,6 @@ use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Mvc\Controller\AbstractController;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\Mvc\MvcEvent;
 
@@ -49,7 +48,7 @@ class AuthListener implements ListenerAggregateInterface
         $authService = $event->getApplication()->getServiceManager()->get(AuthenticationService::class);
         $controllerName = $event->getRouteMatch()->getParam('controller', null);
 
-        if (!$authService->getIdentity() && $controllerName != AuthController::class) {
+        if (!$authService->hasIdentity() && $controllerName != AuthController::class) {
             return $controller->redirect()->toRoute('login');
         }
 
