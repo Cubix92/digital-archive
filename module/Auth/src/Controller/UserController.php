@@ -23,7 +23,7 @@ class UserController extends AbstractActionController
     public function indexAction()
     {
         return new ViewModel([
-            'users' => $this->userTable->findAll()
+            'users' => $this->userTable->fetchAll()
         ]);
     }
 
@@ -34,7 +34,7 @@ class UserController extends AbstractActionController
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
 
-            if ($this->userForm->isValid()) {
+            if ($form->isValid()) {
                 /** @var User $user */
                 $user = $form->getData();
                 $this->userTable->save($user);
@@ -59,7 +59,7 @@ class UserController extends AbstractActionController
 
         try {
             /** @var User $user */
-            $user = $this->userTable->findById($id);
+            $user = $this->userTable->getUser($id);
         } catch (\InvalidArgumentException $e) {
             $this->flashMessenger()->addErrorMessage('User with identifier not found');
             return $this->redirect()->toRoute('user', ['action' => 'index']);
@@ -96,7 +96,7 @@ class UserController extends AbstractActionController
 
         try {
             /** @var User $user */
-            $user = $this->userTable->findById($id);
+            $user = $this->userTable->getUser($id);
         } catch (\InvalidArgumentException $e) {
             $this->getEventManager()->trigger('userDeleted');
             $this->flashMessenger()->addErrorMessage('User with identifier not found');

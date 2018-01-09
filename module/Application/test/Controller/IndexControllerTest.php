@@ -20,11 +20,15 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
 
         parent::setUp();
 
+        $config = $this->getApplicationServiceLocator()->get('config');
+        unset($config['db']);
+
         $mockAuth = $this->getMockBuilder(AuthenticationService::class)->disableOriginalConstructor()->getMock();
         $mockAuth->expects($this->any())->method('hasIdentity')->willReturn(true);
 
         $this->getApplicationServiceLocator()->setAllowOverride(true);
         $this->getApplicationServiceLocator()->setService(AuthenticationService::class, $mockAuth);
+        $this->getApplicationServiceLocator()->setService('config', $config);
         $this->getApplicationServiceLocator()->setAllowOverride(false);
     }
 

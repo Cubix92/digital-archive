@@ -13,12 +13,12 @@ class UserTable
         $this->tableGateway = $tableGateway;
     }
 
-    public function findAll()
+    public function fetchAll()
     {
         return $this->tableGateway->select();
     }
 
-    public function findById($id)
+    public function getUser($id)
     {
         $resultSet = $this->tableGateway->select(['id' => $id]);
         $user = $resultSet->current();
@@ -46,7 +46,7 @@ class UserTable
             return;
         }
 
-        if (!$this->findById($id)) {
+        if (!$this->getUser($id)) {
             throw new \RuntimeException(sprintf('Cannot update user that does not exist'));
         }
 
