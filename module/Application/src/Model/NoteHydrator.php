@@ -25,7 +25,7 @@ class NoteHydrator extends AbstractHydrator
             $category = (new Category())
                 ->setId($data['category']['id'])
                 ->setName($data['category']['name'])
-                ->setIcon($data['category']['icon']);
+                ->setShortcut($data['category']['shortcut']);
 
             $object->setCategory($category);
         };
@@ -80,7 +80,7 @@ class NoteHydrator extends AbstractHydrator
             'category' => [
                 'id' => $object->getCategory()->getId(),
                 'name' => $object->getCategory()->getName(),
-                'icon' => $object->getCategory()->getIcon()
+                'shortcut' => $object->getCategory()->getShortcut()
             ],
             'tags' => $tags,
             'title' => $object->getTitle(),

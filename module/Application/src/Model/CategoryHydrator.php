@@ -38,8 +38,8 @@ class CategoryHydrator extends AbstractHydrator
             $object->setTags($data['tags']);
         };
 
-        if (array_key_exists('icon', $data)) {
-            $object->setTags($data['tags']);
+        if (array_key_exists('shortcut', $data)) {
+            $object->setShortcut($data['shortcut']);
         };
 
         return $object;
@@ -68,7 +68,7 @@ class CategoryHydrator extends AbstractHydrator
             'id' => $object->getId(),
             'notes' => $notes,
             'name' => $object->getName(),
-            'icon' => $object->getIcon()
+            'shortcut' => $object->getShortcut()
         ];
     }
 }

@@ -35,6 +35,20 @@ img { border: 0; max-width: 100%; }
   -webkit-box-shadow: 0 0 11px rgba(0,0,0,0.35);
 }
 
+.youtube-link {
+  font-size: 25px;
+  color: #c25b4e;
+}
+
+.youtube-link img {
+  margin-bottom: 10px;
+}
+
+.youtube-link:hover {
+  text-decoration: none;
+  color: #c25b4e;
+}
+
 .timeline li {
   margin-bottom: 25px;
   position: relative;
@@ -120,21 +134,19 @@ img { border: 0; max-width: 100%; }
 
 /** timeline circle icons **/
 .timeline li .tl-circ {
-   position: absolute;
-   top: 18px;
-   left: 50%;
-   text-align: center;
-   background: #000;
-   color: #fff;
-   width: 50px;
-   height: 50px;
-   line-height: 35px;
-   margin-left: -24px;
-   border-top-right-radius: 50%;
-   border-top-left-radius: 50%;
-   border-bottom-right-radius: 50%;
-   border-bottom-left-radius: 50%;
-   z-index: 99;
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  text-align: center;
+  background: #000;
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  margin-left: -24px;
+  border-radius: 50%;
+  z-index: 99;
+  font-size: 12px;
  }
 
 .timeline li .tl-circ img {
@@ -143,6 +155,9 @@ img { border: 0; max-width: 100%; }
   top: 6px;
 }
 
+.timeline li .tags a {
+  margin-top: 2px;
+}
 
 /** timeline content **/
 

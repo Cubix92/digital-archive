@@ -10,7 +10,7 @@ class Category
 
     protected $name;
 
-    protected $icon;
+    protected $shortcut;
 
     public function __construct()
     {
@@ -55,14 +55,14 @@ class Category
         return $this;
     }
 
-    public function getIcon()
+    public function getShortcut()
     {
-        return $this->icon;
+        return $this->shortcut;
     }
 
-    public function setIcon($icon)
+    public function setShortcut($shortcut)
     {
-        $this->icon = $icon;
+        $this->shortcut = $shortcut;
         return $this;
     }
 }

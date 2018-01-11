@@ -5,6 +5,7 @@ namespace Auth\Form;
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Filter\StringToLower;
 use Zend\Filter\StringTrim;
+use Zend\Filter\StripTags;
 use Zend\Filter\ToInt;
 use Zend\Filter\ToNull;
 use Zend\InputFilter\InputFilter;
@@ -31,6 +32,7 @@ class UserInputFilter extends InputFilter
             'filters' => [
                 ['name' => StringToLower::class],
                 ['name' => StringTrim::class],
+                ['name' => StripTags::class],
             ],
             'validators' => [
                 ['name' => EmailAddress::class],

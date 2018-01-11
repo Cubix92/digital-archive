@@ -24,7 +24,7 @@ class CategoryCommand
 
         $insert->values([
             'name' => $category->getName(),
-            'icon' => $category->getIcon()
+            'shortcut' => $category->getShortcut()
         ]);
 
         $result = $this->sql->prepareStatementForSqlObject($insert)->execute();
@@ -43,7 +43,7 @@ class CategoryCommand
 
         $update->set([
             'name' => $category->getName(),
-            'icon' => $category->getIcon()
+            'shortcut' => $category->getShortcut()
         ]);
         $update->where(['id = ?' => $category->getId()]);
 
