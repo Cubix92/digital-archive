@@ -11,6 +11,7 @@
                     <tr>
                         <th style="width: 60px;">ID</th>
                         <th>Nazwa</th>
+                        <th>Skrót</th>
                         <th style="width: 80px;">Akcje</th>
                     </tr>
                 </thead>
@@ -19,6 +20,7 @@
                     <tr>
                         <td><?= $category->getId() ?></td>
                         <td><?= $category->getName() ?></td>
+                        <td><?= $category->getShortcut() ?></td>
                         <td>
                             <a href="<?= $this->url('category', ['action' => 'edit', 'id' => $category->getId()]) ?>" class="btn btn-success btn-xs" title="Edytuj">
                                 <span class="glyphicon glyphicon-edit"></span>
