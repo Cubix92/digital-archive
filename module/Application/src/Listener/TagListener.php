@@ -7,11 +7,12 @@ use Application\Model\TagRepository;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
+use Zend\EventManager\ListenerAggregateTrait;
 use Zend\Mvc\Controller\AbstractController;
 
 class TagListener implements ListenerAggregateInterface
 {
-    private $listeners = [];
+    use ListenerAggregateTrait;
 
     protected $tagCommand;
 
@@ -40,14 +41,6 @@ class TagListener implements ListenerAggregateInterface
             [$this, 'onNoteChange'],
             $priority
         );
-    }
-
-    public function detach(EventManagerInterface $events)
-    {
-        foreach ($this->listeners as $index => $listener) {
-            $events->detach($listener);
-            unset($this->listeners[$index]);
-        }
     }
 
     public function onNoteChange()

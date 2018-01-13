@@ -38,7 +38,7 @@ class UserController extends AbstractActionController
                 /** @var User $user */
                 $user = $form->getData();
                 $this->userTable->save($user);
-                $this->getEventManager()->trigger('userAdded');
+                $this->getEventManager()->trigger('userAdded', $this, ['user' => $user]);
                 $this->flashMessenger()->addSuccessMessage('User was added successfull');
                 return $this->redirect()->toRoute('user');
             }
@@ -60,7 +60,7 @@ class UserController extends AbstractActionController
         try {
             /** @var User $user */
             $user = $this->userTable->getUser($id);
-        } catch (\InvalidArgumentException $e) {
+        } catch (\UnexpectedValueException $e) {
             $this->flashMessenger()->addErrorMessage('User with identifier not found');
             return $this->redirect()->toRoute('user', ['action' => 'index']);
         }
@@ -74,7 +74,7 @@ class UserController extends AbstractActionController
 
             if ($form->isValid()) {
                 $this->userTable->save($user);
-                $this->getEventManager()->trigger('userEdited');
+                $this->getEventManager()->trigger('userEdited', $this, ['user' => $user]);
                 $this->flashMessenger()->addSuccessMessage('User was updated successfull');
                 return $this->redirect()->toRoute('user', ['action' => 'index']);
             }
@@ -98,12 +98,12 @@ class UserController extends AbstractActionController
             /** @var User $user */
             $user = $this->userTable->getUser($id);
         } catch (\InvalidArgumentException $e) {
-            $this->getEventManager()->trigger('userDeleted');
             $this->flashMessenger()->addErrorMessage('User with identifier not found');
             return $this->redirect()->toRoute('user', ['action' => 'index']);
         }
 
         $this->userTable->delete($user->getId());
+        $this->getEventManager()->trigger('userDeleted', $this, ['user' => $user]);
         $this->flashMessenger()->addSuccessMessage('User was deleted successful');
         return $this->redirect()->toRoute('user', ['action' => 'index']);
     }

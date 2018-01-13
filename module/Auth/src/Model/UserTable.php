@@ -24,7 +24,7 @@ class UserTable
         $user = $resultSet->current();
 
         if (!$user) {
-            throw new \InvalidArgumentException('User with identifier not found');
+            throw new \UnexpectedValueException('User with identifier not found');
         }
 
         return $user;

@@ -34,12 +34,14 @@
         "zendframework/zend-serializer": "^2.8",
         "zendframework/zend-test": "^3.1",
         "zendframework/zend-console": "^2.6",
-        "zendframework/zend-mvc-console": "^1.1"
+        "zendframework/zend-mvc-console": "^1.1",
+        "zendframework/zend-log": "^2.9"
     },
     "autoload": {
         "psr-4": {
             "Application\\": "module/Application/src/",
-            "Auth\\": "module/Auth/src/"
+            "Auth\\": "module/Auth/src/",
+            "Log\\": "module/Log/src/"
         }
     },
     "autoload-dev": {

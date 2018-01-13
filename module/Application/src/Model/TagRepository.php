@@ -7,7 +7,6 @@ use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Sql;
 use Zend\Hydrator\Reflection as ReflectionHydrator;
-use Zend\Hydrator\Reflection;
 
 class TagRepository
 {

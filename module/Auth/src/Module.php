@@ -20,4 +20,11 @@ class Module
         $authListener = $serviceManager->get(AuthListener::class );
         $authListener->attach($eventManager);
     }
+
+    public function getModuleDependencies()
+    {
+        return [
+            'Log'
+        ];
+    }
 }

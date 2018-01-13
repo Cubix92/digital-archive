@@ -12,6 +12,7 @@ use Zend\InputFilter\InputFilter;
 use Zend\Validator\Db\NoRecordExists;
 use Zend\Validator\EmailAddress;
 use Zend\Validator\Identical;
+use Zend\Validator\StringLength;
 
 class UserInputFilter extends InputFilter
 {
@@ -92,7 +93,14 @@ class UserInputFilter extends InputFilter
                     'options' => [
                         'token' => 'repeat_password'
                     ],
-                ]
+                ],
+                [
+                    'name' => StringLength::class,
+                    'options' => [
+                        'min' => 6,
+                        'max' => 120
+                    ],
+                ],
             ]
         ]);
 

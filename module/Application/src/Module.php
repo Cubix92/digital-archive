@@ -2,6 +2,8 @@
 
 namespace Application;
 
+use Application\Listener\CategoryListener;
+use Application\Listener\NoteListener;
 use Application\Listener\TagListener;
 use Zend\Mvc\MvcEvent;
 use Zend\Http\PhpEnvironment\Request as HttpRequest;
@@ -27,12 +29,19 @@ class Module
 
         $tagListener = $serviceManager->get(TagListener::class);
         $tagListener->attach($eventManager);
+
+        $categoryListener = $serviceManager->get(CategoryListener::class);
+        $categoryListener->attach($eventManager);
+
+        $noteListener = $serviceManager->get(NoteListener::class);
+        $noteListener->attach($eventManager);
     }
 
     public function getModuleDependencies()
     {
         return [
-            'Auth'
+            'Auth',
+            'Log'
         ];
     }
 }

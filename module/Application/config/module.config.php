@@ -91,6 +91,16 @@ return [
                     ],
                 ],
             ],
+            'log' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route'    => '/log',
+                    'defaults' => [
+                        'controller' => Controller\LogController::class,
+                        'action'     => 'index'
+                    ],
+                ],
+            ],
         ],
     ],
     'service_manager' => [
@@ -106,7 +116,9 @@ return [
             Model\TagService::class => Factory\TagServiceFactory::class,
             Model\TagHydrator::class => InvokableFactory::class,
             Listener\TagListener::class => Factory\TagListenerFactory::class,
-            Service\Slugger::class => InvokableFactory::class,
+            Listener\CategoryListener::class => Factory\CategoryListenerFactory::class,
+            Listener\NoteListener::class => Factory\NoteListenerFactory::class,
+            Service\Slugger::class => InvokableFactory::class
         ],
         'delegators' => [
             Translator::class => [
@@ -123,6 +135,7 @@ return [
             Controller\CategoryController::class => Factory\CategoryControllerFactory::class,
             Controller\NoteController::class => Factory\NoteControllerFactory::class,
             Controller\TagController::class => Factory\TagControllerFactory::class,
+            Controller\LogController::class => Factory\LogControllerFactory::class,
         ],
     ],
     'form_elements' => [
@@ -196,6 +209,17 @@ return [
                         'label'  => 'Podgląd tagu',
                         'route'  => 'tag',
                         'action' => 'show',
+                    ]
+                ],
+            ],
+            [
+                'label' => 'Logi',
+                'route' => 'log',
+                'pages' => [
+                    [
+                        'label'  => 'Przeglądanie logów',
+                        'route'  => 'log',
+                        'action' => 'index',
                     ]
                 ],
             ],

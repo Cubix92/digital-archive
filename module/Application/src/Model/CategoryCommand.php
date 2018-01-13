@@ -56,10 +56,6 @@ class CategoryCommand
             throw new \RuntimeException('Cannot delete category; category has related values');
         }
 
-        if (!$category->getId()) {
-            throw new \RuntimeException('Cannot delete category; missing identifier');
-        }
-
         $delete = (new Delete('category'))
             ->where(['id' => $category->getId()]);
 

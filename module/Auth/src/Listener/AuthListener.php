@@ -2,22 +2,56 @@
 
 namespace Auth\Listener;
 
+use Zend\Authentication\AuthenticationService as AuthService;
 use Auth\Controller\AuthController;
 use Zend\Authentication\AuthenticationService;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
+use Zend\EventManager\ListenerAggregateTrait;
+use Zend\Log\Logger;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\Mvc\MvcEvent;
 
 class AuthListener implements ListenerAggregateInterface
 {
-    private $listeners = [];
+    use ListenerAggregateTrait;
+
+    protected $logger;
+
+    protected $authService;
+
+    public function __construct(Logger $logger, AuthService $authService)
+    {
+        $this->logger = $logger;
+        $this->authService = $authService;
+    }
 
     public function attach(EventManagerInterface $events, $priority = 1)
     {
         $sharedManager = $events->getSharedManager();
+
+        $this->listeners[] = $sharedManager->attach(
+            AbstractActionController::class,
+            'userAdded',
+            [$this, 'onUserAdded'],
+            $priority
+        );
+
+        $this->listeners[] = $sharedManager->attach(
+            AbstractActionController::class,
+            'userEdited',
+            [$this, 'onUserEdited'],
+            $priority
+        );
+
+        $this->listeners[] = $sharedManager->attach(
+            AbstractActionController::class,
+            'userDeleted',
+            [$this, 'onUserDeleted'],
+            $priority
+        );
 
         $this->listeners[] = $sharedManager->attach(
             AbstractActionController::class,
@@ -32,14 +66,6 @@ class AuthListener implements ListenerAggregateInterface
             [$this, 'checkToken'],
             $priority
         );
-    }
-
-    public function detach(EventManagerInterface $events)
-    {
-        foreach ($this->listeners as $index => $listener) {
-            $events->detach($listener);
-            unset($this->listeners[$index]);
-        }
     }
 
     public function checkIdentity(EventInterface $event)
@@ -58,5 +84,32 @@ class AuthListener implements ListenerAggregateInterface
     public function checkToken(EventInterface $event)
     {
         return 0;
+    }
+
+    public function onUserAdded(EventInterface $e)
+    {
+        $user = $e->getParam('user');
+        $message = sprintf('[{email}]: Add new user "%s"', $user->getEmail());
+        $params['email'] = $this->authService->getIdentity()->email;
+
+        $this->logger->info($message, $params);
+    }
+
+    public function onUserEdited(EventInterface $e)
+    {
+        $user = $e->getParam('user');
+        $message = sprintf('[{email}]: Edit user "%s"', $user->getEmail());
+        $params['email'] = $this->authService->getIdentity()->email;
+
+        $this->logger->info($message, $params);
+    }
+
+    public function onUserDeleted(EventInterface $e)
+    {
+        $user = $e->getParam('user');
+        $message = sprintf('[{email}]: User "%s" was deleted', $user->getEmail());
+        $params['email'] = $this->authService->getIdentity()->email;
+
+        $this->logger->info($message, $params);
     }
 }

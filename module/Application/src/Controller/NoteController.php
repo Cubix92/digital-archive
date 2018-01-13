@@ -42,7 +42,7 @@ class NoteController extends AbstractActionController
                 /** @var Note $note */
                 $note = $form->getData();
                 $this->noteCommand->insert($note);
-                $this->getEventManager()->trigger('noteAdded');
+                $this->getEventManager()->trigger('noteAdded', $this, ['note' => $note]);
                 $this->flashMessenger()->addSuccessMessage('Note was added successfull');
                 return $this->redirect()->toRoute('note');
             }
@@ -75,7 +75,7 @@ class NoteController extends AbstractActionController
 
             if ($form->isValid()) {
                 $this->noteCommand->update($note);
-                $this->getEventManager()->trigger('noteEdited');
+                $this->getEventManager()->trigger('noteEdited', $this, ['note' => $note]);
                 $this->flashMessenger()->addSuccessMessage('Note was updated successfull');
                 return $this->redirect()->toRoute('note', ['action' => 'index']);
             }
@@ -103,7 +103,7 @@ class NoteController extends AbstractActionController
         }
 
         $this->noteCommand->delete($note);
-        $this->getEventManager()->trigger('noteDeleted');
+        $this->getEventManager()->trigger('noteDeleted', $this, ['note' => $note]);
         $this->flashMessenger()->addSuccessMessage('Note was deleted successfull');
         return $this->redirect()->toRoute('note', ['action' => 'index']);
     }

@@ -64,7 +64,7 @@ return [
             Model\UserTable::class => Factory\UserTableFactory::class,
             AuthService::class => Factory\AuthServiceFactory::class,
             AuthAdapter::class => Factory\AuthAdapterFactory::class,
-            Listener\AuthListener::class => InvokableFactory::class,
+            Listener\AuthListener::class => Factory\AuthListenerFactory::class,
         ],
     ],
     'form_elements' => [
