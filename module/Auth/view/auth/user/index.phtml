@@ -12,7 +12,6 @@
                     <th style="width: 60px;">ID</th>
                     <th>Email</th>
                     <th>Rola</th>
-                    <th>Data dodania</th>
                     <th style="width: 80px;">Akcje</th>
                 </tr>
                 </thead>
@@ -22,7 +21,6 @@
                         <td><?= $user->getId() ?></td>
                         <td><?= $user->getEmail() ?></td>
                         <td><?= $user->getRole() ?></td>
-                        <td><?= $user->getDateCreated()->format('Y-m-d') ?></td>
                         <td>
                             <a href="<?= $this->url('user', ['action' => 'edit', 'id' => $user->getId()]) ?>"
                                class="btn btn-success btn-xs" title="Edytuj">

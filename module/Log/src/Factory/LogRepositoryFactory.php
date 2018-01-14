@@ -2,6 +2,7 @@
 
 namespace Log\Factory;
 
+use Log\Model\LogHydrator;
 use Log\Model\LogRepository;
 use Interop\Container\ContainerInterface;
 use Zend\Db\Adapter\AdapterInterface;
@@ -11,7 +12,8 @@ class LogRepositoryFactory
     public function __invoke(ContainerInterface $container)
     {
         $dbAdapter = $container->get(AdapterInterface::class);
+        $logHydrator = $container->get(LogHydrator::class);
 
-        return new LogRepository($dbAdapter);
+        return new LogRepository($dbAdapter, $logHydrator);
     }
 }

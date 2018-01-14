@@ -43,7 +43,6 @@ class UserTable
         $id = $user->getId();
 
         if ($id == 0) {
-            $data['date_created'] = date('Y-m-d H:i:s');
             $this->tableGateway->insert($data);
             return;
         }

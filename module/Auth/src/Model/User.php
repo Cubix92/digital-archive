@@ -14,13 +14,6 @@ class User
 
     protected $password;
 
-    protected $dateCreated;
-
-    public function __construct()
-    {
-        $this->dateCreated = new \DateTime();
-    }
-
     public function getId()
     {
         return $this->id;
@@ -64,17 +57,6 @@ class User
         $bcrypt = new Bcrypt();
         $this->password = $bcrypt->create($password);
 
-        return $this;
-    }
-
-    public function getDateCreated(): \DateTime
-    {
-        return $this->dateCreated;
-    }
-
-    public function setDateCreated(\DateTime $dateCreated)
-    {
-        $this->dateCreated = $dateCreated;
         return $this;
     }
 }

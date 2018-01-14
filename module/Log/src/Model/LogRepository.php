@@ -11,9 +11,12 @@ class LogRepository
 {
     protected $sql;
 
-    public function __construct(AdapterInterface $dbAdapter)
+    protected $logHydrator;
+
+    public function __construct(AdapterInterface $dbAdapter, LogHydrator $logHydrator)
     {
         $this->sql = new Sql($dbAdapter);
+        $this->logHydrator = $logHydrator;
     }
 
     public function findAll(): array
@@ -28,14 +31,8 @@ class LogRepository
         /**
          * @var Log $log
          */
-        foreach ($resultSet as $log) {
-            $log = (new Log())
-                ->setId($log['id'])
-                ->setContent($log['content'])
-                ->setDate(new \DateTime($log['date']))
-                ->setType($log['type']);
-
-            $logs[] = $log;
+        foreach ($resultSet->toArray() as $logSet) {
+            $logs[] = $this->logHydrator->hydrate($logSet, new Log());
         }
 
         return $logs;
