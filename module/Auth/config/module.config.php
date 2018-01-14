@@ -6,7 +6,6 @@ use Zend\Router\Http\Segment;
 use Zend\Router\Http\Literal;
 use Zend\Authentication\AuthenticationService as AuthService;
 use Zend\Authentication\Adapter\DbTable\CallbackCheckAdapter as AuthAdapter;
-use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'router' => [

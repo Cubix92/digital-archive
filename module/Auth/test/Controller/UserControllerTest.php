@@ -8,9 +8,8 @@ use Auth\Model\User;
 use Auth\Model\UserTable;
 use Prophecy\Argument;
 use Zend\Authentication\AuthenticationService;
-use Zend\Db\ResultSet\HydratingResultSet;
+use Zend\Db\ResultSet\ResultSetInterface;
 use Zend\Form\FormElementManager;
-use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayUtils;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
@@ -47,6 +46,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
     {
         $authenticationService = $this->prophesize(AuthenticationService::class);
         $authenticationService->hasIdentity()->willReturn(true);
+        $authenticationService->getIdentity()->willReturn((object)['email' => 'example@example.com']);
 
         return $authenticationService;
     }
@@ -59,7 +59,8 @@ class UserControllerTest extends AbstractHttpControllerTestCase
 
     public function testIndexActionCanBeAccessed()
     {
-        $this->userTable->fetchAll()->willReturn(new HydratingResultSet());
+        $resultSet = $this->prophesize(ResultSetInterface::class)->reveal();
+        $this->userTable->fetchAll()->willReturn($resultSet);
 
         $this->dispatch('/user', 'GET');
         $this->assertResponseStatusCode(200);
@@ -79,12 +80,12 @@ class UserControllerTest extends AbstractHttpControllerTestCase
 
     public function testAddActionRedirectsAfterValidPost()
     {
-        $userForm = $this->getApplicationServiceLocator()
-            ->get(FormElementManager::class)->get(UserForm::class);
-
         $this->userTable
             ->save(Argument::type(User::class))
             ->shouldBeCalled();
+
+        $userForm = $this->getApplicationServiceLocator()
+            ->get(FormElementManager::class)->get(UserForm::class);
 
         $postData = [
             'email'  => 'example@example.com',
@@ -99,17 +100,32 @@ class UserControllerTest extends AbstractHttpControllerTestCase
         $this->assertRedirectTo('/user');
     }
 
+    public function testEditActionWithoutPost()
+    {
+        $user = (new User())->setEmail('example@example.com');
+        $this->userTable->getUser(Argument::type('integer'))->willReturn($user);
+
+        $this->userTable
+            ->getUser(Argument::type('integer'))
+            ->shouldBeCalled();
+
+        $this->dispatch('/user/edit/1');
+
+        $this->assertResponseStatusCode(200);
+        $this->assertMatchedRouteName('user');
+    }
+
     public function testEditActionRedirectsAfterValidPost()
     {
         $user = (new User())->setEmail('example@example.com');
         $this->userTable->getUser(Argument::type('integer'))->willReturn($user);
 
-        $userForm = $this->getApplicationServiceLocator()
-            ->get(FormElementManager::class)->get(UserForm::class);
-
         $this->userTable
             ->save(Argument::type(User::class))
             ->shouldBeCalled();
+
+        $userForm = $this->getApplicationServiceLocator()
+            ->get(FormElementManager::class)->get(UserForm::class);
 
         $postData = [
             'id' => 1,
@@ -125,9 +141,9 @@ class UserControllerTest extends AbstractHttpControllerTestCase
 
     public function testDeleteActionRedirectsAfterValidPost()
     {
-        $user = $this->prophesize(User::class);
-        $user->getId()->willReturn(1);
-        $this->userTable->getUser(Argument::type('integer'))->willReturn($user->reveal());
+        $user = (new User())->setId(1);
+
+        $this->userTable->getUser(Argument::type('integer'))->willReturn($user);
 
         $this->userTable
             ->delete(Argument::type('integer'))

@@ -2,25 +2,27 @@
 
 namespace Auth\Model;
 
-use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\ResultSet\ResultSetInterface;
+use Zend\Db\TableGateway\TableGatewayInterface;
 
 class UserTable
 {
     protected $tableGateway;
 
-    public function __construct(TableGateway $tableGateway)
+    public function __construct(TableGatewayInterface $tableGateway)
     {
         $this->tableGateway = $tableGateway;
     }
 
-    public function fetchAll()
+    public function fetchAll(): ResultSetInterface
     {
         return $this->tableGateway->select();
     }
 
-    public function getUser($id)
+    public function getUser($id): User
     {
         $resultSet = $this->tableGateway->select(['id' => $id]);
+        /** @var User $user */
         $user = $resultSet->current();
 
         if (!$user) {

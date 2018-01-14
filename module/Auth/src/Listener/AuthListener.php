@@ -22,10 +22,9 @@ class AuthListener implements ListenerAggregateInterface
 
     protected $authService;
 
-    public function __construct(Logger $logger, AuthService $authService)
+    public function __construct(Logger $logger)
     {
         $this->logger = $logger;
-        $this->authService = $authService;
     }
 
     public function attach(EventManagerInterface $events, $priority = 1)
@@ -90,7 +89,7 @@ class AuthListener implements ListenerAggregateInterface
     {
         $user = $e->getParam('user');
         $message = sprintf('[{email}]: Add new user "%s"', $user->getEmail());
-        $params['email'] = $this->authService->getIdentity()->email;
+        $params['email'] = $e->getTarget()->identity()->email;
 
         $this->logger->info($message, $params);
     }
@@ -99,7 +98,7 @@ class AuthListener implements ListenerAggregateInterface
     {
         $user = $e->getParam('user');
         $message = sprintf('[{email}]: Edit user "%s"', $user->getEmail());
-        $params['email'] = $this->authService->getIdentity()->email;
+        $params['email'] = $e->getTarget()->identity()->email;
 
         $this->logger->info($message, $params);
     }
@@ -108,7 +107,7 @@ class AuthListener implements ListenerAggregateInterface
     {
         $user = $e->getParam('user');
         $message = sprintf('[{email}]: User "%s" was deleted', $user->getEmail());
-        $params['email'] = $this->authService->getIdentity()->email;
+        $params['email'] = $e->getTarget()->identity()->email;
 
         $this->logger->info($message, $params);
     }
