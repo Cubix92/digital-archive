@@ -43,8 +43,7 @@ class UserTableTest extends TestCase
         $userData = [
             'email' => 'example@example.com',
             'role' => 'admin',
-            'password' => (new Bcrypt())->create('test_pass'),
-            'date_created' => (new \DateTime())->format('Y-m-d H:i:s')
+            'password' => (new Bcrypt())->create('test_pass')
         ];
 
         $hydrator = new ReflectionHydrator();

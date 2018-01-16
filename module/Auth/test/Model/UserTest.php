@@ -16,7 +16,6 @@ class UserTest extends TestCase
         $this->assertNull($user->getEmail());
         $this->assertNull($user->getRole());
         $this->assertNull($user->getPassword());
-        $this->assertNotNull($user->getDateCreated());
     }
 
     public function testSetsPropertiesCorrectly()
