@@ -6,4 +6,7 @@ Moim celem będzie przygotowanie aplikacji webowej, której głównym założeni
 
 Aplikacja będzie projektowana z zastosowaniem dobrych praktyk programowania obiektowego - m. in. DRY, SOLID, LoD, KISS, zostanie zoptymalizowana w﻿ racjonalny sposób aby zwracać wyniki w stosownym czasie oraz zostanie zabezpieczona przed typowymi atakami takimi jak CSRF, XSS, SQL Injection, Brute Force czy Session Hijacking. Zostanie również przygotowany responsywny szablon HTML, w którym część frontowa aplikacji zostanie dostosowana do urządzeń mobilnych. Projekt zamierzam opracować w technologiach PHP﻿ 7, Zend Framework‌﻿ 3, CSS3, HTML5, JavaScript, jQuery oraz Bootstrap.
 
-## An application supporting the management of digital archive of video games
+## TODO
+0. Wypełnić wszystkie wymagania do pracy.
+1. Dodanie komendy konsolowej dodającej nowego użytkownika
+2. Dodanie autentykacji po tokenie, żeby móc dodawać dane przez API
