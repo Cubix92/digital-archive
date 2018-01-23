@@ -78,8 +78,9 @@ class NoteInputFilter extends InputFilter
                 [
                     'name' => RenameUpload::class,
                     'options' => [
-                        'target'    => './data/tmp',
+                        'target'    => 'public\upload',
                         'randomize' => true,
+                        'use_upload_name' => true,
                     ]
                 ],
             ],

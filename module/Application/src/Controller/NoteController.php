@@ -79,22 +79,32 @@ class NoteController extends AbstractActionController
             $this->flashMessenger()->addErrorMessage('Note with identifier not found');
             return $this->redirect()->toRoute('note', ['action' => 'index']);
         }
-
+        $this->noteForm->getInputFilter()->get('image')->setRequired(false);
         $form = $this->noteForm->bind($note);
+        $prg = $this->fileprg($form);
 
-        if ($this->getRequest()->isPost()) {
-            $form->setData($this->getRequest()->getPost());
+        if ($prg instanceof Response) {
+            return $prg;
+        }
 
+        if (is_array($prg)) {
             if ($form->isValid()) {
                 $this->noteCommand->update($note);
                 $this->getEventManager()->trigger('noteEdited', $this, ['note' => $note]);
                 $this->flashMessenger()->addSuccessMessage('Note was updated successfull');
                 return $this->redirect()->toRoute('note', ['action' => 'index']);
             }
+
+            $fileErrors = $form->get('image')->getMessages();
+
+            if (empty($fileErrors)) {
+                $tempFile = $form->get('image')->getValue();
+            }
         }
 
         return new ViewModel([
             'note' => $note,
+            'tempFile' => $tempFile ?? null,
             'form' => $form
         ]);
     }

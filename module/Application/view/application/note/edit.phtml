@@ -30,6 +30,26 @@
                 <?= $this->formElementErrors($this->form->get('url')) ?>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <?= $this->formLabel($this->form->get('image')) ?>
+                <?= $this->formFile($this->form->get('image')); ?>
+                <?= $this->formElementErrors($this->form->get('image')) ?>
+                <?php if ($this->tempFile) :?>
+                    <div class="help-block">
+                        <ul>
+                            <li><?= $this->escapeHtml($this->tempFile['name']) ?></li>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-offset-6 col-md-6">
+            <img width="100%" class="img-responsive img-thumbnail" src="<?= $this->imageHelper($this->note->getImage()) ?>">
+        </div>
     </div>
 
     <div class="row">

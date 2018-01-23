@@ -151,6 +151,14 @@ return [
             Form\NoteInputFilter::class => Factory\NoteInputFilterFactory::class,
         ],
     ],
+    'view_helpers' => [
+        'factories'=> [
+            Plugin\ImageHelper::class => InvokableFactory::class
+        ],
+        'invokables'=> [
+            'imageHelper' => Plugin\ImageHelper::class
+        ]
+    ],
     'navigation' => [
         'default' => [
             [

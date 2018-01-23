@@ -16,6 +16,8 @@ class Note
 
     protected $url;
 
+    protected $image;
+
     protected $datePublished;
 
     public function __construct()
@@ -91,6 +93,17 @@ class Note
     public function setUrl($url)
     {
         $this->url = $url;
+        return $this;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
         return $this;
     }
 

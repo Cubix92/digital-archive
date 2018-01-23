@@ -32,6 +32,7 @@ class NoteCommand
             'title' => $note->getTitle(),
             'content' => $note->getContent(),
             'url' => $note->getUrl(),
+            'image' => $note->getImage()['tmp_name'],
             'date_published' => (new \DateTime())->format('Y-m-d H:i:s')
         ]);
 
@@ -59,7 +60,8 @@ class NoteCommand
             'category' => $note->getCategory()->getId(),
             'title' => $note->getTitle(),
             'content' => $note->getContent(),
-            'url' => $note->getUrl()
+            'url' => $note->getUrl(),
+            'image' => $note->getImage()['tmp_name']
         ]);
         $update->where(['id = ?' => $note->getId()]);
 

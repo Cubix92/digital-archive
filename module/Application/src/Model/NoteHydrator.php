@@ -52,6 +52,10 @@ class NoteHydrator extends AbstractHydrator
             $object->setContent($data['content']);
         };
 
+        if (array_key_exists('image', $data)) {
+            $object->setImage($data['image']);
+        };
+
         if (array_key_exists('date_published', $data)) {
             $object->setDatePublished(new \DateTime($data['date_published']));
         };
@@ -86,6 +90,7 @@ class NoteHydrator extends AbstractHydrator
             'title' => $object->getTitle(),
             'content' => $object->getContent(),
             'url' => $object->getUrl(),
+            'image' => $object->getImage(),
             'date_published' => $object->getDatePublished() ? $object->getDatePublished()->format('Y-m-d H:i:s') : null,
         ];
     }
