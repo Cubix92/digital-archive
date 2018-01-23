@@ -6,6 +6,8 @@ use Application\Form\NoteForm;
 use Application\Model\Note;
 use Application\Model\NoteCommand;
 use Application\Model\NoteRepository;
+use Zend\Session\Container;
+use Zend\Http\PhpEnvironment\Response;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -34,10 +36,13 @@ class NoteController extends AbstractActionController
     public function addAction()
     {
         $form = $this->noteForm;
+        $prg = $this->fileprg($form);
 
-        if ($this->getRequest()->isPost()) {
-            $form->setData($this->getRequest()->getPost());
+        if ($prg instanceof Response) {
+            return $prg;
+        }
 
+        if (is_array($prg)) {
             if ($form->isValid()) {
                 /** @var Note $note */
                 $note = $form->getData();
@@ -46,10 +51,17 @@ class NoteController extends AbstractActionController
                 $this->flashMessenger()->addSuccessMessage('Note was added successfull');
                 return $this->redirect()->toRoute('note');
             }
+
+            $fileErrors = $form->get('image')->getMessages();
+
+            if (empty($fileErrors)) {
+                $tempFile = $form->get('image')->getValue();
+            }
         }
 
         return new ViewModel([
-            'form' => $form
+            'form' => $form,
+            'tempFile' => $tempFile ?? null,
         ]);
     }
 

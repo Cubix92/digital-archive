@@ -2,8 +2,10 @@
 
 namespace Application\Form;
 
+use Zend\Filter\File\RenameUpload;
 use Zend\Filter\StringTrim;
 use Zend\InputFilter\InputFilter;
+use Zend\Validator\File\IsImage;
 use Zend\Validator\InArray;
 use Zend\Validator\StringLength;
 use Zend\Validator\Uri;
@@ -66,6 +68,23 @@ class NoteInputFilter extends InputFilter
                         'allowRelative' => false
                     ]
                 ],
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'image',
+            'required' => true,
+            'filters' => [
+                [
+                    'name' => RenameUpload::class,
+                    'options' => [
+                        'target'    => './data/tmp',
+                        'randomize' => true,
+                    ]
+                ],
+            ],
+            'validators' => [
+                ['name' => IsImage::class],
             ],
         ]);
     }

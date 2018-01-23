@@ -63,6 +63,18 @@ class NoteForm extends Form
         ]);
 
         $this->add([
+            'name' => 'image',
+            'type' => 'file',
+            'attributes' => [
+                'class' => 'form-control',
+                'id' => 'image'
+            ],
+            'options' => [
+                'label' => 'Zdjęcie'
+            ]
+        ]);
+
+        $this->add([
             'name' => 'content',
             'type' => 'textarea',
             'attributes' => [
