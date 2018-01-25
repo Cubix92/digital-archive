@@ -7,6 +7,7 @@
 
 namespace Application;
 
+use Application\Factory\IndexControllerFactory;
 use Zend\Mvc\I18n\Translator;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
@@ -128,7 +129,7 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            Controller\IndexController::class => InvokableFactory::class,
+            Controller\IndexController::class => IndexControllerFactory::class,
             Controller\Api\NoteController::class => Factory\Api\NoteControllerFactory::class,
             Controller\Api\TagController::class => Factory\Api\TagControllerFactory::class,
             Controller\Api\CategoryController::class => Factory\Api\CategoryControllerFactory::class,

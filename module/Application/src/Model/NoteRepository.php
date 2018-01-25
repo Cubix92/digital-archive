@@ -22,7 +22,7 @@ class NoteRepository
     public function findAll(): array
     {
         $notes = [];
-        $noteSelect = new Select('note');
+        $noteSelect = (new Select('note'))->order('date_published ASC');
         $noteResult = $this->sql->prepareStatementForSqlObject($noteSelect)->execute();
 
         $noteResultSet = new ResultSet();
