@@ -14,7 +14,7 @@ function Timeline(data, perPage) {
             var image = entry.image ? '<p><img src="'+ entry.image.substring(7) +'" alt="lorem pixel"></p>\n' : '';
             var tags = '';
 
-            entry.tags.forEach(function(tag, index) {
+            entry.tags.forEach(function(tag) {
                 tags += '<a class="btn btn-blk" href="#">' + tag.name + '</a>\n';
             });
 
