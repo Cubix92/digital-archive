@@ -42,6 +42,8 @@
                         ->setMinDepth(0)
                         ->setMaxDepth(0)
                         ->setUlClass('nav navbar-nav')
+                        ->setAcl($this->acl)
+                        ->setRole($this->identity()->role)
                     ?>
                     <ul class="nav navbar-nav navbar-right">
                         <li>

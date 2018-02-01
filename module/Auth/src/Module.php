@@ -3,6 +3,7 @@
 namespace Auth;
 
 use Auth\Listener\AuthListener;
+use Auth\Listener\UserListener;
 use Zend\Mvc\MvcEvent;
 
 class Module
@@ -18,6 +19,9 @@ class Module
         $eventManager = $e->getTarget()->getEventManager();
 
         $authListener = $serviceManager->get(AuthListener::class );
+        $authListener->attach($eventManager);
+
+        $authListener = $serviceManager->get(UserListener::class );
         $authListener->attach($eventManager);
     }
 

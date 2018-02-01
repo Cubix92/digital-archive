@@ -14,6 +14,11 @@ class AuthController extends AbstractActionController
 
     protected $authService;
 
+    protected $userData = [
+        'email' => 'example@example.com',
+        'role' => 'admin'
+    ];
+
     public function __construct(LoginForm $loginForm, AuthenticationService $authService)
     {
         $this->loginForm = $loginForm;
@@ -47,11 +52,6 @@ class AuthController extends AbstractActionController
     public function logoutAction()
     {
         $this->authService->clearIdentity();
-        return $this->redirect()->toRoute('login');
-    }
-
-    public function rememberAction()
-    {
         return $this->redirect()->toRoute('login');
     }
 }

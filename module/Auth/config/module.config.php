@@ -2,6 +2,7 @@
 
 namespace Auth;
 
+use Zend\Permissions\Acl\Acl;
 use Zend\Router\Http\Segment;
 use Zend\Router\Http\Literal;
 use Zend\Authentication\AuthenticationService as AuthService;
@@ -64,6 +65,8 @@ return [
             AuthService::class => Factory\AuthServiceFactory::class,
             AuthAdapter::class => Factory\AuthAdapterFactory::class,
             Listener\AuthListener::class => Factory\AuthListenerFactory::class,
+            Listener\UserListener::class => Factory\UserListenerFactory::class,
+            Acl::class => Factory\AclFactory::class
         ],
     ],
     'form_elements' => [

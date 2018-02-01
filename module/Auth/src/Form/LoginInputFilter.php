@@ -7,11 +7,8 @@ use Zend\Authentication\Adapter\DbTable\CallbackCheckAdapter as AuthAdapter;
 use Zend\Authentication\Validator\Authentication as AuthenticationValidator;
 use Zend\Filter\StringToLower;
 use Zend\Filter\StringTrim;
-use Zend\Filter\ToInt;
-use Zend\Filter\ToNull;
 use Zend\InputFilter\InputFilter;
 use Zend\Validator\EmailAddress;
-use Zend\Validator\Identical;
 
 class LoginInputFilter extends InputFilter
 {

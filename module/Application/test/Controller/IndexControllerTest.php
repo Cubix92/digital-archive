@@ -27,8 +27,10 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $mockAuth->expects($this->any())->method('hasIdentity')->willReturn(true);
 
         $this->getApplicationServiceLocator()->setAllowOverride(true);
+
         $this->getApplicationServiceLocator()->setService(AuthenticationService::class, $mockAuth);
         $this->getApplicationServiceLocator()->setService('config', $config);
+
         $this->getApplicationServiceLocator()->setAllowOverride(false);
     }
 

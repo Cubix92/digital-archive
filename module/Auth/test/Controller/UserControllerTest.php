@@ -7,13 +7,11 @@ use Auth\Form\UserForm;
 use Auth\Model\User;
 use Auth\Model\UserTable;
 use Prophecy\Argument;
-use Zend\Authentication\AuthenticationService;
 use Zend\Db\ResultSet\ResultSetInterface;
 use Zend\Form\FormElementManager;
 use Zend\Stdlib\ArrayUtils;
-use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
-class UserControllerTest extends AbstractHttpControllerTestCase
+class UserControllerTest extends AbstractControllerTest
 {
     protected $traceError = true;
 
@@ -32,23 +30,10 @@ class UserControllerTest extends AbstractHttpControllerTestCase
 
         $this->getApplicationServiceLocator()->setAllowOverride(true);
 
-        $config = $this->getApplicationServiceLocator()->get('config');
-        $config['db'] = [];
-
-        $this->getApplicationServiceLocator()->setService('config', $config);
-        $this->getApplicationServiceLocator()->setService(AuthenticationService::class, $this->mockAuthenticationService()->reveal());
-        $this->getApplicationServiceLocator()->setService(UserTable::class, $this->mockUserTable()->reveal());
+        $this->getApplicationServiceLocator()
+            ->setService(UserTable::class, $this->mockUserTable()->reveal());
 
         $this->getApplicationServiceLocator()->setAllowOverride(false);
-    }
-
-    protected function mockAuthenticationService()
-    {
-        $authenticationService = $this->prophesize(AuthenticationService::class);
-        $authenticationService->hasIdentity()->willReturn(true);
-        $authenticationService->getIdentity()->willReturn((object)['email' => 'example@example.com']);
-
-        return $authenticationService;
     }
 
     protected function mockUserTable()

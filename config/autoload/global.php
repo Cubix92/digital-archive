@@ -29,4 +29,109 @@ return [
     'session_storage' => [
         'type' => SessionArrayStorage::class
     ],
+    'navigation' => [
+        'default' => [
+            [
+                'label' => 'Użytkownicy',
+                'route' => 'user',
+                'resource'=> 'user',
+                'pages' => [
+                    [
+                        'label'  => 'Dodawanie użytkownika',
+                        'route'  => 'user',
+                        'action' => 'add',
+                    ],
+                    [
+                        'label'  => 'Edycja użytkownika',
+                        'route'  => 'user',
+                        'action' => 'edit',
+                    ]
+                ]
+            ],
+            [
+                'label' => 'Kategorie',
+                'route' => 'category',
+                'resource'=> 'category',
+                'pages' => [
+                    [
+                        'label'  => 'Dodawanie kategorii',
+                        'route'  => 'category',
+                        'action' => 'add',
+                    ],
+                    [
+                        'label'  => 'Edycja kategorii',
+                        'route'  => 'category',
+                        'action' => 'edit',
+                    ]
+                ],
+            ],
+            [
+                'label' => 'Notatki',
+                'route' => 'note',
+                'resource'=> 'note',
+                'pages' => [
+                    [
+                        'label'  => 'Dodawanie notatki',
+                        'route'  => 'note',
+                        'action' => 'add',
+                    ],
+                    [
+                        'label'  => 'Edycja notatki',
+                        'route'  => 'note',
+                        'action' => 'edit',
+                    ]
+                ],
+            ],
+            [
+                'label' => 'Tagi',
+                'route' => 'tag',
+                'resource' => 'tag',
+                'pages' => [
+                    [
+                        'label'  => 'Podgląd tagu',
+                        'route'  => 'tag',
+                        'action' => 'show',
+                    ]
+                ],
+            ],
+            [
+                'label' => 'Logi',
+                'route' => 'log',
+                'resource' => 'log',
+                'pages' => [
+                    [
+                        'label'  => 'Przeglądanie logów',
+                        'route'  => 'log',
+                        'action' => 'index',
+                    ]
+                ],
+            ],
+        ],
+    ],
+    'acl' =>[
+        'admin'=> [
+            'user',
+            'category',
+            'note',
+            'tag',
+            'log',
+        ],
+        'moderator' => [
+            'category',
+            'note',
+            'tag',
+            'log',
+        ],
+        'editor' => [
+            'category',
+            'note',
+            'tag'
+        ],
+        'author' => [
+            'note'
+        ],
+        'subscriber'=> [
+            'home'
+        ]
+    ]
 ];

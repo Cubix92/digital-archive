@@ -13,14 +13,13 @@ use Zend\Log\Logger;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\Mvc\MvcEvent;
+use Zend\Permissions\Acl\Acl;
 
 class AuthListener implements ListenerAggregateInterface
 {
     use ListenerAggregateTrait;
 
     protected $logger;
-
-    protected $authService;
 
     public function __construct(Logger $logger)
     {
@@ -32,23 +31,9 @@ class AuthListener implements ListenerAggregateInterface
         $sharedManager = $events->getSharedManager();
 
         $this->listeners[] = $sharedManager->attach(
-            AbstractActionController::class,
-            'userAdded',
-            [$this, 'onUserAdded'],
-            $priority
-        );
-
-        $this->listeners[] = $sharedManager->attach(
-            AbstractActionController::class,
-            'userEdited',
-            [$this, 'onUserEdited'],
-            $priority
-        );
-
-        $this->listeners[] = $sharedManager->attach(
-            AbstractActionController::class,
-            'userDeleted',
-            [$this, 'onUserDeleted'],
+            '*',
+            MvcEvent::EVENT_ROUTE,
+            [$this, 'checkAcl'],
             $priority
         );
 
@@ -85,30 +70,18 @@ class AuthListener implements ListenerAggregateInterface
         return 0;
     }
 
-    public function onUserAdded(EventInterface $e)
-    {
-        $user = $e->getParam('user');
-        $message = sprintf('[{email}]: Add new user "%s"', $user->getEmail());
-        $params['email'] = $e->getTarget()->identity()->email;
+    public function checkAcl(MvcEvent $e) {
+        $acl = $e->getApplication()->getServiceManager()->get(Acl::class);
+        $authService = $e->getApplication()->getServiceManager()->get(AuthService::class);
 
-        $this->logger->info($message, $params);
-    }
+        $route = $e->getRouteMatch()->getMatchedRouteName();
+        $role = $authService->getIdentity() ? $authService->getIdentity()->role : 'subscriber';
 
-    public function onUserEdited(EventInterface $e)
-    {
-        $user = $e->getParam('user');
-        $message = sprintf('[{email}]: Edit user "%s"', $user->getEmail());
-        $params['email'] = $e->getTarget()->identity()->email;
+        if ($acl->hasResource($route) && !$acl->isAllowed($role, $route)) {
+            $response = $e->getResponse();
+            $response->setStatusCode(404);
+        }
 
-        $this->logger->info($message, $params);
-    }
-
-    public function onUserDeleted(EventInterface $e)
-    {
-        $user = $e->getParam('user');
-        $message = sprintf('[{email}]: User "%s" was deleted', $user->getEmail());
-        $params['email'] = $e->getTarget()->identity()->email;
-
-        $this->logger->info($message, $params);
+        $e->getViewModel()->acl = $acl;
     }
 }
