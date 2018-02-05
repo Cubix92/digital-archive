@@ -110,6 +110,7 @@ return [
     ],
     'acl' =>[
         'admin'=> [
+            'home',
             'user',
             'category',
             'note',
@@ -117,17 +118,20 @@ return [
             'log',
         ],
         'moderator' => [
+            'home',
             'category',
             'note',
             'tag',
             'log',
         ],
         'editor' => [
+            'home',
             'category',
             'note',
             'tag'
         ],
         'author' => [
+            'home',
             'note'
         ],
         'subscriber'=> [

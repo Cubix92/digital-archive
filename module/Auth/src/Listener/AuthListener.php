@@ -5,6 +5,7 @@ namespace Auth\Listener;
 use Zend\Authentication\AuthenticationService as AuthService;
 use Auth\Controller\AuthController;
 use Zend\Authentication\AuthenticationService;
+use Zend\Console\Request as ConsoleRequest;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
@@ -54,6 +55,10 @@ class AuthListener implements ListenerAggregateInterface
 
     public function checkIdentity(EventInterface $event)
     {
+        if ($event->getRequest() instanceof ConsoleRequest) {
+            return 0;
+        }
+
         $controller = $event->getTarget();
         $authService = $event->getApplication()->getServiceManager()->get(AuthenticationService::class);
         $controllerName = $event->getRouteMatch()->getParam('controller', null);

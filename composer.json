@@ -43,7 +43,8 @@
         "psr-4": {
             "Application\\": "module/Application/src/",
             "Auth\\": "module/Auth/src/",
-            "Log\\": "module/Log/src/"
+            "Log\\": "module/Log/src/",
+            "Generator\\": "module/Generator/src/"
         }
     },
     "autoload-dev": {
@@ -65,5 +66,8 @@
         ],
         "serve": "php -S 0.0.0.0:8080 -t public public/index.php",
         "test": "phpunit"
+    },
+    "require-dev": {
+        "zendframework/zend-developer-tools": "^1.1"
     }
 }
