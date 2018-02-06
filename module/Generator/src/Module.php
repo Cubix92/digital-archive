@@ -21,7 +21,7 @@ class Module implements ConsoleBannerProviderInterface, ConsoleUsageProviderInte
     public function getConsoleUsage(Console $console)
     {
         return [
-            'list' => 'Show application options'
+            'generate -l' => 'Generate listener'
         ];
     }
 }

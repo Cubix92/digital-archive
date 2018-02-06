@@ -15,7 +15,7 @@ return [
             'routes' => [
                 'list-users' => [
                     'options' => [
-                        'route'    => 'list',
+                        'route'    => 'generate',
                         'defaults' => [
                             'controller' => Controller\IndexController::class,
                             'action'     => 'index',

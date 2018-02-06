@@ -6,12 +6,8 @@ use Zend\Mvc\Console\Controller\AbstractConsoleController;
 
 class IndexController extends AbstractConsoleController
 {
-    public function indexAction()
+    public function listenerAction()
     {
-        $this->getConsole()->writeLine('Would you like to generate?');
-        $this->getConsole()->writeLine('[C] Controller');
-        $this->getConsole()->writeLine('[L] Listener');
-        $this->getConsole()->writeLine('[E] Entity');
-        $this->getConsole()->writeLine('[F] Form');
+
     }
 }
