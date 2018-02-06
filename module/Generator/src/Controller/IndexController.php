@@ -8,6 +8,10 @@ class IndexController extends AbstractConsoleController
 {
     public function indexAction()
     {
-        $this->getConsole()->writeLine('test', 'red', 'yellow');
+        $this->getConsole()->writeLine('Would you like to generate?');
+        $this->getConsole()->writeLine('[C] Controller');
+        $this->getConsole()->writeLine('[L] Listener');
+        $this->getConsole()->writeLine('[E] Entity');
+        $this->getConsole()->writeLine('[F] Form');
     }
 }
