@@ -8,6 +8,8 @@ use Zend\Console\Adapter\AdapterInterface as Console;
 
 class Module implements ConsoleBannerProviderInterface, ConsoleUsageProviderInterface
 {
+    public const MODULES_PATH = './module/';
+
     public function getConfig()
     {
         return include __DIR__ . '/../config/module.config.php';
@@ -21,7 +23,7 @@ class Module implements ConsoleBannerProviderInterface, ConsoleUsageProviderInte
     public function getConsoleUsage(Console $console)
     {
         return [
-            'generate -l' => 'Generate listener'
+            'generate module' => 'Generate modules'
         ];
     }
 }
