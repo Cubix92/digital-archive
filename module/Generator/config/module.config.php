@@ -7,18 +7,28 @@ use Zend\ServiceManager\Factory\InvokableFactory;
 return [
     'controllers' => [
         'factories' => [
-            Controller\IndexController::class => InvokableFactory::class,
+            Controller\ModuleController::class => InvokableFactory::class,
+            Controller\ListenerController::class => InvokableFactory::class,
         ],
     ],
     'console' => [
         'router' => [
             'routes' => [
-                'list-users' => [
+                'module' => [
                     'options' => [
-                        'route'    => 'generate',
+                        'route'    => 'generate module --name=',
                         'defaults' => [
-                            'controller' => Controller\IndexController::class,
-                            'action'     => 'index',
+                            'controller' => Controller\ModuleController::class,
+                            'action'     => 'generate'
+                        ],
+                    ],
+                ],
+                'listener' => [
+                    'options' => [
+                        'route'    => 'generate listener <name> --module=',
+                        'defaults' => [
+                            'controller' => Controller\ListenerController::class,
+                            'action'     => 'generate'
                         ],
                     ],
                 ],
