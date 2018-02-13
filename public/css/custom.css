@@ -411,9 +411,10 @@ input[type="submit"] {
 
 input:not([type="submit"]), textarea.form-control, select.form-control {
     -webkit-appearance: none;
+    -moz-appearance: none;
     background: #fff;
     border: 1px solid #d9d9d9;
-    border-radius: 0px !important;
+    border-radius: 0 !important;
 }
 
 .select-arrow {
