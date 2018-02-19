@@ -43,8 +43,7 @@
         "psr-4": {
             "Application\\": "module/Application/src/",
             "Auth\\": "module/Auth/src/",
-            "Log\\": "module/Log/src/",
-            "Generator\\": "module/Generator/src/"
+            "Log\\": "module/Log/src/"
         }
     },
     "autoload-dev": {
