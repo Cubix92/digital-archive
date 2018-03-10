@@ -43,6 +43,7 @@ class AuthControllerTest extends AbstractControllerTest
         ];
 
         $this->dispatch('/login', 'POST', $postData);
+
         $this->assertResponseStatusCode(302);
         $this->assertRedirectTo('/');
     }

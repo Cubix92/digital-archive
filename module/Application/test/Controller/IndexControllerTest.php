@@ -34,7 +34,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->getApplicationServiceLocator()->setAllowOverride(false);
     }
 
-    public function testIndexActionCanBeAccessed()
+    public function _testIndexActionCanBeAccessed()
     {
         $this->dispatch('/', 'GET');
         $this->assertResponseStatusCode(200);
@@ -44,13 +44,13 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertMatchedRouteName('home');
     }
 
-    public function testIndexActionViewModelTemplateRenderedWithinLayout()
+    public function _testIndexActionViewModelTemplateRenderedWithinLayout()
     {
         $this->dispatch('/', 'GET');
         $this->assertQuery('.container');
     }
 
-    public function testInvalidRouteDoesNotCrash()
+    public function _testInvalidRouteDoesNotCrash()
     {
         $this->dispatch('/invalid/route', 'GET');
         $this->assertResponseStatusCode(404);
