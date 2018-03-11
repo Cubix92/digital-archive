@@ -3,8 +3,7 @@
 namespace Auth\Controller;
 
 use Auth\Form\LoginForm;
-use Auth\Model\User;
-use Zend\Authentication\AuthenticationService;
+use Auth\Service\LoginService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -12,22 +11,17 @@ class AuthController extends AbstractActionController
 {
     protected $loginForm;
 
-    protected $authService;
+    protected $loginService;
 
-    protected $userData = [
-        'email' => 'example@example.com',
-        'role' => 'admin'
-    ];
-
-    public function __construct(LoginForm $loginForm, AuthenticationService $authService)
+    public function __construct(LoginForm $loginForm, LoginService $loginService)
     {
         $this->loginForm = $loginForm;
-        $this->authService = $authService;
+        $this->loginService = $loginService;
     }
 
     public function loginAction()
     {
-        $this->authService->clearIdentity();
+        $this->loginService->clear();
 
         $request = $this->getRequest();
         $form = $this->loginForm;
@@ -36,9 +30,18 @@ class AuthController extends AbstractActionController
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $user = $this->authService->getAdapter()->getResultRowObject();
-                $this->authService->getStorage()->write($user);
-                return $this->redirect()->toRoute('home');
+                $result = $this->loginService->authenticate(
+                    $request->getPost('email'),
+                    $request->getPost('password')
+                );
+
+                if ($result) {
+                    $this->flashMessenger()->addSuccessMessage('You are logged successfull');
+                    return $this->redirect()->toRoute('home');
+                }
+
+                $this->flashMessenger()->addErrorMessage('Your password or credentials are wrong');
+                return $this->redirect()->refresh();
             }
         }
 
@@ -51,7 +54,7 @@ class AuthController extends AbstractActionController
 
     public function logoutAction()
     {
-        $this->authService->clearIdentity();
+        $this->loginService->clear();
         return $this->redirect()->toRoute('login');
     }
 }

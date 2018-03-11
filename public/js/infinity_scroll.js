@@ -44,10 +44,11 @@ function Timeline(data, perPage) {
     };
 }
 
-$(document).ready(function() {
+function timelineInit(data)
+{
     var win = $(window);
     var doc = $(document);
-    var timeline = new Timeline(DATA, 2);
+    var timeline = new Timeline(data, 2);
 
     timeline.renderEntries();
 
@@ -55,5 +56,26 @@ $(document).ready(function() {
         if (doc.height() - win.height() <= Math.ceil(win.scrollTop())) {
             timeline.renderEntries();
         }
+    });
+}
+
+$(document).ready(function() {
+    $.get( "/api/notes", function(response) {
+        timelineInit(response.data);
+    });
+
+    $('.js-tags a').click(function() {
+        $(this).addClass('active');
+
+        var tags = [];
+
+        $('.js-tags a.active').each(function(index, element) {
+            tags.push('tags[]=' + $(element).data('id'));
+        });
+
+        $.get( "/api/notes?" + tags.join('&'), function(response) {
+            // clear timeline...
+            timelineInit(response.data);
+        });
     });
 });

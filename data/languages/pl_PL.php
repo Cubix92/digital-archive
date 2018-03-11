@@ -22,4 +22,6 @@ return [
     'Note with identifier not found' => 'Nie znaleziono notatki o podanym identyfikatorze',
     'Tag not found' => 'Nie znaleziono taga',
     'Cannot update user that does not exist' => 'Nie można zaktualizować użytkownika, który nie istnieje',
+    'You are logged successfull' => 'Poprawnie zalogowałeś się do aplikacji',
+    'Your password or credentials are wrong' => 'Wpisałeś niepoprawny login lub hasło'
 ];

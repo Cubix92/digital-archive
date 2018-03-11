@@ -62,10 +62,11 @@ return [
     'service_manager' => [
         'factories' => [
             Model\UserTable::class => Factory\UserTableFactory::class,
-            AuthService::class => Factory\AuthServiceFactory::class,
-            AuthAdapter::class => Factory\AuthAdapterFactory::class,
+            Service\LoginService::class => Factory\LoginServiceFactory::class,
             Listener\AuthListener::class => Factory\AuthListenerFactory::class,
             Listener\UserListener::class => Factory\UserListenerFactory::class,
+            AuthService::class => Factory\AuthServiceFactory::class,
+            AuthAdapter::class => Factory\AuthAdapterFactory::class,
             Acl::class => Factory\AclFactory::class
         ],
     ],

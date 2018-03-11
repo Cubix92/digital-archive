@@ -2,12 +2,10 @@
 
 <header class="page-header text-center">
     <h1>Linia czasu</h1>
-    <div class="row margin-top-30">
-        <a class="btn btn-blk margin-left-10" href="#">Przykładowy tag</a>
-        <a class="btn btn-blk margin-left-10" href="#">Przykładowy tag</a>
-        <a class="btn btn-blk margin-left-10" href="#">Przykładowy tag</a>
-        <a class="btn btn-blk margin-left-10" disabled="disabled" href="#">Przykładowy tag</a>
-        <a class="btn btn-blk margin-left-10" disabled="disabled" href="#">Przykładowy tag</a>
+    <div class="row margin-top-30 js-tags">
+        <?php foreach($this->tags as $tag) : ?>
+            <a class="btn btn-blk margin-left-10" href="#" data-id="<?= $tag->getId() ?>"><?= $tag->getName() ?></a>
+        <?php endforeach; ?>
     </div>
 </header>
 
@@ -15,7 +13,4 @@
     <li><div class="tldate">Apr 2014</div></li>
 </ul>
 
-<script>
-    DATA = <?= $this->data ?>;
-</script>
 <?php $this->inlineScript()->prependFile($this->basePath('js/infinity_scroll.js')) ?>
