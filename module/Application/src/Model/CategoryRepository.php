@@ -4,6 +4,7 @@ namespace Application\Model;
 
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\ResultSet\HydratingResultSet;
+use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Sql;
 use Zend\Hydrator\Reflection as ReflectionHydrator;
@@ -12,9 +13,12 @@ class CategoryRepository
 {
     protected $sql;
 
-    public function __construct(AdapterInterface $dbAdapter)
+    protected $categoryHydrator;
+
+    public function __construct(AdapterInterface $dbAdapter, CategoryHydrator $categoryHydrator)
     {
         $this->sql = new Sql($dbAdapter);
+        $this->categoryHydrator = $categoryHydrator;
     }
 
     public function findAll(): array
@@ -23,27 +27,27 @@ class CategoryRepository
         $categorySelect = new Select('category');
         $categoryResult = $this->sql->prepareStatementForSqlObject($categorySelect)->execute();
 
-        $categoryResultSet = new HydratingResultSet(new ReflectionHydrator(), new Category());
+        $categoryResultSet = new ResultSet();
         $categoryResultSet->initialize($categoryResult);
 
         /**
          * @var Category $category
          */
-        foreach ($categoryResultSet as $category) {
-            $noteSelect = (new Select('note'))->where(['category' => $category->getId()]);
+        foreach ($categoryResultSet->toArray() as $category) {
+            $noteSelect = (new Select('note'))->where(['category' => $category['id']]);
             $noteResult = $this->sql->prepareStatementForSqlObject($noteSelect)->execute();
 
-            $noteResultSet = new HydratingResultSet(new ReflectionHydrator(),new Note());
+            $noteResultSet = new ResultSet();
             $noteResultSet->initialize($noteResult);
 
             /**
              * @var Note $note
              */
-            foreach ($noteResultSet as $note) {
-                $category->addNote($note);
+            foreach ($noteResultSet->toArray() as $note) {
+                $category['note'] = $note;
             }
 
-            $categories[] = $category;
+            $categories[] = $this->categoryHydrator->hydrate($category, new Category());
         }
 
         return $categories;

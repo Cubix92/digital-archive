@@ -2,23 +2,23 @@
 
 namespace Application\Controller;
 
-use Log\Model\LogRepository;
+use Log\Model\LogTable;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 class LogController extends AbstractActionController
 {
-    protected $logRepository;
+    protected $logTable;
 
-    public function __construct(LogRepository $logRepository)
+    public function __construct(LogTable $logTable)
     {
-        $this->logRepository = $logRepository;
+        $this->logTable = $logTable;
     }
 
     public function indexAction()
     {
         return new ViewModel([
-            'logs' => $this->logRepository->findAll()
+            'logs' => $this->logTable->fetchAll()
         ]);
     }
 }

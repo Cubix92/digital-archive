@@ -45,8 +45,11 @@ class NoteController extends AbstractRestfulController
 
     public function getList():JsonModel
     {
+
+
         /** @var Note $note */
-        $notes = $this->noteRepository->findAll();
+        $tags = $this->params()->fromQuery('tags', []);
+        $notes = $this->noteRepository->findByTags($tags);
         $data = [];
 
         foreach($notes as $note) {

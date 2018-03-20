@@ -35,7 +35,7 @@ class CategoryHydrator extends AbstractHydrator
         };
 
         if (array_key_exists('name', $data)) {
-            $object->setTags($data['tags']);
+            $object->setName($data['name']);
         };
 
         if (array_key_exists('shortcut', $data)) {
@@ -54,7 +54,7 @@ class CategoryHydrator extends AbstractHydrator
         $notes = [];
 
         /** @var Note $note */
-        foreach ((array)$object->getNotes() as $note) {
+        foreach ($object->getNotes() as $note) {
             $notes[] = [
                 'id' => $note->getId(),
                 'title' => $note->getTitle(),

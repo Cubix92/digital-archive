@@ -3,7 +3,7 @@
 namespace Application\Factory;
 
 use Application\Controller\LogController;
-use Log\Model\LogRepository;
+use Log\Model\LogTable;
 use Interop\Container\ContainerInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 
@@ -11,8 +11,8 @@ class LogControllerFactory extends AbstractActionController
 {
     public function __invoke(ContainerInterface $container)
     {
-        $logRepository = $container->get(LogRepository::class);
+        $logTable = $container->get(LogTable::class);
 
-        return new LogController($logRepository);
+        return new LogController($logTable);
     }
 }

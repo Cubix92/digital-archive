@@ -9,12 +9,12 @@ class LogTest extends TestCase
 {
     public function testInitialValuesAreDefault()
     {
-        $user = new Log();
+        $log = new Log();
 
-        $this->assertNull($user->getId());
-        $this->assertNull($user->getContent());
-        $this->assertNull($user->getType());
-        $this->assertNull($user->getDate());
+        $this->assertNull($log->getId());
+        $this->assertNull($log->getContent());
+        $this->assertNull($log->getType());
+        $this->assertNull($log->getDate());
     }
 
     public function testSetsPropertiesCorrectly()
@@ -24,12 +24,12 @@ class LogTest extends TestCase
         $log = (new Log())
             ->setId(123)
             ->setContent('Lorem ipsum dolor sit amet...')
-            ->setType(123)
+            ->setType(5)
             ->setDate($now);
 
         $this->assertEquals(123, $log->getId());
         $this->assertEquals('Lorem ipsum dolor sit amet...', $log->getContent());
-        $this->assertEquals(123, $log->getType());
+        $this->assertEquals(5, $log->getType());
         $this->assertEquals($now, $log->getDate());
     }
 }

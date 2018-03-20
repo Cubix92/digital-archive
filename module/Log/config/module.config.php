@@ -8,7 +8,7 @@ use Zend\ServiceManager\Factory\InvokableFactory;
 return [
     'service_manager' => [
         'factories' => [
-            Model\LogRepository::class => Factory\LogRepositoryFactory::class,
+            Model\LogTable::class => Factory\LogTableFactory::class,
             Model\LogHydrator::class => InvokableFactory::class,
             Logger::class => Factory\LoggerFactory::class
         ],

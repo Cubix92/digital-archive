@@ -13,7 +13,7 @@ class LoginService
         $this->authService = $authService;
     }
 
-    public function authenticate($identity, $password)
+    public function authenticate(string $identity, string $password): bool
     {
         $this->authService->getAdapter()
             ->setIdentity($identity)

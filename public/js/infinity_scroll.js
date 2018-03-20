@@ -65,16 +65,23 @@ $(document).ready(function() {
     });
 
     $('.js-tags a').click(function() {
-        $(this).addClass('active');
+
+        if ($(this).attr("disabled")) {
+            $(this).attr("disabled", false);
+            $(this).removeClass('checked');
+        } else {
+            $(this).attr("disabled", true);
+            $(this).addClass('checked');
+        }
 
         var tags = [];
 
-        $('.js-tags a.active').each(function(index, element) {
+        $('.js-tags a.checked').each(function(index, element) {
             tags.push('tags[]=' + $(element).data('id'));
         });
 
         $.get( "/api/notes?" + tags.join('&'), function(response) {
-            // clear timeline...
+            $('#timeline').empty();
             timelineInit(response.data);
         });
     });

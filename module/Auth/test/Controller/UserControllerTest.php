@@ -4,14 +4,16 @@ namespace UserTest\Controller;
 
 use Auth\Controller\UserController;
 use Auth\Form\UserForm;
+use Auth\Listener\UserListener;
 use Auth\Model\User;
 use Auth\Model\UserTable;
 use Prophecy\Argument;
 use Zend\Db\ResultSet\ResultSetInterface;
+use Zend\Log\Logger;
 use Zend\Form\FormElementManager;
-use Zend\Stdlib\ArrayUtils;
+use Zend\Mvc\Controller\AbstractActionController;
 
-class UserControllerTest extends AbstractControllerTest
+class UserControllerTest extends AuthControllerTest
 {
     protected $traceError = true;
 
@@ -19,27 +21,18 @@ class UserControllerTest extends AbstractControllerTest
 
     public function setUp()
     {
-        $configOverrides = [];
-
-        $this->setApplicationConfig(ArrayUtils::merge(
-            include __DIR__ . '/../../../../config/application.config.php',
-            $configOverrides
-        ));
-
         parent::setUp();
+
+        $this->userTable = $this->prophesize(UserTable::class);
+
+        $sharedManager = $this->getApplication()->getEventManager()->getSharedManager();
+        $sharedManager->clearListeners(AbstractActionController::class);
 
         $this->getApplicationServiceLocator()->setAllowOverride(true);
 
-        $this->getApplicationServiceLocator()
-            ->setService(UserTable::class, $this->mockUserTable()->reveal());
+        $this->getApplicationServiceLocator()->setService(UserTable::class, $this->userTable->reveal());
 
         $this->getApplicationServiceLocator()->setAllowOverride(false);
-    }
-
-    protected function mockUserTable()
-    {
-        $this->userTable = $this->prophesize(UserTable::class);
-        return $this->userTable;
     }
 
     public function testIndexActionCanBeAccessed()
