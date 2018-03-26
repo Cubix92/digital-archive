@@ -4,6 +4,7 @@ namespace Application\Model;
 
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\Predicate\Expression;
 use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Where;
@@ -20,10 +21,26 @@ class NoteRepository
         $this->noteHydrator = $noteHydrator;
     }
 
-    public function findAll(): array
+    public function fetchByTags(array $tags): array
     {
         $notes = [];
-        $noteSelect = (new Select('note'))->order('date_published ASC');
+        $noteSelect = (new Select(['n' => 'note']))
+            ->order('date_published ASC');
+
+        if ($tags) {
+            $noteSelect->where(function (Where $where) use ($tags) {
+                $subWhere = (new Where())->addPredicate(new Expression('t.id IN (?)', [$tags]));
+
+                $subSelect = (new Select(['n' => 'note']))
+                    ->columns(['id'])
+                    ->join(['nt' => 'note_tag'], 'nt.note_id = n.id', [])
+                    ->join(['t' => 'tag'], 't.id = nt.tag_id', [])
+                    ->where($subWhere);
+
+                $where->addPredicate(new Expression('n.id NOT IN ?', [$subSelect]));
+            });
+        }
+//var_dump($noteSelect->getSqlString());die;
         $noteResult = $this->sql->prepareStatementForSqlObject($noteSelect)->execute();
 
         $noteResultSet = new ResultSet();
@@ -58,26 +75,16 @@ class NoteRepository
                 $noteSet['tags'][] = $tagSet;
             }
 
-            $notes[] = $this->noteHydrator->hydrate($noteSet, new Note());
+            $notes[] = $noteSet;
         }
 
         return $notes;
     }
 
-    public function findByTags(array $tags)
+    public function findAll(): array
     {
         $notes = [];
-        $noteSelect = (new Select(['n' => 'note']))
-            ->join(['nt' => 'note_tag'], 'nt.note_id = n.id', [])
-            ->join(['t' => 'tag'], 't.id = nt.tag_id', [])
-            ->order('date_published ASC');
-
-        if ($tags) {
-            $noteSelect->where(function (Where $where) use ($tags) {
-                $where->notIn('t.id', $tags);
-            });
-        }
-
+        $noteSelect = (new Select('note'))->order('date_published ASC');
         $noteResult = $this->sql->prepareStatementForSqlObject($noteSelect)->execute();
 
         $noteResultSet = new ResultSet();
