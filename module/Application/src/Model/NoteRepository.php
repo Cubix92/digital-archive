@@ -40,7 +40,7 @@ class NoteRepository
                 $where->addPredicate(new Expression('n.id NOT IN ?', [$subSelect]));
             });
         }
-//var_dump($noteSelect->getSqlString());die;
+
         $noteResult = $this->sql->prepareStatementForSqlObject($noteSelect)->execute();
 
         $noteResultSet = new ResultSet();

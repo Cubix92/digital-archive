@@ -5,22 +5,24 @@ CREATE TABLE category
   shortcut VARCHAR(255) NOT NULL
 )ENGINE = INNODB;
 
-CREATE TABLE note
-(
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  category INT NOT NULL,
-  title VARCHAR(255) NOT NULL,
-  content TEXT,
-  url VARCHAR(255) NOT NULL,
-  date_created DATETIME NOT NULL
-  FOREIGN KEY(category) REFERENCES category(id)
-)ENGINE = INNODB;
-
 CREATE TABLE tag
 (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
   UNIQUE (name)
+)ENGINE = INNODB;
+
+CREATE TABLE note
+(
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  category INT NOT NULL,
+  user_id INT NOT NULL,
+  image VARCHAR(255) NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  content TEXT,
+  url VARCHAR(255) NOT NULL,
+  date_published DATETIME NOT NULL,
+  FOREIGN KEY(category) REFERENCES category(id)
 )ENGINE = INNODB;
 
 CREATE TABLE note_tag
