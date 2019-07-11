@@ -24,8 +24,7 @@ class NoteHydrator extends AbstractHydrator
         if (array_key_exists('category', $data)) {
             $category = (new Category())
                 ->setId($data['category']['id'])
-                ->setName($data['category']['name'])
-                ->setIcon($data['category']['icon']);
+                ->setName($data['category']['name']);
 
             $object->setCategory($category);
         };
